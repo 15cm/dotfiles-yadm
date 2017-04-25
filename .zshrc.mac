@@ -1,0 +1,33 @@
+# alias
+alias p="proxychains4 -q"
+alias ep="HTTP_PROXY=http://127.0.0.1:1090"
+alias mux="tmuxinator"
+alias em="emacsclient -t"
+alias ls="ls --color=auto --group-directories-first --group-directories-first"
+alias brew="p brew"
+alias git="p git"
+alias yadm="p yadm"
+
+# Auto completion
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit -i
+source ~/.zsh/completion/tmuxinator.zsh
+
+# use coreutils without 'g' prefix
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+# user path
+export PATH="/usr/local/bin:$PATH:/usr/local/script"
+
+# Path for aria2 build
+export PATH="$PATH:/usr/local/aria2/bin"
+
+# Spacemacs tramp connection
+export PATH="/usr/local/sbin:$PATH"
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
+source $HOME/.cargo/env
+
+# added by travis gem
+[ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh

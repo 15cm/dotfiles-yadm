@@ -1,3 +1,5 @@
+# Common config
+
 is_linux () {
   [[ $('uname') == 'Linux' ]];
 }
@@ -54,44 +56,16 @@ plugins=(git vi-mode z catimg zsh-autosuggestions zsh-syntax-highlighting zsh-di
 
 source $ZSH/oh-my-zsh.sh
 
+if is_osx; then
+  source $HOME/.zshrc.mac
+fi
+elif is_linux; then
+  source $HOME/.zshrc.linux
+fi
+
 # alias
-alias p="proxychains4 -q"
-alias ep="HTTP_PROXY=http://127.0.0.1:1090"
-alias vi="vim"
-alias mux="tmuxinator"
 alias rz="source ~/.zshrc"
-alias brew="p brew"
-alias git="p git"
-alias em="emacsclient -t"
-alias ls="ls --color=auto --group-directories-first --group-directories-first"
-
-
-# Auto completion
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit -i
-source ~/.zsh/completion/tmuxinator.zsh
-
-# use coreutils without 'g' prefix
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-# user path
-export PATH="/usr/local/bin:$PATH:/usr/local/script"
-
-# Path for aria2 build
-export PATH="$PATH:/usr/local/opt/gettext/bin:/usr/local/aria2/bin"
-
-# GNU Utils Before Load Zsh Plugins {
-# alias dircolors="gdircolors"
-# }
-
-# GNU Utils After Load Zsh Plugins {
-# wrap find with gfind, result always with quotes
-# alias xargs="gxargs "
-# alias sed="gsed"
-# sed alias
-# alias sed_unix_path="sed 's/ /\\\ /g'"
-#}
+alias vi="vim"
 
 # ------------------ 'fzf' and 'z' ----------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -116,16 +90,6 @@ fdirz() {
 }
 alias j="fun_z"
 # ------------------ 'fzf' and 'z' ----------------------------
-
-# Spacemacs tramp connection
-export PATH="/usr/local/sbin:$PATH"
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-
-source $HOME/.cargo/env
-
-# added by travis gem
-[ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
-
 
 # ---------------------------- Java ----------------------------
 # jenv
