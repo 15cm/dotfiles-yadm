@@ -21,9 +21,8 @@ if is_osx; then
   # Powerline
   # python
   [[ ! -f '/usr/local/bin/python' ]] || brew install python
-  BREW_PYTHON="/usr/local/bin/python"
-  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
-  $BREW_PYTHON install powerline-status
+  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | /usr/local/bin/python
+  /usr/loca/bin/pip install powerline-status
 
 elif is_linux; then
   # sudo
