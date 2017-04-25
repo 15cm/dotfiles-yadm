@@ -49,6 +49,8 @@ bindkey '^o' forward-word
 
 # ---------------------------- ENV ----------------------------
 export EDITOR='vim'
+export _Z_DATA="$HOME/.z/.z"
+. ~/.z/z.sh
 # ---------------------------- ENV ----------------------------
 
 # Plugins
@@ -58,7 +60,6 @@ source $ZSH/oh-my-zsh.sh
 
 if is_osx; then
   source $HOME/.zshrc.mac
-fi
 elif is_linux; then
   source $HOME/.zshrc.linux
 fi
