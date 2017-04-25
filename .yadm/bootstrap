@@ -40,6 +40,8 @@ elif is_linux; then
   which python > /dev/null || sudo apt-get -y install python
   which pip > /dev/null || sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python
   sudo pip install powerline-status
+  # Keychain
+  which keychain > /dev/null || sudo apt-get -y install keychain
 fi
 
 # Oh-my-zsh
