@@ -7,25 +7,48 @@ is_osx () {
   [[ $('uname') == 'Darwin' ]]
 }
 
-# sudo
-which sudo > /dev/null || sudo apt-get -y install sudo
+if is_osx; then
+  # brew
+  if [[ ! -f '/usr/local/bin/brew' ]]; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+  # vim
+  which vim > /dev/null || brew install vim
+  # Tmux
+  which tmux > /dev/null || brew install tmux
+  # ZSH
+  which zsh > /dev/null || brew install zsh
+  # Powerline
+  # python
+  [[ ! -f '/usr/local/bin/python' ]] || brew install python
+  BREW_PYTHON="/usr/local/bin/python"
+  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
+  $BREW_PYTHON install powerline-status
 
-# vim
-which vim > /dev/null || sudo apt-get -y install vim
+elif is_linux; then
+  # sudo
+  which sudo > /dev/null || sudo apt-get -y install sudo
+  # vim
+  which vim > /dev/null || sudo apt-get -y install vim
+  # curl
+  which curl > /dev/null || sudo apt-get -y install curl
+  # ZSH
+  which zsh > /dev/null || sudo apt-get -y install zsh
+  # Tmux
+  which tmux > /dev/null || sudo apt-get -y install tmux
+  # Powerline
+  which python > /dev/null || sudo apt-get -y install python
+  which pip > /dev/null || sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python
+  sudo pip install powerline-status
+fi
 
-# curl
-which curl > /dev/null || sudo apt-get -y install curl
-
-# ZSH
+# Oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # ZSH Powerline
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
-# Tmux
-which tmux > /dev/null || sudo apt-get -y install tmux
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
@@ -34,19 +57,4 @@ git clone https://github.com/rupa/z.git ~/.z
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
-# Brew and Powerline
-if is_osx; then
-  if [[ ! -f '/usr/local/bin/brew' ]]; then
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-  if [[ ! -f '/usr/local/bin/python' ]]; then
-    brew install python
-  fi
-  BREW_PYTHON="/usr/local/bin/python"
-  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
-  $BREW_PYTHON install powerline-status
-elif is_linux; then
-  whch python > /dev/null || sudo apt-get -y install python
-  which pip > /dev/null || sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  sudo pip install powerline-status
-fi
+chsh -s $(which zsh)
