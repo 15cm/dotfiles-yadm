@@ -58,7 +58,7 @@ bindkey '^o' forward-word
 
 
 # Plugins
-plugins=(git vi-mode z catimg zsh-autosuggestions zsh-syntax-highlighting zsh-dircolors-solarized)
+plugins=(git vi-mode z zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -71,6 +71,7 @@ fi
 # alias
 alias rz="source ~/.zshrc"
 alias vi="vim"
+alias ls="ls --color=auto --group-directories-first --group-directories-first"
 
 # ------------------ 'fzf' and 'z' ----------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
