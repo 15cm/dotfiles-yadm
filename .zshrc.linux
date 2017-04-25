@@ -1,0 +1,7 @@
+# alias
+alias ssh="ssh-ident"
+
+# add ssh keys
+eval $(keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
+eval $(keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
+
