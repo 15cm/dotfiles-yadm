@@ -11,9 +11,20 @@ is_osx () {
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# ---------------------------- ENV ----------------------------
+export EDITOR='vim'
+export _Z_DATA="$HOME/.z/.z"
+. ~/.z/z.sh
+
 # Encoding
 export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
+
+# Colors
+export TERM="xterm-256color"
+
+# ---------------------------- ENV ----------------------------
+
 
 # --------------------- Theme ----------------------------
 # POWERLEVEL9K_MODE='awesome-fontconfig'
@@ -45,12 +56,6 @@ bindkey '^b' backward-char
 bindkey '^f' forward-char
 bindkey '^o' forward-word
 
-
-# ---------------------------- ENV ----------------------------
-export EDITOR='vim'
-export _Z_DATA="$HOME/.z/.z"
-. ~/.z/z.sh
-# ---------------------------- ENV ----------------------------
 
 # Plugins
 plugins=(git vi-mode z catimg zsh-autosuggestions zsh-syntax-highlighting zsh-dircolors-solarized)
