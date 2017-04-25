@@ -7,6 +7,9 @@ is_osx () {
   [[ $('uname') == 'Darwin' ]]
 }
 
+# sudo
+which sudo > /dev/null || sudo apt-get -y install sudo
+
 # vim
 which vim > /dev/null || sudo apt-get -y install vim
 
@@ -43,8 +46,7 @@ if is_osx; then
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PYTHON install powerline-status
 elif is_linux; then
+  whch python > /dev/null || sudo apt-get -y install python
   which pip > /dev/null || sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python
   sudo pip install powerline-status
 fi
-
-chsh -s $(which zsh)
