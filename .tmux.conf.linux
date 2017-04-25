@@ -1,5 +1,5 @@
 # General
-set -g prefix C-m
+set -g prefix M-q
 
 # Powerline
 run-shell "powerline-daemon -q"
