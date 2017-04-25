@@ -27,7 +27,7 @@ if is_osx; then
 
 elif is_linux; then
   # sudo
-  which sudo > /dev/null || sudo apt-get -y install sudo
+  which sudo > /dev/null || apt-get -y install sudo
   # vim
   which vim > /dev/null || sudo apt-get -y install vim
   # curl
