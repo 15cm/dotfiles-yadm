@@ -23,6 +23,9 @@ export LANG="$LC_ALL"
 # Colors
 export TERM="xterm-256color"
 
+# Tmux Plugin
+ZSH_TMUX_AUTOSTART=true
+
 # ---------------------------- ENV ----------------------------
 
 
@@ -56,9 +59,8 @@ bindkey '^b' backward-char
 bindkey '^f' forward-char
 bindkey '^o' forward-word
 
-
 # Plugins
-plugins=(git vi-mode z zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
