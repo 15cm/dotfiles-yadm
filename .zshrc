@@ -40,7 +40,7 @@ POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs pyenv vi_mode)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
 
 # OS icon
-POWERLEVEL9K_OS_ICON_BACKGROUND="white"
+POWERLEVEL9K_OS_ICON_BACKGROUND="251"
 POWERLEVEL9K_OS_ICON_FOREGROUND="blue"
 
 # vi_mode
