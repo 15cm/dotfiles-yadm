@@ -60,6 +60,7 @@ bindkey '^d' delete-char
 bindkey '^b' backward-char
 bindkey '^f' forward-char
 bindkey '^o' forward-word
+bindkey '^k' kill-line
 
 # Plugins
 plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting)
