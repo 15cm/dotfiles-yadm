@@ -108,6 +108,8 @@ if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 # ---------------------------- Python ----------------------------
 # pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # pyenv-virtualenv
