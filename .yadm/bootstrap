@@ -20,9 +20,11 @@ if is_osx; then
   which zsh > /dev/null || brew install zsh
   # Powerline
   # python
-  [[ ! -f '/usr/local/bin/python' ]] || brew install python
-  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | /usr/local/bin/python
-  /usr/loca/bin/pip install powerline-status
+  BREW_PYTHON="/usr/local/bin/python"
+  BREW_PIP="/usr/local/bin/pip"
+  [[ -f $BREW_PYTHON ]] || brew install python
+  which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
+  $BREW_PIP install powerline-status
 
 elif is_linux; then
   # sudo
@@ -36,9 +38,11 @@ elif is_linux; then
   # Tmux
   which tmux > /dev/null || sudo apt-get -y install tmux
   # Powerline
-  which python > /dev/null || sudo apt-get -y install python
-  which pip > /dev/null || sudo curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  sudo pip install powerline-status
+  SYS_PYTHON="/usr/bin/python"
+  SYS_PIP="/usr/bin/pip"
+  [[ -f $SYS_PYTHON ]] || sudo apt-get -y install python
+  [[ -f $SYS_PIP ]] || sudo apt-get -y install python-pip
+  sudo $SYS_PIP install powerline-status
   # Keychain
   which keychain > /dev/null || sudo apt-get -y install keychain
 fi
