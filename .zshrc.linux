@@ -1,6 +1,3 @@
-# Fix for emacs tramp mode
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-
 # alias
 alias ssh="ssh-ident"
 

@@ -1,3 +1,6 @@
+# Fix for emacs tramp mode
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
 # Common config
 
 is_linux () {
@@ -27,7 +30,6 @@ export TERM="xterm-256color"
 ZSH_TMUX_AUTOSTART=true
 
 # ---------------------------- ENV ----------------------------
-
 
 # --------------------- Theme ----------------------------
 # POWERLEVEL9K_MODE='awesome-fontconfig'
