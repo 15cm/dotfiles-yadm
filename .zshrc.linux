@@ -1,5 +1,6 @@
 # alias
 alias ssh="ssh-ident"
+alias vi="vim"
 
 # add ssh keys
 eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
