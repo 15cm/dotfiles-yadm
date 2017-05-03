@@ -5,7 +5,7 @@ alias mux="tmuxinator"
 alias brew="p brew"
 alias git="p git"
 alias yadm="p yadm"
-alias vi="emacsclient -t"
+alias ew="emacsclient -t"
 alias rm="trash"
 
 # Auto completion
