@@ -78,6 +78,7 @@ fi
 # alias
 alias rz="source ~/.zshrc"
 alias ls="ls --color=auto --group-directories-first --group-directories-first"
+alias vi="vim"
 
 # ------------------ 'fzf' and 'z' ----------------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
