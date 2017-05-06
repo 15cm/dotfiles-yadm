@@ -1,12 +1,11 @@
 # alias
 alias p="proxychains4 -q"
-alias ep="HTTP_PROXY=http://127.0.0.1:1090"
+alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "
 alias mux="tmuxinator"
 alias brew="p brew"
 alias git="p git"
 alias yadm="p yadm"
 alias ew="emacsclient -t"
-alias rm="trash"
 
 # Auto completion
 fpath=(~/.zsh/completion $fpath)
