@@ -106,6 +106,7 @@ alias j="fun_z"
 
 # ---------------------------- Java ----------------------------
 # jenv
+export PATH="$HOME/.jenv/bin:$PATH"
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 # ---------------------------- Java ----------------------------
 
@@ -120,11 +121,13 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 # ---------------------------- Python ----------------------------
 
 # ---------------------------- Node ----------------------------
-# nodenv
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 # ---------------------------- Node ----------------------------
 
 # ---------------------------- Ruby ----------------------------
 # rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # ---------------------------- Ruby ----------------------------
