@@ -25,6 +25,8 @@ if is_osx; then
   [[ -f $BREW_PYTHON ]] || brew install python
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PIP install powerline-status
+  # fpp
+  which fpp > /dev/null || brew install fpp
 
 elif is_linux; then
   # sudo
