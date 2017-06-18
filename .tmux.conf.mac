@@ -1,6 +1,3 @@
-# Plugins
-set -g @plugin 'tmux-plugins/tmux-urlview'
-
 # General
 set -g prefix C-q
 
