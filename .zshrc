@@ -104,6 +104,14 @@ fdirz() {
 alias j="fun_z"
 # ------------------ 'fzf' and 'z' ----------------------------
 
+# -------------------------- direnv ----------------------------
+if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
+# -------------------------- direnv ----------------------------
+#
+# -------------------------- thefuck ---------------------------
+if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
+# -------------------------- thefuck ---------------------------
+
 # ---------------------------- Java ----------------------------
 # jenv
 export PATH="$HOME/.jenv/bin:$PATH"
@@ -131,3 +139,4 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # ---------------------------- Ruby ----------------------------
+

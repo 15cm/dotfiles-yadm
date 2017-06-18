@@ -13,7 +13,7 @@ autoload -Uz compinit && compinit -i
 source ~/.zsh/completion/tmuxinator.zsh
 
 # use coreutils without 'g' prefix
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/opt/gettext/bin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # user path
