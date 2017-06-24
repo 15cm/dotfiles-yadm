@@ -29,6 +29,10 @@ export TERM="xterm-256color"
 # Tmux Plugin
 ZSH_TMUX_AUTOSTART=true
 
+# nvm(loaded with zsh-nvm plugin)
+export NVM_DIR="$HOME/.nvm"
+export NVM_LAZY_LOAD=true
+
 # ---------------------------- ENV ----------------------------
 
 # --------------------- Theme ----------------------------
@@ -65,7 +69,7 @@ bindkey '^o' forward-word
 bindkey '^k' kill-line
 
 # Plugins
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,12 +131,6 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 # pyenv-virtualenv
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 # ---------------------------- Python ----------------------------
-
-# ---------------------------- Node ----------------------------
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-# ---------------------------- Node ----------------------------
 
 # ---------------------------- Ruby ----------------------------
 # rbenv
