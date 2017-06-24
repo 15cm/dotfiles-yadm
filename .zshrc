@@ -1,8 +1,13 @@
+# ---------------------------- Common Config  ----------------------------
 # Fix for emacs tramp mode
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
-# Common config
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
 
+# ---------------------------- Common Config  ----------------------------
+
+# ---------------------------- Functions ----------------------------
 is_linux () {
   [[ $('uname') == 'Linux' ]];
 }
@@ -11,8 +16,39 @@ is_osx () {
   [[ $('uname') == 'Darwin' ]]
 }
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# Lazy Load to speed up zsh start
+# Authors:
+#   xcv58 <i@xcv58.com>
+# Source:
+#   https://github.com/xcv58/prezto/blob/master/modules/lazy-load/init.zsh
+
+function lazy_load() {
+  local load_func=${1}
+  local lazy_func="lazy_${load_func}"
+
+  shift
+  for i in ${@}; do
+    alias ${i}="${lazy_func} ${i}"
+  done
+
+  eval "
+    function ${lazy_func}() {
+        unset -f ${lazy_func}
+        lazy_load_clean $@
+        eval ${load_func}
+        unset -f ${load_func}
+        eval \$@
+    }
+    "
+}
+
+function lazy_load_clean() {
+  for i in ${@}; do
+    unalias ${i}
+  done
+}
+
+# ---------------------------- Functions ----------------------------
 
 # ---------------------------- ENV ----------------------------
 export EDITOR='vim'
@@ -31,7 +67,41 @@ ZSH_TMUX_AUTOSTART=true
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
-export NVM_LAZY_LOAD=true
+export LOAD_NVM=true
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+# pyenv-virtualenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# jenv(lazy load)
+export PATH="$HOME/.jenv/bin:$PATH"
+function load_jenv() {
+  if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+}
+lazy_load load_jenv jenv
+
+# rbenv(lazy load)
+export PATH="$HOME/.rbenv/bin:$PATH"
+function load_rbenv() {
+  if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+}
+lazy_load load_rbenv rbenv
+
+# direnv
+function load_direnv() {
+  if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
+}
+lazy_load load_direnv direnv
+
+# thefuck
+function load_thefuck() {
+  if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
+}
+lazy_load load_thefuck fuck
 
 # ---------------------------- ENV ----------------------------
 
@@ -107,34 +177,3 @@ fdirz() {
 }
 alias j="fun_z"
 # ------------------ 'fzf' and 'z' ----------------------------
-
-# -------------------------- direnv ----------------------------
-if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
-# -------------------------- direnv ----------------------------
-#
-# -------------------------- thefuck ---------------------------
-if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
-# -------------------------- thefuck ---------------------------
-
-# ---------------------------- Java ----------------------------
-# jenv
-export PATH="$HOME/.jenv/bin:$PATH"
-if which jenv > /dev/null; then eval "$(jenv init -)"; fi
-# ---------------------------- Java ----------------------------
-
-# ---------------------------- Python ----------------------------
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-# pyenv-virtualenv
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-# ---------------------------- Python ----------------------------
-
-# ---------------------------- Ruby ----------------------------
-# rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-# ---------------------------- Ruby ----------------------------
-
