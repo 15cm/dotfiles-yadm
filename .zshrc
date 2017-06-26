@@ -82,14 +82,14 @@ export PATH="$HOME/.jenv/bin:$PATH"
 function load_jenv() {
   if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 }
-lazy_load load_jenv jenv
+lazy_load load_jenv jenv java javac
 
 # rbenv(lazy load)
 export PATH="$HOME/.rbenv/bin:$PATH"
 function load_rbenv() {
   if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 }
-lazy_load load_rbenv rbenv
+lazy_load load_rbenv rbenv ruby gem
 
 # direnv
 function load_direnv() {
@@ -175,5 +175,6 @@ fun_z() {
 fdirz() {
     _z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//'
 }
+
 alias j="fun_z"
 # ------------------ 'fzf' and 'z' ----------------------------
