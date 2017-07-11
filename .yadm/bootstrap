@@ -18,8 +18,7 @@ if is_osx; then
   which tmux > /dev/null || brew install tmux
   # ZSH
   which zsh > /dev/null || brew install zsh
-  # Powerline
-  # python
+  # pip & Powerline
   BREW_PYTHON="/usr/local/bin/python"
   BREW_PIP="/usr/local/bin/pip"
   [[ -f $BREW_PYTHON ]] || brew install python
@@ -29,6 +28,8 @@ if is_osx; then
   which fpp > /dev/null || brew install fpp
 
 elif is_linux; then
+  # folders
+  [ -d ~/local/bin ] || mkdir -p ~/local/bin
   # sudo
   which sudo > /dev/null || apt-get -y install sudo
   # vim
@@ -39,7 +40,7 @@ elif is_linux; then
   which zsh > /dev/null || sudo apt-get -y install zsh
   # Tmux
   which tmux > /dev/null || sudo apt-get -y install tmux
-  # Powerline
+  # pip & Powerline
   SYS_PYTHON="/usr/bin/python"
   SYS_PIP="/usr/bin/pip"
   [[ -f $SYS_PYTHON ]] || sudo apt-get -y install python
@@ -47,12 +48,16 @@ elif is_linux; then
   sudo $SYS_PIP install powerline-status
   # Keychain
   which keychain > /dev/null || sudo apt-get -y install keychain
+  # fpp
+  git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
 fi
-
 # Oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# k
+git clone https://github.com/supercrabtree/k $HOME/.oh-my-zsh/custom/plugins/k
 
 # ZSH Powerline
 git clone https://github.com/bhilburn/powerlevel9k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k
@@ -63,5 +68,17 @@ git clone https://github.com/rupa/z.git ~/.z
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
+
+# pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+# rbenv & ruby-build
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+export PATH="$HOME/.rbenv/bin:$PATH"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# colorls
+gem install colorls
 
 chsh -s $(which zsh)
