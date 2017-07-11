@@ -1,13 +1,12 @@
-# ---------------------------- Common Config  ----------------------------
+# --------------------- Common Config  ---------------------
 # Fix for emacs tramp mode
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+# _____________________ Common Config  _____________________
 
-# ---------------------------- Common Config  ----------------------------
-
-# ---------------------------- Functions ----------------------------
+# --------------------- Functions ---------------------
 is_linux () {
   [[ $('uname') == 'Linux' ]];
 }
@@ -47,10 +46,9 @@ function lazy_load_clean() {
     unalias ${i}
   done
 }
+# _____________________ Functions _____________________
 
-# ---------------------------- Functions ----------------------------
-
-# ---------------------------- ENV ----------------------------
+# --------------------- ENV ---------------------
 export EDITOR='vim'
 export _Z_DATA="$HOME/.z/.z"
 . ~/.z/z.sh
@@ -102,12 +100,11 @@ function load_thefuck() {
   if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
 }
 lazy_load load_thefuck fuck
+# _____________________ ENV _____________________
 
-# ---------------------------- ENV ----------------------------
-
-# --------------------- Theme ----------------------------
 # POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_MODE='awesome-patched'
+# --------------------- Theme ---------------------
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs pyenv vi_mode)
@@ -126,10 +123,9 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='250'
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='black'
+# _____________________ Theme _____________________
 
-# --------------------- Theme ----------------------------
-
-# bindings
+# --------------------- Key map ---------------------
 export KEYTIMEOUT=0
 bindkey '^h' backward-delete-char
 bindkey '^d' delete-char
@@ -137,9 +133,11 @@ bindkey '^b' backward-char
 bindkey '^f' forward-char
 bindkey '^o' forward-word
 bindkey '^k' kill-line
+# _____________________ Key map _____________________
 
-# Plugins
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm)
+# --------------------- Plugins ---------------------
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k)
+# _____________________ Plugins _____________________
 
 source $ZSH/oh-my-zsh.sh
 
@@ -154,7 +152,7 @@ alias rz="source ~/.zshrc"
 alias ls="ls --color=auto --group-directories-first --group-directories-first"
 alias vi="vim"
 
-# ------------------ 'fzf' and 'z' ----------------------------
+# --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 set FZF_CTRL_T_COMMAND="fzf-tmux"
 set FZF_CTRL_T_OPTS="-m --cycle --jump-labels=CHARS"
@@ -177,4 +175,4 @@ fdirz() {
 }
 
 alias j="fun_z"
-# ------------------ 'fzf' and 'z' ----------------------------
+# _____________________ 'fzf' and 'z' _____________________
