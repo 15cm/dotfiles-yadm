@@ -127,7 +127,7 @@ POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='black'
 # _____________________ Theme _____________________
 
 # --------------------- Key map ---------------------
-export KEYTIMEOUT=0
+export KEYTIMEOUT=1
 bindkey '^h' backward-delete-char
 bindkey '^d' delete-char
 bindkey '^b' backward-char
@@ -142,7 +142,7 @@ plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm 
 
 source $ZSH/oh-my-zsh.sh
 
---------------------- Alias ---------------------
+# --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
 alias vi="vim"
 alias ls="colorls -sd"
