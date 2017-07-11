@@ -1,5 +1,9 @@
 # General
 set -g prefix C-q
 
+# Powerline
+run-shell "POWERLINE_CONFIG_PATHS=~/.powerline powerline-daemon -q"
+source "/usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf"
+
 # Copy
 bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel 'reattach-to-user-namespace pbcopy'
