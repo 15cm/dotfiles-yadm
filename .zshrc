@@ -142,16 +142,18 @@ plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm 
 
 source $ZSH/oh-my-zsh.sh
 
+--------------------- Alias ---------------------
+alias rz="source ~/.zshrc"
+alias vi="vim"
+alias ls="colorls -sd"
+alias ll="k"
+# _____________________ Alias  _____________________
+
 if is_osx; then
   source $HOME/.zshrc.mac
 elif is_linux; then
   source $HOME/.zshrc.linux
 fi
-
-# alias
-alias rz="source ~/.zshrc"
-alias ls="ls --color=auto --group-directories-first --group-directories-first"
-alias vi="vim"
 
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
