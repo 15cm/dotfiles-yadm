@@ -102,22 +102,23 @@ function load_thefuck() {
 lazy_load load_thefuck fuck
 # _____________________ ENV _____________________
 
-# POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_MODE='awesome-patched'
 # --------------------- Theme ---------------------
+POWERLEVEL9K_MODE='nerdfont-complete'
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs pyenv vi_mode)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs time)
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs vi_mode)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs pyenv time)
 
-# OS icon
-POWERLEVEL9K_OS_ICON_BACKGROUND="251"
-POWERLEVEL9K_OS_ICON_FOREGROUND="blue"
+# icon override
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON="\uf408"
 
 # vi_mode
 POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
 POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
+POWERLEVEL9K_VI_INSERT_MODE_STRING="I"
+POWERLEVEL9K_VI_COMMAND_MODE_STRING="N"
 
 # CMD Exec Time
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
