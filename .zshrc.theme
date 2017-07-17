@@ -1,0 +1,6 @@
+export ENV_THEME='light'
+if [[ $ENV_THEME == 'light' ]]; then
+  POWERLEVEL9K_COLOR_SCHEME='light'
+else
+  POWERLEVEL9K_COLOR_SCHEME='dark'
+fi
