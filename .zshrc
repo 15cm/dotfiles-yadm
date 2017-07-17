@@ -103,6 +103,7 @@ lazy_load load_thefuck fuck
 # _____________________ ENV _____________________
 
 # --------------------- Theme ---------------------
+source ~/.zshrc.theme
 POWERLEVEL9K_MODE='nerdfont-complete'
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
