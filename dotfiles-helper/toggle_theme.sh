@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/bin/bash
 if [[ $ENV_THEME == 'light' ]]; then
   sed -i "1s/.*/export ENV_THEME='dark'/" ~/.zshrc.theme
 else
