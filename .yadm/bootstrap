@@ -81,4 +81,7 @@ git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 
+# vim colors
+wget -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+
 chsh -s $(which zsh)
