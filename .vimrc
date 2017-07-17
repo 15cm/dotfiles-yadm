@@ -314,6 +314,7 @@ endif
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
+set nospell
 map <leader>ss :setlocal spell!<cr>
 
 " Shortcuts using <leader>
