@@ -66,40 +66,6 @@ ZSH_TMUX_AUTOSTART=true
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
 export LOAD_NVM=true
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-# pyenv-virtualenv
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-
-# jenv(lazy load)
-export PATH="$HOME/.jenv/bin:$PATH"
-function load_jenv() {
-  if which jenv > /dev/null; then eval "$(jenv init -)"; fi
-}
-lazy_load load_jenv jenv java javac
-
-# rbenv(lazy load)
-export PATH="$HOME/.rbenv/bin:$PATH"
-function load_rbenv() {
-  if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-}
-lazy_load load_rbenv rbenv ruby gem
-
-# direnv
-function load_direnv() {
-  if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
-}
-lazy_load load_direnv direnv
-
-# thefuck
-function load_thefuck() {
-  if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
-}
-lazy_load load_thefuck fuck
 # _____________________ ENV _____________________
 
 # --------------------- Theme ---------------------
@@ -183,3 +149,39 @@ fdirz() {
 
 alias j="fun_z"
 # _____________________ 'fzf' and 'z' _____________________
+
+# --------------------- ENV 2 ---------------------
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+# pyenv-virtualenv
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# jenv(lazy load)
+export PATH="$HOME/.jenv/bin:$PATH"
+function load_jenv() {
+  if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+}
+lazy_load load_jenv jenv java javac
+
+# rbenv(lazy load)
+export PATH="$HOME/.rbenv/bin:$PATH"
+function load_rbenv() {
+  if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+}
+lazy_load load_rbenv rbenv ruby gem
+
+# direnv
+function load_direnv() {
+  if which direnv > /dev/null; then eval "$(direnv hook zsh)"; fi
+}
+lazy_load load_direnv direnv
+
+# thefuck
+function load_thefuck() {
+  if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
+}
+lazy_load load_thefuck fuck
+# _____________________ ENV 2 _____________________
