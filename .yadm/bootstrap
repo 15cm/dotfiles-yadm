@@ -24,6 +24,7 @@ if is_osx; then
   [[ -f $BREW_PYTHON ]] || brew install python
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PIP install powerline-status
+  $BREW_PIP install powerline-gitstatus
   # colorls
   gem install colorls
   # fpp
@@ -48,6 +49,7 @@ elif is_linux; then
   [[ -f $SYS_PYTHON ]] || sudo apt-get -y install python
   [[ -f $SYS_PIP ]] || sudo apt-get -y install python-pip
   sudo $SYS_PIP install powerline-status
+  sudo $SYS_PIP install powerline-gitstatus
   # Ruby && colorls
   sudo apt-get -y install ruby-full
   sudo gem install colorls
