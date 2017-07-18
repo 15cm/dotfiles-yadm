@@ -68,34 +68,6 @@ export NVM_DIR="$HOME/.nvm"
 export LOAD_NVM=true
 # _____________________ ENV _____________________
 
-# --------------------- Theme ---------------------
-source ~/.zshrc.theme
-POWERLEVEL9K_MODE='nerdfont-complete'
-ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs vi_mode)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status command_execution_time background_jobs pyenv time)
-
-# icon override
-POWERLEVEL9K_VCS_GIT_GITHUB_ICON="\uf408"
-
-# vcs
-POWERLEVEL9K_SHOW_CHANGESET=true
-
-# vi_mode
-POWERLEVEL9K_DIR_HOME_FOREGROUND="white"
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="white"
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="white"
-POWERLEVEL9K_VI_INSERT_MODE_STRING="I"
-POWERLEVEL9K_VI_COMMAND_MODE_STRING="N"
-
-# CMD Exec Time
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='250'
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='black'
-# _____________________ Theme _____________________
-
 # --------------------- Key map ---------------------
 export KEYTIMEOUT=1
 bindkey '^h' backward-delete-char
@@ -110,6 +82,7 @@ bindkey '^k' kill-line
 plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k)
 # _____________________ Plugins _____________________
 
+# oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 # --------------------- Alias ---------------------
@@ -118,12 +91,6 @@ alias vi="vim"
 alias ls="colorls -sd"
 alias ll="k"
 # _____________________ Alias  _____________________
-
-if is_osx; then
-  source $HOME/.zshrc.mac
-elif is_linux; then
-  source $HOME/.zshrc.linux
-fi
 
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -149,6 +116,14 @@ fdirz() {
 
 alias j="fun_z"
 # _____________________ 'fzf' and 'z' _____________________
+
+# --------------------- Config for local and remote machine ---------------------
+if is_osx; then
+  source $HOME/.zshrc.mac
+elif is_linux; then
+  source $HOME/.zshrc.linux
+fi
+# _____________________ Config for local and remote machine _____________________
 
 # --------------------- ENV 2 ---------------------
 # pyenv
