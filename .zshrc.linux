@@ -6,3 +6,8 @@ eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/
 eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
 
 export PATH="$PATH:$HOME/local/bin:$HOME/local/script"
+
+# Powerline
+powerline-daemon -q
+. /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
+unset _POWERLINE_SAVE_WIDGET

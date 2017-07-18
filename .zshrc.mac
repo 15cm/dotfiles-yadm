@@ -27,3 +27,9 @@ source $HOME/.cargo/env
 
 # added by travis gem
 [ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
+
+# Powerline
+
+powerline-daemon -q
+. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+unset _POWERLINE_SAVE_WIDGET
