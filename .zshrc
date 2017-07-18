@@ -90,6 +90,7 @@ alias rz="source ~/.zshrc"
 alias vi="vim"
 alias ls="colorls -sd"
 alias ll="k"
+alias st="~/dotfiles-helper/switch-theme.sh"
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------
