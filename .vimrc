@@ -146,16 +146,10 @@ set foldcolumn=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colorsheme
+source ~/.vimrc.theme
 " Enable syntax highlighting
 syntax enable 
-
-" Set theme according to ENV_THEME
-if $ENV_THEME == 'light'
-    set background=light
-else
-    set background=dark
-endif
-colorscheme solarized
 
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
