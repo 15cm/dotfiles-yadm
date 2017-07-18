@@ -31,6 +31,9 @@ if is_osx; then
   gem install colorls
   # fpp
   which fpp > /dev/null || brew install fpp
+  # urlview
+  brew install urlview
+
 
 elif is_linux; then
   # folders
@@ -61,6 +64,8 @@ elif is_linux; then
   which keychain > /dev/null || sudo apt-get -y install keychain
   # fpp
   git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
+  # urlview
+  sudo apt-get -y install urlview
 fi
 # Oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
