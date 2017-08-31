@@ -65,8 +65,12 @@ ZSH_TMUX_AUTOSTART=true
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
-export LOAD_NVM=true
+export NVM_LAZY_LOAD=true
 # _____________________ ENV _____________________
+
+# --------------------- PATH ---------------------
+export PATH="/usr/local/bin:$PATH"
+# _____________________ PATH _____________________
 
 # --------------------- Key map ---------------------
 export KEYTIMEOUT=1
