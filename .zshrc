@@ -92,7 +92,6 @@ source $ZSH/oh-my-zsh.sh
 # --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
 alias vi="vim"
-alias ls="colorls -sd"
 alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 # _____________________ Alias  _____________________
