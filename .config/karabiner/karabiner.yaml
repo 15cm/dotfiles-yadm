@@ -95,10 +95,11 @@ profiles:
           to:
             - key_code: up_arrow
           type: basic
-        - description: 'control-a: home'
+        - description: 'control-a: begin of line'
           conditions: &conditions_frontmost_need_home_end
             - bundle_identifiers:
               - '^org\.telegram\.desktop.*'
+              - '^com\.microsoft\..*'
               type: frontmost_application_if
           from:
             key_code: a
@@ -215,7 +216,7 @@ profiles:
                   - control
                   - command
           to:
-              - key_code: page_down
+            - key_code: page_down
           type: basic
         - description: 'command-control-u: page_up'
           from:
@@ -225,7 +226,19 @@ profiles:
                   - control
                   - command
           to:
-              - key_code: page_up
+            - key_code: page_up
+          type: basic
+      # Space to mec-space
+        - description: 'space: mec-space'
+          from:
+            key_code: spacebar
+          to:
+            - key_code: left_command
+              modifiers:
+                - shift
+                - option
+          to_if_alone:
+            - key_code: spacebar
           type: basic
         # Layer 1
           # F1-F12
