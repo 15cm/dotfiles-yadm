@@ -6,7 +6,6 @@ profiles:
 - complex_modifications:
     parameters:
       basic.to_if_alone_timeout_milliseconds: 500
-      # sticky.to_delayed_action_delay_milliseconds: 500
     rules:
       - manipulators:
         - description: 'caps_lock: escape, left_control'
@@ -380,9 +379,9 @@ profiles:
         - description: 'm: 2.asg-m(iTunes volume up)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
-            key_code: m
+            key_code: n
           to:
-            - key_code: m
+            - key_code: n
               modifiers: *modifiers_asg
           type: basic
         - description: 'semicolon: 2.asg-;(sleep computer)[BTT]'
