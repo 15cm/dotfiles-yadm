@@ -206,6 +206,7 @@ profiles:
                 - shift
             - key_code: delete_or_backspace
           type: basic
+        # Application
         # Common
         - description: 'command-control-d: page_down'
           from:
@@ -316,43 +317,6 @@ profiles:
           to:
           - key_code: f12
           type: basic
-        # Layer 1 Hyper
-        - description: 'open_bracket: 1.hyper-open_bracket(show items)[Bartender]'
-          conditions: *conditions_layer1
-          from:
-            key_code: open_bracket
-          to:
-            - key_code: open_bracket
-              modifiers: &modifiers_hyper
-                - control
-                - option
-                - shift
-                - command
-          type: basic
-        - description: 'close_bracket: 1.hyper-close_bracket(show full menubar)[Bartender)'
-          conditions: *conditions_layer1
-          from:
-            key_code: close_bracket
-          to:
-            - key_code: close_bracket
-              modifiers: *modifiers_hyper
-          type: basic
-        - description: 'quote: 1.hyper-quote(search items)[Bartender]'
-          conditions: *conditions_layer1
-          from:
-            key_code: quote
-          to:
-            - key_code: quote
-              modifiers: *modifiers_hyper
-          type: basic
-        - description: 'semicolon: 1.hyper-semicolon(keyboard navigate)[Bartender]'
-          conditions: *conditions_layer1
-          from:
-            key_code: semicolon
-          to:
-            - key_code: semicolon
-              modifiers: *modifiers_hyper
-          type: basic
       # layer 2
         - description: 'p: 2.volume_increment'
           conditions: &conditions_layer2
@@ -371,7 +335,7 @@ profiles:
           to:
             - key_code: volume_decrement
           type: basic
-        - description: 'i: 2.volume_decrement'
+        - description: 'i: 2.mute'
           conditions: *conditions_layer2
           from:
             key_code: i
@@ -405,6 +369,22 @@ profiles:
             - key_code: j
               modifiers: *modifiers_asg
           type: basic
+        - description: 'n: 2.asg-n(iTunes volume down)[Hammerspoon]'
+          conditions: *conditions_layer2
+          from:
+            key_code: n
+          to:
+            - key_code: n
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'm: 2.asg-m(iTunes volume up)[Hammerspoon]'
+          conditions: *conditions_layer2
+          from:
+            key_code: m
+          to:
+            - key_code: m
+              modifiers: *modifiers_asg
+          type: basic
         - description: 'semicolon: 2.asg-;(sleep computer)[BTT]'
           conditions: *conditions_layer2
           from:
@@ -419,21 +399,5 @@ profiles:
             key_code: quote
           to:
             - key_code: quote
-              modifiers: *modifiers_asg
-          type: basic
-        - description: 'u: 2.asg-u(eudic lightpeek)'
-          conditions: *conditions_layer2
-          from:
-            key_code: u
-          to:
-            - key_code: u
-              modifiers: *modifiers_asg
-          type: basic
-        - description: 'n: 2.asg-n(show notification center)[BTT]'
-          conditions: *conditions_layer2
-          from:
-            key_code: n
-          to:
-            - key_code: n
               modifiers: *modifiers_asg
           type: basic
