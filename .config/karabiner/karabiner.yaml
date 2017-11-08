@@ -341,62 +341,63 @@ profiles:
           to:
             - key_code: mute
           type: basic
-        - description: 'l: 2.asg-l(iTunes Next)[Hammerspoon]'
+        - description: 'l: 2.hyper-l(iTunes Next)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
             key_code: l
           to:
             - key_code: l
-              modifiers: &modifiers_asg
+              modifiers: &modifiers_hyper
+                - control
                 - option
                 - shift
                 - command
           type: basic
-        - description: 'k: 2.asg-k(iTunes Stop)[Hammerspoon]'
+        - description: 'k: 2.hyper-k(iTunes Stop)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
             key_code: k
           to:
             - key_code: k
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
-        - description: 'j: 2.asg-j(iTunes Previous)[Hammerspoon]'
+        - description: 'j: 2.hyper-j(iTunes Previous)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
             key_code: j
           to:
             - key_code: j
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
-        - description: 'n: 2.asg-n(iTunes volume down)[Hammerspoon]'
+        - description: 'n: 2.hyper-n(iTunes volume down)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
             key_code: n
           to:
             - key_code: n
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
-        - description: 'm: 2.asg-m(iTunes volume up)[Hammerspoon]'
+        - description: 'm: 2.hyper-m(iTunes volume up)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
             key_code: n
           to:
             - key_code: n
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
-        - description: 'semicolon: 2.asg-;(sleep computer)[BTT]'
+        - description: 'semicolon: 2.hyper-;(sleep computer)[BTT]'
           conditions: *conditions_layer2
           from:
             key_code: semicolon
           to:
             - key_code: semicolon
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
-        - description: 'quote: 2.asg-;(sleep computer)[BTT]'
+        - description: 'quote: 2.hyper-;(sleep computer)[BTT]'
           conditions: *conditions_layer2
           from:
             key_code: quote
           to:
             - key_code: quote
-              modifiers: *modifiers_asg
+              modifiers: *modifiers_hyper
           type: basic
