@@ -1,0 +1,439 @@
+global:
+  check_for_updates_on_startup: true
+  show_in_menu_bar: false
+  show_profile_name_in_menu_bar: false
+profiles:
+- complex_modifications:
+    parameters:
+      basic.to_if_alone_timeout_milliseconds: 500
+      # sticky.to_delayed_action_delay_milliseconds: 500
+    rules:
+      - manipulators:
+        - description: 'caps_lock: escape, left_control'
+          from:
+            key_code: caps_lock
+          to:
+            - key_code: left_control
+          to_if_alone:
+            - key_code: escape
+          type: basic
+        - description: 'tab: tab, layer 1'
+          from:
+            key_code: tab
+          to:
+            - set_variable:
+                name: layer
+                value: 1
+          to_after_key_up:
+            - set_variable:
+                name: layer
+                value: 0
+          to_if_alone:
+            - key_code: tab
+          type: basic
+        - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer2'
+          conditions: &conditions_layer0
+            - name: layer
+              type: variable_if
+              value: 0
+          from:
+            key_code: grave_accent_and_tilde
+          to:
+            - set_variable:
+                name: layer
+                value: 2
+          to_after_key_up:
+            - set_variable:
+                name: layer
+                value: 0
+          to_if_alone:
+            - key_code: grave_accent_and_tilde
+          type: basic
+        # Emacs bindings
+        - description: 'control-f: right_arrow'
+          conditions: &conditions_frontmost_not_whole_emacs
+            - bundle_identifiers:
+                - '^org\.gnu\.Emacs.*'
+                - '^com\.googlecode\.iterm2.*'
+                - '^com\.apple\.com\.Terminal.*'
+                - '^com\.github\.atom.*'
+              type: frontmost_application_unless
+          from:
+            key_code: f
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: right_arrow
+          type: basic
+        - description: 'control-b: left_arrow'
+          conditions: *conditions_frontmost_not_whole_emacs
+          from:
+            key_code: b
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: left_arrow
+          type: basic
+        - description: 'control-n: down_arrow'
+          conditions: *conditions_frontmost_not_whole_emacs
+          from:
+            key_code: n
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: down_arrow
+          type: basic
+        - description: 'control-p: up_arrow'
+          conditions: *conditions_frontmost_not_whole_emacs
+          from:
+            key_code: p
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: up_arrow
+          type: basic
+        - description: 'control-a: home'
+          conditions: &conditions_frontmost_need_home_end
+            - bundle_identifiers:
+              - '^org\.telegram\.desktop.*'
+              type: frontmost_application_if
+          from:
+            key_code: a
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: home
+          type: basic
+        - description: 'control-e: end'
+          conditions: *conditions_frontmost_need_home_end
+          from:
+            key_code: e
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: end
+          type: basic
+        - description: 'control-h: delete'
+          from:
+            key_code: h
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: delete_or_backspace
+          type: basic
+        - description: 'control-d: delete_forward'
+          conditions: *conditions_frontmost_not_whole_emacs
+          from:
+            key_code: d
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: delete_forward
+          type: basic
+        - description: 'control-k: kill to end'
+          conditions:  *conditions_frontmost_not_whole_emacs
+          from:
+            key_code: k
+            modifiers:
+              mandatory:
+                - control
+          to:
+            - key_code: end
+              modifiers:
+                - fn
+                - shift
+            - key_code: delete_or_backspace
+          type: basic
+        - description: 'option-b: back a word'
+          conditions: &conditions_frontmost_not_emacs
+            - bundle_identifiers:
+                - '^org\.gnu\.Emacs.*'
+              type: frontmost_application_unless
+          from:
+            key_code: b
+            modifiers:
+              mandatory:
+                - option
+          to:
+            - key_code: left_arrow
+              modifiers:
+                - option
+          type: basic
+        - description: 'option-f: forward a word'
+          conditions: *conditions_frontmost_not_emacs
+          from:
+            key_code: f
+            modifiers:
+              mandatory:
+                - option
+          to:
+            - key_code: right_arrow
+              modifiers:
+                - option
+          type: basic
+        - description: 'option-d: forward_delete a word'
+          conditions: *conditions_frontmost_not_emacs
+          from:
+            key_code: d
+            modifiers:
+              mandatory:
+                - option
+          to:
+            - key_code: right_arrow
+              modifiers:
+                - option
+                - shift
+            - key_code: delete_or_backspace
+          type: basic
+        - description: 'option-h: delete a word'
+          from:
+            key_code: h
+            modifiers:
+              mandatory:
+                - option
+          to:
+            - key_code: left_arrow
+              modifiers:
+                - option
+                - shift
+            - key_code: delete_or_backspace
+          type: basic
+        # Common
+        - description: 'command-control-d: page_down'
+          from:
+              key_code: d
+              modifiers: &modifiers_cg
+                mandatory:
+                  - control
+                  - command
+          to:
+              - key_code: page_down
+          type: basic
+        - description: 'command-control-u: page_up'
+          from:
+              key_code: u
+              modifiers: &modifiers_cg
+                mandatory:
+                  - control
+                  - command
+          to:
+              - key_code: page_up
+          type: basic
+        # Layer 1
+          # F1-F12
+        - description: '1: 1.f1'
+          conditions: &conditions_layer1
+          - name: layer
+            type: variable_if
+            value: 1
+          from:
+            key_code: "1"
+          to:
+          - key_code: f1
+          type: basic
+        - description: '2: 1.f2'
+          conditions: *conditions_layer1
+          from:
+            key_code: "2"
+          to:
+          - key_code: f2
+          type: basic
+        - description: '3: 1.f3'
+          conditions: *conditions_layer1
+          from:
+            key_code: "3"
+          to:
+          - key_code: f3
+          type: basic
+        - description: '4: 1.f4'
+          conditions: *conditions_layer1
+          from:
+            key_code: "4"
+          to:
+          - key_code: f4
+          type: basic
+        - description: '5: 1.f5'
+          conditions: *conditions_layer1
+          from:
+            key_code: "5"
+          to:
+          - key_code: f5
+          type: basic
+        - description: '6: 1.f6'
+          conditions: *conditions_layer1
+          from:
+            key_code: "6"
+          to:
+          - key_code: f6
+          type: basic
+        - description: '7: 1.f7'
+          conditions: *conditions_layer1
+          from:
+            key_code: "7"
+          to:
+          - key_code: f7
+          type: basic
+        - description: '8: 1.f8'
+          conditions: *conditions_layer1
+          from:
+            key_code: "8"
+          to:
+          - key_code: f8
+          type: basic
+        - description: '9: 1.f9'
+          conditions: *conditions_layer1
+          from:
+            key_code: "9"
+          to:
+          - key_code: f9
+          type: basic
+        - description: '0: 1.f10'
+          conditions: *conditions_layer1
+          from:
+            key_code: "0"
+          to:
+          - key_code: f10
+          type: basic
+        - description: '-: 1.f11'
+          conditions: *conditions_layer1
+          from:
+            key_code: hyphen
+          to:
+          - key_code: f11
+          type: basic
+        - description: '=: 1.f12'
+          conditions: *conditions_layer1
+          from:
+            key_code: equal_sign
+          to:
+          - key_code: f12
+          type: basic
+        # Layer 1 Hyper
+        - description: 'open_bracket: 1.hyper-open_bracket(show items)[Bartender]'
+          conditions: *conditions_layer1
+          from:
+            key_code: open_bracket
+          to:
+            - key_code: open_bracket
+              modifiers: &modifiers_hyper
+                - control
+                - option
+                - shift
+                - command
+          type: basic
+        - description: 'close_bracket: 1.hyper-close_bracket(show full menubar)[Bartender)'
+          conditions: *conditions_layer1
+          from:
+            key_code: close_bracket
+          to:
+            - key_code: close_bracket
+              modifiers: *modifiers_hyper
+          type: basic
+        - description: 'quote: 1.hyper-quote(search items)[Bartender]'
+          conditions: *conditions_layer1
+          from:
+            key_code: quote
+          to:
+            - key_code: quote
+              modifiers: *modifiers_hyper
+          type: basic
+        - description: 'semicolon: 1.hyper-semicolon(keyboard navigate)[Bartender]'
+          conditions: *conditions_layer1
+          from:
+            key_code: semicolon
+          to:
+            - key_code: semicolon
+              modifiers: *modifiers_hyper
+          type: basic
+      # layer 2
+        - description: 'p: 2.volume_increment'
+          conditions: &conditions_layer2
+            - name: layer
+              type: variable_if
+              value: 2
+          from:
+            key_code: p
+          to:
+            - key_code: volume_increment
+          type: basic
+        - description: 'o: 2.volume_decrement'
+          conditions: *conditions_layer2
+          from:
+            key_code: o
+          to:
+            - key_code: volume_decrement
+          type: basic
+        - description: 'i: 2.volume_decrement'
+          conditions: *conditions_layer2
+          from:
+            key_code: i
+          to:
+            - key_code: mute
+          type: basic
+        - description: 'l: 2.asg-l(iTunes Next)[Hammerspoon]'
+          conditions: *conditions_layer2
+          from:
+            key_code: l
+          to:
+            - key_code: l
+              modifiers: &modifiers_asg
+                - option
+                - shift
+                - command
+          type: basic
+        - description: 'k: 2.asg-k(iTunes Stop)[Hammerspoon]'
+          conditions: *conditions_layer2
+          from:
+            key_code: k
+          to:
+            - key_code: k
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'j: 2.asg-j(iTunes Previous)[Hammerspoon]'
+          conditions: *conditions_layer2
+          from:
+            key_code: j
+          to:
+            - key_code: j
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'semicolon: 2.asg-;(sleep computer)[BTT]'
+          conditions: *conditions_layer2
+          from:
+            key_code: semicolon
+          to:
+            - key_code: semicolon
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'quote: 2.asg-;(sleep computer)[BTT]'
+          conditions: *conditions_layer2
+          from:
+            key_code: quote
+          to:
+            - key_code: quote
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'u: 2.asg-u(eudic lightpeek)'
+          conditions: *conditions_layer2
+          from:
+            key_code: u
+          to:
+            - key_code: u
+              modifiers: *modifiers_asg
+          type: basic
+        - description: 'n: 2.asg-n(show notification center)[BTT]'
+          conditions: *conditions_layer2
+          from:
+            key_code: n
+          to:
+            - key_code: n
+              modifiers: *modifiers_asg
+          type: basic
