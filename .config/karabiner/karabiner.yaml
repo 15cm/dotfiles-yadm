@@ -393,9 +393,9 @@ profiles:
         - description: 'm: 2.hyper-m(iTunes volume up)[Hammerspoon]'
           conditions: *conditions_layer2
           from:
-            key_code: n
+            key_code: m
           to:
-            - key_code: n
+            - key_code: m
               modifiers: *modifiers_hyper
           type: basic
         - description: 'semicolon: 2.hyper-;(sleep computer)[BTT]'
