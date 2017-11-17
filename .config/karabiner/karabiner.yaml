@@ -16,46 +16,15 @@ profiles:
           to_if_alone:
             - key_code: escape
           type: basic
-        - description: 'tab: tab, layer 1'
-          from:
-            key_code: tab
-          to:
-            - set_variable:
-                name: layer
-                value: 1
-          to_after_key_up:
-            - set_variable:
-                name: layer
-                value: 0
-          to_if_alone:
-            - key_code: tab
-          type: basic
-        - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer2'
-          conditions: &conditions_layer0
-            - name: layer
-              type: variable_if
-              value: 0
-          from:
-            key_code: grave_accent_and_tilde
-          to:
-            - set_variable:
-                name: layer
-                value: 2
-          to_after_key_up:
-            - set_variable:
-                name: layer
-                value: 0
-          to_if_alone:
-            - key_code: grave_accent_and_tilde
-          type: basic
         # Emacs bindings
         - description: 'control-f: right_arrow'
-          conditions: &conditions_frontmost_not_whole_emacs
+          conditions: &conditions_frontmost_not_partial_emacs
             - bundle_identifiers:
                 - '^org\.gnu\.Emacs.*'
                 - '^com\.googlecode\.iterm2.*'
                 - '^com\.apple\.com\.Terminal.*'
                 - '^com\.github\.atom.*'
+                - '^com\.jetbrains\.*'
               type: frontmost_application_unless
           from:
             key_code: f
@@ -66,7 +35,7 @@ profiles:
             - key_code: right_arrow
           type: basic
         - description: 'control-b: left_arrow'
-          conditions: *conditions_frontmost_not_whole_emacs
+          conditions: *conditions_frontmost_not_partial_emacs
           from:
             key_code: b
             modifiers:
@@ -76,7 +45,13 @@ profiles:
             - key_code: left_arrow
           type: basic
         - description: 'control-n: down_arrow'
-          conditions: *conditions_frontmost_not_whole_emacs
+          conditions: &conditions_frontmost_not_whole_emacs
+            - bundle_identifiers:
+                - '^org\.gnu\.Emacs.*'
+                - '^com\.googlecode\.iterm2.*'
+                - '^com\.apple\.com\.Terminal.*'
+                - '^com\.github\.atom.*'
+              type: frontmost_application_unless
           from:
             key_code: n
             modifiers:
@@ -129,7 +104,7 @@ profiles:
             - key_code: delete_or_backspace
           type: basic
         - description: 'control-d: delete_forward'
-          conditions: *conditions_frontmost_not_whole_emacs
+          conditions: *conditions_frontmost_not_partial_emacs
           from:
             key_code: d
             modifiers:
@@ -228,6 +203,7 @@ profiles:
           to:
             - key_code: page_up
           type: basic
+
       # Space to mec-space
         - description: 'space: mec-space'
           from:
@@ -240,96 +216,131 @@ profiles:
           to_if_alone:
             - key_code: spacebar
           type: basic
-        # Layer 1
+
+      # Layer 1
+        - description: 'tab: tab, layer 1(option control)'
+          from:
+            key_code: tab
+            modifiers:
+              optional:
+                - shift
+          to:
+            - key_code: left_option
+              modifiers:
+                - control
+          to_if_alone:
+            - key_code: tab
+          type: basic
+      # layer 2
+        - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer2(hyper)'
+          conditions: &conditions_layer0
+            - name: layer
+              type: variable_if
+              value: 0
+          from:
+            key_code: grave_accent_and_tilde
+          to:
+            - set_variable:
+                name: layer
+                value: 2
+          to_after_key_up:
+            - set_variable:
+                name: layer
+                value: 0
+          to_if_alone:
+            - key_code: grave_accent_and_tilde
+          type: basic
+
+        # Layout 2
           # F1-F12
-        - description: '1: 1.f1'
+        - description: '1: 2.f1'
           conditions: &conditions_layer1
           - name: layer
             type: variable_if
-            value: 1
+            value: 2
           from:
             key_code: "1"
           to:
           - key_code: f1
           type: basic
-        - description: '2: 1.f2'
+        - description: '2: 2.f2'
           conditions: *conditions_layer1
           from:
             key_code: "2"
           to:
           - key_code: f2
           type: basic
-        - description: '3: 1.f3'
+        - description: '3: 2.f3'
           conditions: *conditions_layer1
           from:
             key_code: "3"
           to:
           - key_code: f3
           type: basic
-        - description: '4: 1.f4'
+        - description: '4: 2.f4'
           conditions: *conditions_layer1
           from:
             key_code: "4"
           to:
           - key_code: f4
           type: basic
-        - description: '5: 1.f5'
+        - description: '5: 2.f5'
           conditions: *conditions_layer1
           from:
             key_code: "5"
           to:
           - key_code: f5
           type: basic
-        - description: '6: 1.f6'
+        - description: '6: 2.f6'
           conditions: *conditions_layer1
           from:
             key_code: "6"
           to:
           - key_code: f6
           type: basic
-        - description: '7: 1.f7'
+        - description: '7: 2.f7'
           conditions: *conditions_layer1
           from:
             key_code: "7"
           to:
           - key_code: f7
           type: basic
-        - description: '8: 1.f8'
+        - description: '8: 2.f8'
           conditions: *conditions_layer1
           from:
             key_code: "8"
           to:
           - key_code: f8
           type: basic
-        - description: '9: 1.f9'
+        - description: '9: 2.f9'
           conditions: *conditions_layer1
           from:
             key_code: "9"
           to:
           - key_code: f9
           type: basic
-        - description: '0: 1.f10'
+        - description: '0: 2.f10'
           conditions: *conditions_layer1
           from:
             key_code: "0"
           to:
           - key_code: f10
           type: basic
-        - description: '-: 1.f11'
+        - description: '-: 2.f11'
           conditions: *conditions_layer1
           from:
             key_code: hyphen
           to:
           - key_code: f11
           type: basic
-        - description: '=: 1.f12'
+        - description: '=: 2.f12'
           conditions: *conditions_layer1
           from:
             key_code: equal_sign
           to:
           - key_code: f12
           type: basic
-      # layer 2
+
         - description: 'p: 2.volume_increment'
           conditions: &conditions_layer2
             - name: layer
@@ -414,3 +425,4 @@ profiles:
             - key_code: quote
               modifiers: *modifiers_hyper
           type: basic
+
