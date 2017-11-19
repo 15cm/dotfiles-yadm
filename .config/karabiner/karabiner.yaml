@@ -228,7 +228,9 @@ profiles:
               value: 0
           from:
             key_code: tab
-            modifiers: *modifiers_any
+            modifiers:
+              optional:
+                - shift
           to:
             - set_variable:
                 name: layer
@@ -749,7 +751,6 @@ profiles:
             - key_code: comma
               modifiers: *modifiers_layer1
           type: basic 
-
         - description: '1.period'
           conditions: *conditions_layer1
           from:
