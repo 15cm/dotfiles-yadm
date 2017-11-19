@@ -83,7 +83,7 @@ bindkey '^k' kill-line
 # _____________________ Key map _____________________
 
 # --------------------- Plugins ---------------------
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k)
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -94,6 +94,7 @@ alias rz="source ~/.zshrc"
 alias vi="vim"
 alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
+alias gcmsg!="git commit --allow-empty-message -m ''"
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------

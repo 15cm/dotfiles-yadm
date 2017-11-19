@@ -1,6 +1,7 @@
 const MAPPINGS = {
   'tab_select_previous': 'K',
-  'tab_select_next': 'J'
+  'tab_select_next': 'J',
+  'enter_mode_ignore': '<c-i>'
 }
 
 const VIMFX_PREFS = {
