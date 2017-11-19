@@ -742,6 +742,24 @@ profiles:
             - key_code: "9"
               modifiers: *modifiers_layer1
           type: basic 
+        - description: '1.return_or_enter'
+          conditions: *conditions_layer1
+          from:
+            key_code: return_or_enter
+            modifiers: *modifiers_any
+          to:
+            - key_code: return_or_enter
+              modifiers: *modifiers_layer1
+          type: basic 
+        - description: '1.spacebar'
+          conditions: *conditions_layer1
+          from:
+            key_code: spacebar
+            modifiers: *modifiers_any
+          to:
+            - key_code: spacebar
+              modifiers: *modifiers_layer1
+          type: basic 
         - description: '1.comma'
           conditions: *conditions_layer1
           from:
@@ -758,6 +776,15 @@ profiles:
             modifiers: *modifiers_any
           to:
             - key_code: period
+              modifiers: *modifiers_layer1
+          type: basic 
+        - description: '1.open_bracket'
+          conditions: *conditions_layer1
+          from:
+            key_code: open_bracket
+            modifiers: *modifiers_any
+          to:
+            - key_code: open_bracket
               modifiers: *modifiers_layer1
           type: basic 
 
