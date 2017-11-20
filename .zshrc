@@ -61,7 +61,8 @@ export LANG="$LC_ALL"
 export TERM="xterm-256color"
 
 # Tmux Plugin
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
+[[ $TMUX == "" ]] && tmux new-session -A -s sesh
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
@@ -71,6 +72,7 @@ export NVM_LAZY_LOAD=true
 # --------------------- PATH ---------------------
 export PATH="/usr/local/bin:$PATH"
 # Path for powerline on mac
+export POWERLINE_CONFIG_PATHS="$HOME/.config/powerline"
 export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 # _____________________ PATH _____________________
 

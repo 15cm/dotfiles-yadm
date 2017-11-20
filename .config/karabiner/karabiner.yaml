@@ -248,7 +248,9 @@ profiles:
           conditions: *conditions_layer0
           from:
             key_code: grave_accent_and_tilde
-            modifiers: *modifiers_any
+            modifiers:
+              optional:
+                - control
           to:
             - set_variable:
                 name: layer
