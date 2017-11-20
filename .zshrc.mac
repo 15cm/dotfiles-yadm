@@ -12,8 +12,8 @@ alias ew="emacsclient -t"
   # --cache=$HOME/.npm/.cache/cnpm \
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
-alias ls="colorls -sd"
-alias la="colorls -sd -a"
+#alias ls="colorls -sd"
+#alias la="colorls -sd -a"
 
 # functions
 function mag2torrent {
@@ -44,13 +44,12 @@ export PATH="$PATH:/usr/local/script"
 export PATH="$PATH:/usr/local/aria2/bin"
 
 # Rust
-source $HOME/.cargo/env
+#source $HOME/.cargo/env
 
 # added by travis gem
 [ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
 
 # Powerline
-
-powerline-daemon -q
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+$HOME/Library/Python/2.7/bin/powerline-daemon -q
+. $HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 unset _POWERLINE_SAVE_WIDGET
