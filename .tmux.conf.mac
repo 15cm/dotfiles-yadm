@@ -5,7 +5,6 @@ set -g prefix C-q
 run-shell "powerline-daemon -q"
 run-shell "export POWERLINE_CONFIG_COMMAND=/Users/sinkerine/Library/Python/2.7/bin/powerline-config"
 source "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"
-#source-file "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/bindings/tmux/powerline_tmux_2.1_plus.conf"
 
 # Copy
 bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel 'reattach-to-user-namespace pbcopy'

@@ -72,7 +72,6 @@ export NVM_LAZY_LOAD=true
 # --------------------- PATH ---------------------
 export PATH="/usr/local/bin:$PATH"
 # Path for powerline on mac
-export POWERLINE_CONFIG_PATHS="$HOME/.config/powerline"
 export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 # _____________________ PATH _____________________
 
