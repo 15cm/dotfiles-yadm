@@ -32,9 +32,6 @@ function oemacs {
   open $1 -a 'Emacs'
 }
 
-# Tex path
-export PATH="$PATH:/Library/TeX/texbin"
-
 # use coreutils without 'g' prefix
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/opt/gettext/bin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
