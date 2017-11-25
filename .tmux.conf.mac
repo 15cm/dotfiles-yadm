@@ -3,7 +3,6 @@ set -g prefix C-q
 
 # Powerline
 run-shell "powerline-daemon -q"
-run-shell "export POWERLINE_CONFIG_COMMAND=/Users/sinkerine/Library/Python/2.7/bin/powerline-config"
 source "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"
 
 # Copy
