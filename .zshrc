@@ -61,8 +61,7 @@ export LANG="$LC_ALL"
 export TERM="xterm-256color"
 
 # Tmux Plugin
-ZSH_TMUX_AUTOSTART=false
-[[ $TMUX == "" ]] && tmux new-session -A -s sesh
+ZSH_TMUX_AUTOSTART=true
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
