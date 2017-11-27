@@ -68,15 +68,12 @@ elif is_linux; then
   sudo apt-get -y install urlview
 fi
 # Oh-my-zsh
-git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+git clone https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
 git clone git://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # k
 git clone https://github.com/supercrabtree/k $HOME/.oh-my-zsh/custom/plugins/k
-
-# ZSH Powerline
-git clone https://github.com/bhilburn/powerlevel9k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
