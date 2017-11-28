@@ -85,7 +85,10 @@ bindkey '^k' kill-line
 # _____________________ Key map _____________________
 
 # --------------------- Plugins ---------------------
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
+# Env
+FZ_CMD=j
+FZ_SUBDIR_CMD=jj
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot fz)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -101,28 +104,10 @@ alias gcmsg!="git commit --allow-empty-message -m ''"
 
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-set FZF_CTRL_T_COMMAND="fzf-tmux"
-set FZF_CTRL_T_OPTS="-m --cycle --jump-labels=CHARS"
-set FZF_CTRL_R_OPTS="-m --cycle --jump-labels=CHARS"
-
-# fdirh() {
-#     print -z $(dirs -v |  fzf | sed 's/^\s*[0-9]*\s*//' | sed_unix_path)
-# }
-
-alias fzf="fzf-tmux -m --cycle --jump-labels=CHARS"
-
-# using 'fzf' when calling 'z' with no args or no result returned
-fun_z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-}
-
-fdirz() {
-    _z -l 2>&1 | fzf-tmux +s --tac --query "$*" | sed 's/^[0-9,.]* *//'
-}
-
-alias j="fun_z"
-# _____________________ 'fzf' and 'z' _____________________
+export FZF_TMUX=1
+export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 
 # --------------------- Config for local and remote machine ---------------------
 if is_osx; then
@@ -167,3 +152,7 @@ function load_thefuck() {
 }
 lazy_load load_thefuck fuck
 # _____________________ ENV 2 _____________________
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
