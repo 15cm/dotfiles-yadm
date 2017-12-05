@@ -100,6 +100,7 @@ alias vi="vim"
 alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
+alias ew="emacsclient -s workspace2 -t "
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------
