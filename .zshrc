@@ -86,6 +86,7 @@ bindkey '^k' kill-line
 
 # --------------------- Plugins ---------------------
 # Env
+ZSH_AUTOSUGGEST_USE_ASYNC=true
 plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
 # _____________________ Plugins _____________________
 
@@ -128,6 +129,8 @@ __my_fzf_z_widget() {
 
 zle -N __my_fzf_z_widget
 bindkey '\C-j' __my_fzf_z_widget
+# override the default fzf-cd-widget key binding
+bindkey '\C-y' fzf-cd-widget
 
 # --------------------- Config for local and remote machine ---------------------
 if is_osx; then
