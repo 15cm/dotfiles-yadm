@@ -86,9 +86,7 @@ bindkey '^k' kill-line
 
 # --------------------- Plugins ---------------------
 # Env
-FZ_CMD=j
-FZ_SUBDIR_CMD=jj
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot fz)
+plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -105,10 +103,31 @@ alias ew="emacsclient -s workspace2 -t "
 
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_TMUX=1
+# export FZF_TMUX=1
+export FZF_DEFAULT_OPTS="--bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+# fzf z binding
+__my_fzf_z() {
+  set -o nonomatch
+  z -l 2>&1 | sed 's/^[0-9,.]* *//' \
+    | fzf --height 40% -m --tac --reverse --preview 'tree -C {} | head -200' \
+    | while read item; do printf '%q ' "$item"; done
+  echo
+}
+
+__my_fzf_z_widget() {
+  LBUFFER="${LBUFFER}$(__my_fzf_z)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __my_fzf_z_widget
+bindkey '\C-j' __my_fzf_z_widget
 
 # --------------------- Config for local and remote machine ---------------------
 if is_osx; then
