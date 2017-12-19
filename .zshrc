@@ -72,6 +72,8 @@ export NVM_LAZY_LOAD=true
 export PATH="/usr/local/bin:$PATH"
 # Path for powerline on mac
 export PATH="$PATH:$HOME/Library/Python/2.7/bin"
+# Path for go
+export PATH="$PATH:$HOME/go/bin"
 # _____________________ PATH _____________________
 
 # --------------------- Key map ---------------------
@@ -99,7 +101,7 @@ alias vi="vim"
 alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
-alias ew="emacsclient -s workspace2 -t "
+alias ew="emacsclient -s misc -t "
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------
