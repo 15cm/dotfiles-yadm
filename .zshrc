@@ -76,24 +76,80 @@ export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 export PATH="$PATH:$HOME/go/bin"
 # _____________________ PATH _____________________
 
+# --------------------- Plugins ---------------------
+# Env
+ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
+# _____________________ Plugins _____________________
+
+# oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
 # --------------------- Key map ---------------------
-export KEYTIMEOUT=1
+export KEYTIMEOUT=5
+# Updates editor information when the keymap changes.
+function zle-keymap-select() {
+  zle reset-prompt
+  zle -R
+}
+zle -N zle-keymap-select
+
+function vi_mode_prompt_info() {
+  echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
+}
+
+# Ensure that the prompt is redrawn when the terminal size changes.
+TRAPWINCH() {
+  zle &&  zle -R
+}
+
+bindkey -v
+autoload -Uz edit-command-line
+bindkey -M vicmd '^v' edit-command-line
+
+bindkey '^p' up-history
+bindkey '^n' down-history
+
 bindkey '^h' backward-delete-char
 bindkey '^d' delete-char
 bindkey '^b' backward-char
 bindkey '^f' forward-char
 bindkey '^o' forward-word
 bindkey '^k' kill-line
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
+# zle functions
+# select quoted
+autoload -U select-quoted
+zle -N select-quoted
+for m in visual viopp; do
+	for c in {a,i}{\',\",\`}; do
+	  bindkey -M $m $c select-quoted
+	done
+done
+
+# select bracketed
+autoload -U select-bracketed
+zle -N select-bracketed
+for m in visual viopp; do
+	for c in {a,i}${(s..)^:-'()[]{}<>bB'}; do
+	  bindkey -M $m $c select-bracketed
+	done
+done
+
+# surround
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N add-surround surround
+zle -N change-surround surround
+bindkey -a cs change-surround
+bindkey -a ds delete-surround
+bindkey -a ys add-surround
+bindkey -a S add-surround
+
 # _____________________ Key map _____________________
-
-# --------------------- Plugins ---------------------
-# Env
-ZSH_AUTOSUGGEST_USE_ASYNC=true
-plugins=(git vi-mode tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
-# _____________________ Plugins _____________________
-
-# oh-my-zsh
-source $ZSH/oh-my-zsh.sh
 
 # --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
@@ -102,6 +158,8 @@ alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
+alias more="more -R"
+alias ccat="ccat -C always"
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------
