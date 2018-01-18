@@ -160,6 +160,7 @@ alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
 alias more="more -R"
 alias ccat="ccat -C always"
+alias clip="nc localhost 8377"
 # _____________________ Alias  _____________________
 
 # --------------------- 'fzf' and 'z' ---------------------
