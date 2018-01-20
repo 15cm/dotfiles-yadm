@@ -11,9 +11,6 @@ alias mux="tmuxinator"
   # --cache=$HOME/.npm/.cache/cnpm \
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
-alias ls="colorls --sd"
-alias la="colorls --sd -a"
-
 # functions
 function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"

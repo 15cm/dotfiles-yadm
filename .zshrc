@@ -154,7 +154,7 @@ bindkey -a S add-surround
 # --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
 alias vi="vim"
-alias ll="k"
+# alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
@@ -163,13 +163,20 @@ alias ccat="ccat -C always"
 alias clip="nc localhost 8377"
 # _____________________ Alias  _____________________
 
+# --------------------- colorls ---------------------
+alias ls="colorls --gs --sd"
+alias ll="colorls -l --sd --gs"
+alias la="colorls -lA --sd --gs"
+alias tree="colorls --gs --tree 2>&1"
+# _____________________ colorls _____________________
+
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # export FZF_TMUX=1
 export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
-export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && (colorls --gs --tree {} 2> /dev/null || tree -C {}))) | head -200'"
+export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview '(colorls --gs --tree {} 2> /dev/null || tree -C {}) | head -200'"
 
 # fzf z binding
 __my_fzf_z() {
