@@ -80,7 +80,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm k cd-gitroot)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
