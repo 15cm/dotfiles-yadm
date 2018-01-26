@@ -66,7 +66,7 @@ nmap <leader>w :w!<cr>
 command W w !sudo tee % > /dev/null
 
 " Linenumber
-set number
+set number relativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
