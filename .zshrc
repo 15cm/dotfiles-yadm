@@ -80,7 +80,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -148,6 +148,9 @@ bindkey -a cs change-surround
 bindkey -a ds delete-surround
 bindkey -a ys add-surround
 bindkey -a S add-surround
+
+# zce
+bindkey -M vicmd 's' zce
 
 # _____________________ Key map _____________________
 
