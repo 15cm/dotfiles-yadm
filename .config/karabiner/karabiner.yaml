@@ -26,7 +26,6 @@ profiles:
                 - '^org\.gnu\.Emacs.*'
                 - '^com\.googlecode\.iterm2.*'
                 - '^com\.apple\.com\.Terminal.*'
-                - '^com\.github\.atom.*'
                 - '^com\.jetbrains\..*'
                 - '^com\.apple\.dt\.Xcode.*'
               type: frontmost_application_unless
@@ -54,7 +53,6 @@ profiles:
                 - '^org\.gnu\.Emacs.*'
                 - '^com\.googlecode\.iterm2.*'
                 - '^com\.apple\.com\.Terminal.*'
-                - '^com\.github\.atom.*'
               type: frontmost_application_unless
           from:
             key_code: n
@@ -118,7 +116,7 @@ profiles:
             - key_code: delete_forward
           type: basic
         - description: 'control-k: kill to end'
-          conditions:  *conditions_frontmost_not_whole_emacs
+          conditions:  *conditions_frontmost_not_partial_emacs
           from:
             key_code: k
             modifiers:

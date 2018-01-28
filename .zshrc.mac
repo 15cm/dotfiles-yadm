@@ -36,7 +36,7 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export PATH="/usr/local/opt/sbt@0.13/bin:$PATH"
 
 # user path
-export PATH="$PATH:/usr/local/script"
+export PATH="$PATH:$HOME/user-scripts"
 
 # Rust
 #source $HOME/.cargo/env
