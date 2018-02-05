@@ -2,11 +2,16 @@
 alias ssh="ssh-ident"
 alias clip="nc -q0 localhost 8377"
 
+alias ls="ls --color=tty --group-directories-first"
+alias ll="ls -lh --group-directories-first"
+alias la="ls -lAh --group-directories-first"
+
 # add ssh keys
 eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
 eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
 
 export PATH="$PATH:$HOME/local/bin:$HOME/local/script"
+
 
 # --------------------- fzf ---------------------
 export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
