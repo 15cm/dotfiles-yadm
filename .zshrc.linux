@@ -1,5 +1,6 @@
 # alias
 alias ssh="ssh-ident"
+alias clip="nc -q0 localhost 8377"
 
 # add ssh keys
 eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
