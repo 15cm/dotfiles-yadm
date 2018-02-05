@@ -150,7 +150,7 @@ bindkey -a ys add-surround
 bindkey -a S add-surround
 
 # zce
-bindkey -M vicmd 's' zce
+bindkey -M vicmd 't' zce
 
 # _____________________ Key map _____________________
 
@@ -163,7 +163,6 @@ alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
 alias more="more -R"
 alias ccat="ccat -C always"
-alias clip="nc localhost 8377"
 # _____________________ Alias  _____________________
 
 # --------------------- colorls ---------------------
