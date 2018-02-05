@@ -165,20 +165,9 @@ alias more="more -R"
 alias ccat="ccat -C always"
 # _____________________ Alias  _____________________
 
-# --------------------- colorls ---------------------
-alias ls="colorls --sd"
-alias ll="colorls -l --sd"
-alias la="colorls -lA --sd"
-alias tree="colorls --sd --tree 2>&1"
-# _____________________ colorls _____________________
-
 # --------------------- 'fzf' and 'z' ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # export FZF_TMUX=1
-export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && (colorls --sd --tree {} 2> /dev/null || tree -C {}))) | head -200'"
-export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview '(colorls --sd --tree {} 2> /dev/null || tree -C {}) | head -200'"
 
 # fzf z binding
 __my_fzf_z() {
@@ -214,10 +203,7 @@ fi
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-function load_pyenv() {
-  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-}
-lazy_load load_pyenv pyenv python ipython pip
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # pyenv-virtualenv
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
