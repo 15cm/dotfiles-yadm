@@ -13,21 +13,6 @@ alias clip="nc localhost 8377"
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
 
-# --------------------- colorls ---------------------
-alias ls="colorls --sd"
-alias ll="colorls -l --sd"
-alias la="colorls -lA --sd"
-alias tree="colorls --sd --tree 2>&1"
-# _____________________ colorls _____________________
-
-# --------------------- fzf ---------------------
-export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && (colorls --sd --tree {} 2> /dev/null || tree -C {}))) | head -200'"
-export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview '(colorls --sd --tree {} 2> /dev/null || tree -C {}) | head -200'"
-# _____________________ fzf _____________________
-
-
 # functions
 function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"
