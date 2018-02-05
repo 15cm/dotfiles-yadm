@@ -7,18 +7,10 @@ alias ll="ls -lh --group-directories-first"
 alias la="ls -lAh --group-directories-first"
 
 # add ssh keys
-eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
-eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
+# eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
+# eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
 
 export PATH="$PATH:$HOME/local/bin:$HOME/local/script"
-
-
-# --------------------- fzf ---------------------
-export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && (tree {} 2> /dev/null || tree -C {}))) | head -200'"
-export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview '(tree {} 2> /dev/null || tree -C {}) | head -200'"
-# _____________________ fzf _____________________
 
 # Powerline
 powerline-daemon -q
