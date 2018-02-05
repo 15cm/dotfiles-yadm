@@ -2,6 +2,7 @@
 alias p="proxychains4 -q"
 alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "
 alias mux="tmuxinator"
+alias clip="nc localhost 8377"
 # Proxy Alias
 # alias brew="p brew"
 # lias git="p git"
@@ -11,6 +12,7 @@ alias mux="tmuxinator"
   # --cache=$HOME/.npm/.cache/cnpm \
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
+
 # functions
 function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"
