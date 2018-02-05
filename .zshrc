@@ -214,7 +214,10 @@ fi
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+function load_pyenv() {
+  if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+}
+lazy_load load_pyenv pyenv python ipython pip
 
 # pyenv-virtualenv
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
