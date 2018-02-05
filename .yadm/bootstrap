@@ -8,63 +8,65 @@ is_osx () {
 }
 
 if is_osx; then
+  pacman_install="brew install"
   # brew
   if [[ ! -f '/usr/local/bin/brew' ]]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
   # vim
-  which vim > /dev/null || brew install vim
+  which vim > /dev/null || $pacman_install vim
   # Tmux
-  which tmux > /dev/null || brew install tmux
+  which tmux > /dev/null || $pacman_install tmux
   # ZSH
-  which zsh > /dev/null || brew install zsh
+  which zsh > /dev/null || $pacman_install zsh
   # pip & Powerline
   BREW_PYTHON="/usr/local/bin/python"
   BREW_PIP="/usr/local/bin/pip"
-  [[ -f $BREW_PYTHON ]] || brew install python
+  [[ -f $BREW_PYTHON ]] || $pacman_install python
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PIP install powerline-status
   $BREW_PIP install powerline-gitstatus
   # jq
-  brew install jq
+  $pacman_install jq
   # colorls
   gem install colorls
   # fpp
-  which fpp > /dev/null || brew install fpp
+  which fpp > /dev/null || $pacman_install fpp
   # urlview
-  brew install urlview
+  $pacman_install urlview
   # pyenv
-  brew install pyenv
+  $pacman_install pyenv
   # rbenv
-  brew install rbenv
+  $pacman_install rbenv
 
 elif is_linux; then
+  pacman_install="apt-get -y install"
   # folders
   [ -d ~/local/bin ] || mkdir -p ~/local/bin
   # sudo
-  which sudo > /dev/null || apt-get -y install sudo
+  which sudo > /dev/null || $pacman_install sudo
   # vim
-  which vim > /dev/null || sudo apt-get -y install vim
+  which vim > /dev/null || sudo $pacman_install vim
   # curl
-  which curl > /dev/null || sudo apt-get -y install curl
+  which curl > /dev/null || sudo $pacman_install curl
   # ZSH
-  which zsh > /dev/null || sudo apt-get -y install zsh
+  which zsh > /dev/null || sudo $pacman_install zsh
   # Tmux
-  which tmux > /dev/null || sudo apt-get -y install tmux
+  which tmux > /dev/null || sudo $pacman_install tmux
   # pip & Powerline
   SYS_PYTHON="/usr/bin/python"
   SYS_PIP="/usr/bin/pip"
-  [[ -f $SYS_PYTHON ]] || sudo apt-get -y install python
-  [[ -f $SYS_PIP ]] || sudo apt-get -y install python-pip
+  [[ -f $SYS_PYTHON ]] || sudo $pacman_install python
+  [[ -f $SYS_PIP ]] || sudo $pacman_install python-pip
   sudo $SYS_PIP install powerline-status
   sudo $SYS_PIP install powerline-gitstatus
   # jq
-  sudo apt-get -y install jq
+  sudo $pacman_install jq
   # Ruby && colorls
-  sudo apt-get -y install ruby-full
+  sudo $pacman_install
   sudo gem install colorls
   # Keychain
-  which keychain > /dev/null || sudo apt-get -y install keychain
+  which keychain > /dev/null || sudo $pacman_install keychain
   # fpp
   git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
   # urlview
