@@ -2,10 +2,6 @@
 alias ssh="ssh-ident"
 alias clip="nc -q0 localhost 8377"
 
-alias ls="ls --color=tty --group-directories-first"
-alias ll="ls -lh --group-directories-first"
-alias la="ls -lAh --group-directories-first"
-
 # add ssh keys
 # eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
 # eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
