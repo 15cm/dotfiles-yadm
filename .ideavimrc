@@ -1,5 +1,9 @@
 " Common
 set number relativenumber
+
+" Extensions
+set surround
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = " "
@@ -15,5 +19,5 @@ inoremap <C-B> <Left>
 inoremap <C-P> <Up>
 inoremap <C-N> <Down>
 
-noremap s :action AceAction<CR>
+noremap t :action AceAction<CR>
 noremap <leader>jl :action AceLineAction<CR>
