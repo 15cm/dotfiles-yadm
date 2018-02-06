@@ -95,10 +95,6 @@ function zle-keymap-select() {
 }
 zle -N zle-keymap-select
 
-function vi_mode_prompt_info() {
-  echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
-}
-
 # Ensure that the prompt is redrawn when the terminal size changes.
 TRAPWINCH() {
   zle &&  zle -R
@@ -165,6 +161,7 @@ if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -
 
 # jenv(lazy load)
 export PATH="$HOME/.jenv/bin:$PATH"
+# if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 function load_jenv() {
   if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 }
@@ -183,21 +180,9 @@ function load_direnv() {
 }
 lazy_load load_direnv direnv
 
-# thefuck
-function load_thefuck() {
-  if which thefuck > /dev/null; then eval "$(thefuck --alias)"; fi
-}
-lazy_load load_thefuck fuck
-# _____________________ ENV 2 _____________________
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
 alias vi="vim"
-# alias ll="k"
 alias st="~/dotfiles-helper/switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
