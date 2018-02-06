@@ -154,51 +154,6 @@ bindkey -M vicmd 't' zce
 
 # _____________________ Key map _____________________
 
-# --------------------- Alias ---------------------
-alias rz="source ~/.zshrc"
-alias vi="vim"
-# alias ll="k"
-alias st="~/dotfiles-helper/switch-theme.sh"
-alias gcmsg!="git commit --allow-empty-message -m ''"
-alias ew="emacsclient -s misc -t "
-alias more="more -R"
-alias ccat="ccat -C always"
-# _____________________ Alias  _____________________
-
-# --------------------- 'fzf' and 'z' ---------------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# export FZF_TMUX=1
-
-# fzf z binding
-__my_fzf_z() {
-  set -o nonomatch
-  z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf --height 40% -m --tac --reverse --preview 'tree -C {} | head -200' \
-    | while read item; do printf '%q ' "$item"; done
-  echo
-}
-
-__my_fzf_z_widget() {
-  LBUFFER="${LBUFFER}$(__my_fzf_z)"
-  local ret=$?
-  zle redisplay
-  typeset -f zle-line-init >/dev/null && zle zle-line-init
-  return $ret
-}
-
-zle -N __my_fzf_z_widget
-bindkey '\C-j' __my_fzf_z_widget
-# override the default fzf-cd-widget key binding
-bindkey '\C-y' fzf-cd-widget
-
-# --------------------- Config for local and remote machine ---------------------
-if is_osx; then
-  source $HOME/.zshrc.mac
-elif is_linux; then
-  source $HOME/.zshrc.linux
-fi
-# _____________________ Config for local and remote machine _____________________
-
 # --------------------- ENV 2 ---------------------
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -238,3 +193,70 @@ lazy_load load_thefuck fuck
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# --------------------- Alias ---------------------
+alias rz="source ~/.zshrc"
+alias vi="vim"
+# alias ll="k"
+alias st="~/dotfiles-helper/switch-theme.sh"
+alias gcmsg!="git commit --allow-empty-message -m ''"
+alias ew="emacsclient -s misc -t "
+alias more="more -R"
+alias ccat="ccat -C always"
+# _____________________ Alias  _____________________
+
+# --------------------- colorls ---------------------
+if which colorls > /dev/null; then
+  alias ls="colorls --sd"
+  alias ll="colorls -l --sd"
+  alias la="colorls -lA --sd"
+  alias tree="colorls --sd --tree 2>&1"
+  _tree_cmd="colorls --sd --tree"
+else
+  alias ls="ls --color=tty --group-directories-first"
+  alias ll="ls -lh --group-directories-first"
+  alias la="ls -lAh --group-directories-first"
+  _tree_cmd="tree -C"
+fi
+# _____________________ colorls _____________________
+
+# --------------------- fzf and z ---------------------
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# export FZF_TMUX=1
+
+export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
+export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && ($_tree_cmd {}))) | head -200'"
+export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview '($_tree_cmd {}) | head -200'"
+
+# fzf z binding
+__my_fzf_z() {
+  set -o nonomatch
+  z -l 2>&1 | sed 's/^[0-9,.]* *//' \
+    | fzf --height 40% -m --tac --reverse --preview '$_tree_cmd {} | head -200' \
+    | while read item; do printf '%q ' "$item"; done
+  echo
+}
+
+__my_fzf_z_widget() {
+  LBUFFER="${LBUFFER}$(__my_fzf_z)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __my_fzf_z_widget
+bindkey '\C-j' __my_fzf_z_widget
+# override the default fzf-cd-widget key binding
+bindkey '\C-y' fzf-cd-widget
+
+# _____________________ fzf and z _____________________
+
+# --------------------- Config for local and remote machine ---------------------
+if is_osx; then
+  source $HOME/.zshrc.mac
+elif is_linux; then
+  source $HOME/.zshrc.linux
+fi
+# _____________________ Config for local and remote machine _____________________
