@@ -1,6 +1,6 @@
 # alias
-alias p="proxychains4 -q"
-alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "
+# alias p="proxychains4 -q"
+# alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "
 alias mux="tmuxinator"
 alias clip="nc localhost 8377"
 # Proxy Alias
@@ -44,9 +44,9 @@ export PATH="$PATH:$HOME/user-scripts"
 #source $HOME/.cargo/env
 
 # added by travis gem
-[ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
+# [ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
 
 # Powerline
-$HOME/Library/Python/2.7/bin/powerline-daemon -q
+# $HOME/Library/Python/2.7/bin/powerline-daemon -q
 . $HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 unset _POWERLINE_SAVE_WIDGET

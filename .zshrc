@@ -1,3 +1,6 @@
+# zmodload zsh/zprof
+# _____________________ profiling _____________________
+
 # --------------------- Common Config  ---------------------
 # Fix for emacs tramp mode
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
@@ -62,6 +65,7 @@ export TERM="xterm-256color"
 
 # Tmux Plugin
 ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART_ONCE=true
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
@@ -245,3 +249,6 @@ elif is_linux; then
   source $HOME/.zshrc.linux
 fi
 # _____________________ Config for local and remote machine _____________________
+
+# --------------------- profiling ---------------------
+# zprof
