@@ -154,7 +154,6 @@ bindkey -M vicmd 't' zce
 
 # _____________________ Key map _____________________
 
-# --------------------- ENV 2 ---------------------
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -192,6 +191,7 @@ alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
 alias more="more -R"
 alias ccat="ccat -C always"
+alias cg="cd-gitroot"
 # _____________________ Alias  _____________________
 
 # --------------------- colorls ---------------------
