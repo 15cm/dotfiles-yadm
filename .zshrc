@@ -245,7 +245,7 @@ bindkey '\C-y' fzf-cd-widget
 # --------------------- Config for local and remote machine ---------------------
 if is_osx; then
   source $HOME/.zshrc.mac
-elif is_linux; then
+else
   source $HOME/.zshrc.linux
 fi
 # _____________________ Config for local and remote machine _____________________

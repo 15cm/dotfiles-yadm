@@ -9,6 +9,6 @@ alias clip="nc -q0 localhost 8377"
 export PATH="$PATH:$HOME/local/bin:$HOME/local/script"
 
 # Powerline
-powerline-daemon -q
+# powerline-daemon -q
 source /usr/local/lib/python2.7/dist-packages/powerline/bindings/zsh/powerline.zsh
 unset _POWERLINE_SAVE_WIDGET

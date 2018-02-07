@@ -2,7 +2,6 @@
 set -g prefix C-q
 
 # Powerline
-run-shell "powerline-daemon -q"
 source "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"
 
 # Copy
