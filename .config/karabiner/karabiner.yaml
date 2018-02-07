@@ -25,6 +25,7 @@ profiles:
             - bundle_identifiers:
                 - '^org\.gnu\.Emacs.*'
                 - '^com\.googlecode\.iterm2.*'
+                - '^io\.alacritty.*'
                 - '^com\.apple\.com\.Terminal.*'
                 - '^com\.jetbrains\..*'
                 - '^com\.apple\.dt\.Xcode.*'
@@ -52,6 +53,7 @@ profiles:
             - bundle_identifiers:
                 - '^org\.gnu\.Emacs.*'
                 - '^com\.googlecode\.iterm2.*'
+                - '^io\.alacritty.*'
                 - '^com\.apple\.com\.Terminal.*'
               type: frontmost_application_unless
           from:
