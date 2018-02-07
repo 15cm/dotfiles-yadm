@@ -1,4 +1,9 @@
 #!/bin/bash
+
+is_osx () {
+  [[ $('uname') == 'Darwin' ]]
+}
+
 powerline_config_file="$HOME/.config/powerline/config.json"
 cur_theme=$(jq -r '.current_theme' "$powerline_config_file")
 jq_tmp=$(mktemp)
@@ -17,5 +22,9 @@ else
   sed -i 's/set background=\w*/set background=light/' ~/.vimrc.theme
   sed -i 's/colors: \*color_scheme_\w*/colors: *color_scheme_light/' ~/.alacritty.yml
 fi
-powerline-daemon --replace
-tmux source ~/.tmux.conf
+
+if is_osx; then
+  tmux source ~/.tmux.conf.mac
+else
+  tmux source ~/.tmux.conf.linux
+fi
