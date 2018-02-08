@@ -10,11 +10,12 @@ ignore_src_names = [
     'Xcode',
     'JEnv',
     'Vim',
-    'Tags'
+    'Tags',
+    'Windows'
 ]
 
 github_link_template = 'https://raw.githubusercontent.com/15cm/gitignore/master/Global/{0}.gitignore'
-local_ignore_file = os.path.expanduser('~/.gitignore_global_local')
+local_ignore_file = os.path.expanduser('~/.gitignore_global.local')
 ignore_file = os.path.expanduser('~/.gitignore_global')
 
 ignore_src_links = map(lambda x: github_link_template.format(x), ignore_src_names)

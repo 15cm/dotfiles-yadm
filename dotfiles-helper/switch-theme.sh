@@ -12,15 +12,16 @@ if [[ $cur_theme == 'light' ]]; then
   | .ext.shell.colorscheme = "nord" 
   | .ext.tmux.colorscheme = "nord"' \
      $powerline_config_file > $jq_tmp && mv $jq_tmp $powerline_config_file
-  sed -i 's/set background=\w*/set background=dark/' ~/.vimrc.theme
-  sed -i 's/colors: \*color_scheme_\w*/colors: *color_scheme_dark/' ~/.alacritty.yml
+  sed -i 's/\(set background=\).*/\1dark/' ~/.vimrc.theme
+  sed -i 's/\(colors: \*color_scheme_\).*/\1dark/' ~/.alacritty.yml
 else
+  # switch to light color schemes
   jq '.current_theme = "light" 
   | .ext.shell.colorscheme = "solarized-light" 
   | .ext.tmux.colorscheme = "solarized-light"' \
      $powerline_config_file  > $jq_tmp && mv $jq_tmp $powerline_config_file
-  sed -i 's/set background=\w*/set background=light/' ~/.vimrc.theme
-  sed -i 's/colors: \*color_scheme_\w*/colors: *color_scheme_light/' ~/.alacritty.yml
+  sed -i 's/\(set background=\).*/\1light/' ~/.vimrc.theme
+  sed -i 's/\(colors: \*color_scheme_\).*/\1light/' ~/.alacritty.yml
 fi
 
 powerline-daemon --replace
