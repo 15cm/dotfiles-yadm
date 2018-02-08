@@ -28,8 +28,8 @@ if is_osx; then
   $BREW_PIP install powerline-gitstatus
   # jq
   $pacman_install jq
-  # colorls
-  gem install colorls
+  # exa
+  brew install exa
   # fpp
   which fpp > /dev/null || $pacman_install fpp
   # urlview
@@ -62,9 +62,11 @@ elif is_linux; then
   sudo $SYS_PIP install powerline-gitstatus
   # jq
   sudo $pacman_install jq
-  # Ruby && colorls
-  sudo $pacman_install
-  sudo gem install colorls
+  # exa
+  tmpf=$(mktemp)
+  wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O $tmpf \
+    && unzip $tmpf -d ~/local/bin && rm $tmpf \
+    && mv ~/local/bin/exa-linux-x86_64 ~/local/bin/exa
   # Keychain
   which keychain > /dev/null || sudo $pacman_install keychain
   # fpp
