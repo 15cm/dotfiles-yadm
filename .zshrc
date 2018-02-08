@@ -158,6 +158,8 @@ bindkey -M vicmd 't' zce
 
 # _____________________ Key map _____________________
 
+# --------------------- Version Management ---------------------
+
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -187,6 +189,8 @@ function load_direnv() {
 }
 lazy_load load_direnv direnv
 
+# _____________________ Version Management _____________________
+
 # --------------------- Alias ---------------------
 alias rz="source ~/.zshrc"
 alias vi="vim"
@@ -199,20 +203,22 @@ alias cg="cd-gitroot"
 
 # _____________________ Alias  _____________________
 
-# --------------------- colorls ---------------------
-if which colorls > /dev/null; then
-  alias ls="colorls --sd"
-  alias ll="colorls -l --sd"
-  alias la="colorls -lA --sd"
-  alias tree="colorls --sd --tree 2>&1"
-  _tree_cmd="colorls --sd --tree"
+# --------------------- exa ---------------------
+if which exa > /dev/null; then
+  _ls_cmd="exa --color always --group-directories-first -I"
+  alias ls="$_ls_cmd --git-ignore"
+  alias ll="$_ls_cmd -l --git --git-ignore"
+  alias la="$_ls_cmd -al --git"
+  alias tree="$_ls_cmd --tree"
+  _tree_cmd="$_ls_cmd --tree --level 4"
 else
-  alias ls="ls --color=tty --group-directories-first"
-  alias ll="ls -lh --group-directories-first"
-  alias la="ls -lAh --group-directories-first"
+  _ls_cmd="ls --color=tty --group-directories-first"
+  alias ls="$_ls_cmd"
+  alias ll="$_ls_cmd -lh"
+  alias la="$_ls_cmd -lAh"
   _tree_cmd="tree -C"
 fi
-# _____________________ colorls _____________________
+# _____________________ exa _____________________
 
 # --------------------- fzf and z ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
