@@ -13,7 +13,7 @@ ignore_src_names = [
     'Tags'
 ]
 
-github_link_template = 'https://raw.githubusercontent.com/github/gitignore/master/Global/{0}.gitignore'
+github_link_template = 'https://raw.githubusercontent.com/15cm/gitignore/master/Global/{0}.gitignore'
 local_ignore_file = os.path.expanduser('~/.gitignore_global_local')
 ignore_file = os.path.expanduser('~/.gitignore_global')
 
