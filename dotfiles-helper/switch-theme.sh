@@ -23,6 +23,7 @@ else
   sed -i 's/colors: \*color_scheme_\w*/colors: *color_scheme_light/' ~/.alacritty.yml
 fi
 
+powerline-daemon --replace
 if is_osx; then
   tmux source ~/.tmux.conf.mac
 else
