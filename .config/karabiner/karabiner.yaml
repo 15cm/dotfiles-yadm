@@ -1,3 +1,57 @@
+_anchors:
+  modifiers_any: &modifiers_any
+    optional:
+      - any
+  modifiers_cg: &modifiers_cg
+    mandatory:
+      - control
+      - command
+  modifiers_layer1: &modifiers_layer1
+    - option
+    - control
+  modifiers_hyper: &modifiers_hyper
+    - control
+    - option
+    - shift
+    - command
+  conditions_layer0: &conditions_layer0
+    - name: layer
+      type: variable_if
+      value: 0
+  conditions_layer1: &conditions_layer1
+    - name: layer
+      type: variable_if
+      value: 1
+  conditions_layer2: &conditions_layer2
+    - name: layer
+      type: variable_if
+      value: 2
+  conditions_frontmost_not_partial_emacs: &conditions_frontmost_not_partial_emacs
+    - bundle_identifiers:
+        - '^org\.gnu\.Emacs.*'
+        - '^com\.googlecode\.iterm2.*'
+        - '^io\.alacritty.*'
+        - '^com\.apple\.com\.Terminal.*'
+        - '^com\.jetbrains\..*'
+        - '^com\.apple\.dt\.Xcode.*'
+      type: frontmost_application_unless
+  conditions_frontmost_not_whole_emacs: &conditions_frontmost_not_whole_emacs
+    - bundle_identifiers:
+        - '^org\.gnu\.Emacs.*'
+        - '^com\.googlecode\.iterm2.*'
+        - '^io\.alacritty.*'
+        - '^com\.apple\.com\.Terminal.*'
+      type: frontmost_application_unless
+  conditions_frontmost_need_home_end: &conditions_frontmost_need_home_end
+    - bundle_identifiers:
+      - '^org\.telegram\.desktop.*'
+      - '^com\.microsoft\..*'
+      type: frontmost_application_if
+  conditions_frontmost_not_emacs: &conditions_frontmost_not_emacs
+    - bundle_identifiers:
+        - '^org\.gnu\.Emacs.*'
+      type: frontmost_application_unless
+
 global:
   check_for_updates_on_startup: true
   show_in_menu_bar: false
@@ -11,9 +65,7 @@ profiles:
         - description: 'caps_lock: escape, left_control'
           from:
             key_code: caps_lock
-            modifiers: &modifiers_any
-              optional:
-                - any
+            modifiers: *modifiers_any
           to:
             - key_code: left_control
           to_if_alone:
@@ -21,15 +73,7 @@ profiles:
           type: basic
         # Emacs bindings
         - description: 'control-f: right_arrow'
-          conditions: &conditions_frontmost_not_partial_emacs
-            - bundle_identifiers:
-                - '^org\.gnu\.Emacs.*'
-                - '^com\.googlecode\.iterm2.*'
-                - '^io\.alacritty.*'
-                - '^com\.apple\.com\.Terminal.*'
-                - '^com\.jetbrains\..*'
-                - '^com\.apple\.dt\.Xcode.*'
-              type: frontmost_application_unless
+          conditions: *conditions_frontmost_not_partial_emacs
           from:
             key_code: f
             modifiers:
@@ -49,13 +93,7 @@ profiles:
             - key_code: left_arrow
           type: basic
         - description: 'control-n: down_arrow'
-          conditions: &conditions_frontmost_not_whole_emacs
-            - bundle_identifiers:
-                - '^org\.gnu\.Emacs.*'
-                - '^com\.googlecode\.iterm2.*'
-                - '^io\.alacritty.*'
-                - '^com\.apple\.com\.Terminal.*'
-              type: frontmost_application_unless
+          conditions: *conditions_frontmost_not_whole_emacs
           from:
             key_code: n
             modifiers:
@@ -75,11 +113,7 @@ profiles:
             - key_code: up_arrow
           type: basic
         - description: 'control-a: begin of line'
-          conditions: &conditions_frontmost_need_home_end
-            - bundle_identifiers:
-              - '^org\.telegram\.desktop.*'
-              - '^com\.microsoft\..*'
-              type: frontmost_application_if
+          conditions: *conditions_frontmost_need_home_end
           from:
             key_code: a
             modifiers:
@@ -132,10 +166,7 @@ profiles:
             - key_code: delete_or_backspace
           type: basic
         - description: 'option-b: back a word'
-          conditions: &conditions_frontmost_not_emacs
-            - bundle_identifiers:
-                - '^org\.gnu\.Emacs.*'
-              type: frontmost_application_unless
+          conditions: *conditions_frontmost_not_emacs
           from:
             key_code: b
             modifiers:
@@ -190,20 +221,14 @@ profiles:
         - description: 'command-control-d: page_down'
           from:
               key_code: d
-              modifiers: &modifiers_cg
-                mandatory:
-                  - control
-                  - command
+              modifiers: *modifiers_cg
           to:
             - key_code: page_down
           type: basic
         - description: 'command-control-u: page_up'
           from:
               key_code: u
-              modifiers: &modifiers_cg
-                mandatory:
-                  - control
-                  - command
+              modifiers: *modifiers_cg
           to:
             - key_code: page_up
           type: basic
@@ -236,10 +261,7 @@ profiles:
 
       # Layer 1
         - description: 'tab: tab, layer 1(option control)'
-          conditions: &conditions_layer0
-            - name: layer
-              type: variable_if
-              value: 0
+          conditions: *conditions_layer0
           from:
             key_code: tab
             modifiers:
@@ -281,10 +303,7 @@ profiles:
         # Layout 2
           # F1-F12
         - description: '1: 2.f1'
-          conditions: &conditions_layer1
-          - name: layer
-            type: variable_if
-            value: 2
+          conditions: *conditions_layer1
           from:
             key_code: "1"
             modifiers: *modifiers_any
@@ -380,10 +399,7 @@ profiles:
           type: basic
 
         - description: 'p: 2.volume_increment'
-          conditions: &conditions_layer2
-            - name: layer
-              type: variable_if
-              value: 2
+          conditions: *conditions_layer2
           from:
             key_code: p
           to:
@@ -406,18 +422,13 @@ profiles:
 
     # Layer 1 common layout
         - description: '1.a'
-          conditions: &conditions_layer1
-            - name: layer
-              type: variable_if
-              value: 1
+          conditions: *conditions_layer1
           from:
             key_code: a
             modifiers: *modifiers_any
           to:
             - key_code: a
-              modifiers: &modifiers_layer1
-                - option
-                - control
+              modifiers: *modifiers_layer1
           type: basic
         - description: '1.b'
           conditions: *conditions_layer1
@@ -806,33 +817,26 @@ profiles:
           type: basic 
 
     # Layer 2 common layout
-        - description: 'l: 2.hyper-l(iTunes Next)[Keyboard Maestro]'
+        - description: 'l: 2.hyper-l(Media Next)'
           conditions: *conditions_layer2
           from:
             key_code: l
           to:
-            - key_code: l
-              modifiers: &modifiers_hyper
-                - control
-                - option
-                - shift
-                - command
+            - key_code: fastforward
           type: basic
-        - description: 'k: 2.hyper-k(iTunes Play/Pause)[Keyboard Maestro]'
+        - description: 'k: 2.hyper-k(Media Play/Plause)'
           conditions: *conditions_layer2
           from:
             key_code: k
           to:
-            - key_code: k
-              modifiers: *modifiers_hyper
+            - key_code: play_or_pause
           type: basic
-        - description: 'j: 2.hyper-j(iTunes Previous)[Keyboard Maestro]'
+        - description: 'j: 2.hyper-j(Media Previous)'
           conditions: *conditions_layer2
           from:
             key_code: j
           to:
-            - key_code: j
-              modifiers: *modifiers_hyper
+            - key_code: rewind
           type: basic
         - description: 'n: 2.hyper-n(iTunes volume down)[Keyboard Maestro]'
           conditions: *conditions_layer2
