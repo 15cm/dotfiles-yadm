@@ -84,7 +84,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -192,6 +192,7 @@ alias ew="emacsclient -s misc -t "
 alias more="more -R"
 alias ccat="ccat -C always"
 alias cg="cd-gitroot"
+
 # _____________________ Alias  _____________________
 
 # --------------------- colorls ---------------------
