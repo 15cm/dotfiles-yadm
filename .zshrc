@@ -205,16 +205,18 @@ alias cg="cd-gitroot"
 
 # --------------------- exa ---------------------
 if which exa > /dev/null; then
-  _ls_cmd="exa --color always --group-directories-first"
+  _ls_cmd="exa --color automatic --group-directories-first"
   alias ls="$_ls_cmd --git-ignore"
-  alias ll="$_ls_cmd -l --git --git-ignore"
   alias la="$_ls_cmd -al --git"
+  alias ll="$_ls_cmd -l --git --git-ignore"
+  alias l="$_ls_cmd -l --git --git-ignore"
   alias tree="$_ls_cmd --tree"
   _tree_cmd="$_ls_cmd --tree --level 4"
 else
   _ls_cmd="ls --color=tty --group-directories-first"
   alias ls="$_ls_cmd"
   alias ll="$_ls_cmd -lh"
+  alias l="$_ls_cmd -lh"
   alias la="$_ls_cmd -lAh"
   _tree_cmd="tree -C"
 fi
