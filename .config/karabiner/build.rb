@@ -9,8 +9,8 @@ class ::Hash
     end
 end
 
-a = YAML.load_file('karabiner.yaml')
-b = YAML.load_file('private.yaml')
+a = YAML.load_file('karabiner.yml')
+b = YAML.load_file('private.yml')
 b.each do |x|
     a["profiles"][0]["complex_modifications"]["rules"][0]["manipulators"] << x
 end
