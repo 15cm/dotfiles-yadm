@@ -7,6 +7,10 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+
+# Disable updates
+DISABLE_UPDATE_PROMPT=true
+DISABLE_AUTO_UPDATE=true
 # _____________________ Common Config  _____________________
 
 # --------------------- Functions ---------------------
