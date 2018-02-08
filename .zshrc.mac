@@ -3,6 +3,7 @@
 # alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "
 alias mux="tmuxinator"
 alias clip="nc localhost 8377"
+alias th="trash"
 # Proxy Alias
 # alias brew="p brew"
 # lias git="p git"
