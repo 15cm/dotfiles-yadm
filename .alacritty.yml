@@ -92,7 +92,12 @@ color_schemes:
       background: '0xfdf6e3'
       foreground: '0x586e75'
 
+    # Colors the cursor will use if `custom_cursor_colors` is true
+    cursor:
+      text: '0xfdf6e3'
+      cursor: '0x586e75'
       # Normal colors
+
     normal:
       black:   '0x073642'
       red:     '0xdc322f'
@@ -140,7 +145,7 @@ color_schemes:
       cyan: '0x8FBCBB'
       white: '0xECEFF4'
 
-colors: *color_scheme_dark
+colors: *color_scheme_light
 
 # Visual Bell
 #
