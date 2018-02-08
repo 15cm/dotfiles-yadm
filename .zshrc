@@ -205,7 +205,7 @@ alias cg="cd-gitroot"
 
 # --------------------- exa ---------------------
 if which exa > /dev/null; then
-  _ls_cmd="exa --color always --group-directories-first -I"
+  _ls_cmd="exa --color always --group-directories-first"
   alias ls="$_ls_cmd --git-ignore"
   alias ll="$_ls_cmd -l --git --git-ignore"
   alias la="$_ls_cmd -al --git"
