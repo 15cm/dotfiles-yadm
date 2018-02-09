@@ -84,11 +84,100 @@ export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 export PATH="$PATH:$HOME/go/bin"
 # _____________________ PATH _____________________
 
+# --------------------- fzf ---------------------
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_TMUX=0
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all'"
+export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {})) | head -200'"
+export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --no-ignore --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --no-ignore --follow --exclude ".git" . "$1"
+}
+
+# fzf z binding
+__fzf_z() {
+  z -l | sed 's/^[0-9,.]* *//' \
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200" --preview-window right:30%:wrap
+}
+
+__fzf_z_arg() {
+  __fzf_z | while read item; do printf ' %q/' "$item"; done
+  echo
+}
+
+__fzf_z_arg_widget() {
+  LBUFFER="${LBUFFER}$(__fzf_z_arg)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __fzf_z_arg_widget
+
+# alt-j
+bindkey '^[j' __fzf_z_arg_widget
+
+__fzf_z_cd_widget() {
+  local dir=$(__fzf_z)
+  cd "$dir"
+  local ret=$?
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __fzf_z_cd_widget
+
+# ctrl-j
+bindkey '^j' __fzf_z_cd_widget
+
+# fzf dirs under current dir
+__fzf_dir() {
+  set -o nonomatch
+  _fzf_compgen_dir . \
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200" \
+    | while read item; do printf ' %q/' "$item"; done
+  echo
+}
+
+__fzf_dir_widget() {
+  LBUFFER="${LBUFFER}$(__fzf_dir)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __fzf_dir_widget
+
+bindkey '^x' fzf-cd-widget
+# alt-t
+bindkey '^[x' __fzf_dir_widget
+
+export FZF_COMPLETION_TRIGGER=':'
+
+# _____________________ fzf and z _____________________
+
 # --------------------- Plugins ---------------------
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm fzf-tab-completion)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -212,92 +301,6 @@ else
 fi
 # _____________________ exa _____________________
 
-# --------------------- fzf and z ---------------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-export FZF_DEFAULT_OPTS="--height 40% -m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {})) | head -200'"
-export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
-
-# Use fd (https://github.com/sharkdp/fd) instead of the default find
-# command for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
-}
-
-# fzf z binding
-__my_fzf_z() {
-  set -o nonomatch
-  z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf -m --tac --reverse --preview "$_tree_cmd {} | head -400" \
-    | while read item; do printf '%q' "$item"; done
-  echo
-}
-
-__my_fzf_z_widget() {
-  LBUFFER="${LBUFFER}$(__my_fzf_z)"
-  local ret=$?
-  zle redisplay
-  typeset -f zle-line-init >/dev/null && zle zle-line-init
-  return $ret
-}
-
-zle -N __my_fzf_z_widget
-
-# alt-j
-bindkey '^[j' __my_fzf_z_widget
-
-__my_fzf_z_cd_widget() {
-  local dir=$(z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf --tac --reverse --preview "$_tree_cmd {} | head -400")
-  cd "$dir"
-  local ret=$?
-  zle fzf-redraw-prompt
-  typeset -f zle-line-init >/dev/null && zle zle-line-init
-  return $ret
-}
-
-zle -N __my_fzf_z_cd_widget
-
-# ctrl-j
-bindkey '^j' __my_fzf_z_cd_widget
-
-# fzf dirs under current dir
-__my_fzf_dir() {
-  set -o nonomatch
-  _fzf_compgen_dir . \
-    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200" \
-    | while read item; do printf '%q' "$item"; done
-  echo
-}
-
-__my_fzf_dir_widget() {
-  LBUFFER="${LBUFFER}$(__my_fzf_dir)"
-  local ret=$?
-  zle redisplay
-  typeset -f zle-line-init >/dev/null && zle zle-line-init
-  return $ret
-}
-
-zle -N __my_fzf_dir_widget
-# ctrl-y
-bindkey '^y' fzf-cd-widget
-# alt-y
-bindkey '^[y' __my_fzf_dir_widget
-
-# _____________________ fzf and z _____________________
-
 # --------------------- Config for local and remote machine ---------------------
 if is_osx; then
   source $HOME/.zshrc.mac
@@ -322,14 +325,6 @@ alias op="open"
 # --------------------- Function Alias ---------------------
 rp() {
   realpath $1 | clip
-}
-
-function mdd() {
-  local dir=$(mdfind "kind:folder" $1 | fzf --preview "$_tree_cmd {} | head -500") && cd "$dir"
-}
-
-function mdf() {
-  local f=$(mdfind "kind:file" $1 | fzf --preview "highlight -O ansi -l {} 2> /dev/null || cat {}") && open "$f"
 }
 
 # _____________________ Function Alias _____________________
