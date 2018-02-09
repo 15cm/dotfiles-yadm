@@ -34,7 +34,7 @@ function oemacs {
 # --------------------- fzf ---------------------
 __fzf_mdfind() {
   mdfind "kind:folder" \
-    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200"  --preview-window right:30%:wrap
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200"  --preview-window right:30%
 }
 
 __fzf_mdfind_arg() {
