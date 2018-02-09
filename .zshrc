@@ -214,7 +214,7 @@ fi
 
 # --------------------- fzf and z ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_TMUX=1
+export FZF_TMUX=0
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
@@ -252,9 +252,23 @@ __my_fzf_z_widget() {
   typeset -f zle-line-init >/dev/null && zle zle-line-init
   return $ret
 }
-
 zle -N __my_fzf_z_widget
-bindkey '\C-j' __my_fzf_z_widget
+
+__my_fzf_z_cd_widget() {
+  local dir=$(z -l 2>&1 | sed 's/^[0-9,.]* *//' \
+    | fzf --height 40% --tac --reverse --preview "$_tree_cmd {} | head -200")
+  cd "$dir"
+  local ret=$?
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __my_fzf_z_cd_widget
+# alt-j
+bindkey '^[j' __my_fzf_z_widget
+# ctrl-j
+bindkey '^j' __my_fzf_z_cd_widget
 
 # fzf dirs under current dir
 __my_fzf_dir() {
@@ -274,7 +288,10 @@ __my_fzf_dir_widget() {
 }
 
 zle -N __my_fzf_dir_widget
-bindkey '\C-y' __my_fzf_dir_widget
+# ctrl-y
+bindkey '^y' fzf-cd-widget
+# alt-y
+bindkey '^[y' __my_fzf_dir_widget
 
 # _____________________ fzf and z _____________________
 
