@@ -14,7 +14,7 @@ alias th="trash -a"
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
 
-# functions
+# function alias
 function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"
 }
@@ -29,6 +29,14 @@ function readBundleIdentifier {
 
 function oemacs {
   open $1 -a 'Emacs'
+}
+
+function mdd() {
+  local dir=$(mdfind "kind:folder" $1 | fzf --preview "$_tree_cmd {} | head -500") && cd "$dir"
+}
+
+function mdf() {
+  local f=$(mdfind "kind:file" $1 | fzf --preview "highlight -O ansi -l {} 2> /dev/null || cat {}") && open "$f"
 }
 
 # use coreutils without 'g' prefix

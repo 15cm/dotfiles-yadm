@@ -218,7 +218,7 @@ export FZF_TMUX=0
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
+export FZF_DEFAULT_OPTS="--height 40% -m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
 export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {})) | head -200'"
 export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
@@ -240,7 +240,7 @@ _fzf_compgen_dir() {
 __my_fzf_z() {
   set -o nonomatch
   z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf --height 40% -m --tac --reverse --preview "$_tree_cmd {} | head -200" \
+    | fzf -m --tac --reverse --preview "$_tree_cmd {} | head -400" \
     | while read item; do printf '%q' "$item"; done
   echo
 }
@@ -252,11 +252,15 @@ __my_fzf_z_widget() {
   typeset -f zle-line-init >/dev/null && zle zle-line-init
   return $ret
 }
+
 zle -N __my_fzf_z_widget
+
+# alt-j
+bindkey '^[j' __my_fzf_z_widget
 
 __my_fzf_z_cd_widget() {
   local dir=$(z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf --height 40% --tac --reverse --preview "$_tree_cmd {} | head -200")
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -400")
   cd "$dir"
   local ret=$?
   zle fzf-redraw-prompt
@@ -265,8 +269,7 @@ __my_fzf_z_cd_widget() {
 }
 
 zle -N __my_fzf_z_cd_widget
-# alt-j
-bindkey '^[j' __my_fzf_z_widget
+
 # ctrl-j
 bindkey '^j' __my_fzf_z_cd_widget
 
@@ -274,7 +277,7 @@ bindkey '^j' __my_fzf_z_cd_widget
 __my_fzf_dir() {
   set -o nonomatch
   _fzf_compgen_dir . \
-    | fzf --height 40% -m --tac --reverse --preview "$_tree_cmd {} | head -200" \
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200" \
     | while read item; do printf '%q' "$item"; done
   echo
 }
@@ -312,6 +315,7 @@ alias ew="emacsclient -s misc -t "
 alias more="more -R"
 alias ccat="ccat -C always"
 alias cg="cd-gitroot"
+alias op="open"
 
 # _____________________ Common Alias  _____________________
 
@@ -319,6 +323,15 @@ alias cg="cd-gitroot"
 rp() {
   realpath $1 | clip
 }
+
+function mdd() {
+  local dir=$(mdfind "kind:folder" $1 | fzf --preview "$_tree_cmd {} | head -500") && cd "$dir"
+}
+
+function mdf() {
+  local f=$(mdfind "kind:file" $1 | fzf --preview "highlight -O ansi -l {} 2> /dev/null || cat {}") && open "$f"
+}
+
 # _____________________ Function Alias _____________________
 
 # --------------------- profiling ---------------------
