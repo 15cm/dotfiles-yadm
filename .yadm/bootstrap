@@ -1,6 +1,6 @@
 #!/bin/bash
-is_linux () {
-  [[ $('uname') == 'Linux' ]];
+is_arch () {
+  which pacman > /dev/null
 }
 
 is_osx () {
@@ -38,48 +38,68 @@ if is_osx; then
   $pacman_install pyenv
   # rbenv
   $pacman_install rbenv
+  # fd
+  $pacman_install fd
 
-elif is_linux; then
-  pacman_install="apt-get -y install"
-  # folders
-  [ -d ~/local/bin ] || mkdir -p ~/local/bin
-  # sudo
-  which sudo > /dev/null || $pacman_install sudo
-  # vim
-  which vim > /dev/null || sudo $pacman_install vim
-  # curl
-  which curl > /dev/null || sudo $pacman_install curl
-  # ZSH
-  which zsh > /dev/null || sudo $pacman_install zsh
-  # Tmux
-  which tmux > /dev/null || sudo $pacman_install tmux
-  # pip & Powerline
-  SYS_PYTHON="/usr/bin/python"
-  SYS_PIP="/usr/bin/pip"
-  [[ -f $SYS_PYTHON ]] || sudo $pacman_install python
-  [[ -f $SYS_PIP ]] || sudo $pacman_install python-pip
-  sudo $SYS_PIP install powerline-status
-  sudo $SYS_PIP install powerline-gitstatus
-  # jq
-  sudo $pacman_install jq
-  # exa
-  tmpf=$(mktemp)
-  wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O $tmpf \
-    && unzip $tmpf -d ~/local/bin && rm $tmpf \
-    && mv ~/local/bin/exa-linux-x86_64 ~/local/bin/exa
-  # Keychain
-  which keychain > /dev/null || sudo $pacman_install keychain
-  # fpp
-  git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
-  # urlview
-  sudo apt-get -y install urlview
-  # pyenv
-  git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+else
+  if is_arch; then
+    which yaourt > /dev/null || pacman -S --noconfirm yaourt
+    pacman_install="yaourt -S --noconfirm"
+  else
+    pacman_install="apt-get -y install"
+  fi
+    # folders
+    [ -d ~/local/bin ] || mkdir -p ~/local/bin
+    # sudo
+    which sudo > /dev/null || $pacman_install sudo
+    # vim
+    which vim > /dev/null || sudo $pacman_install vim
+    # curl
+    which curl > /dev/null || sudo $pacman_install curl
+    # ZSH
+    which zsh > /dev/null || sudo $pacman_install zsh
+    # Tmux
+    which tmux > /dev/null || sudo $pacman_install tmux
+    # pip & Powerline
+    SYS_PYTHON="/usr/bin/python"
+    SYS_PIP="/usr/bin/pip"
+    [[ -f $SYS_PYTHON ]] || sudo $pacman_install python
+    [[ -f $SYS_PIP ]] || sudo $pacman_install python-pip
+    sudo $SYS_PIP install powerline-status
+    sudo $SYS_PIP install powerline-gitstatus
+    # jq
+    sudo $pacman_install jq
+    # exa
+    if is_arch; then
+      sudo $pacman_install exa
+    else
+      tmpf=$(mktemp)
+      wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O $tmpf \
+        && unzip $tmpf -d ~/local/bin && rm $tmpf \
+        && mv ~/local/bin/exa-linux-x86_64 ~/local/bin/exa
+    fi
+    # Keychain
+    which keychain > /dev/null || sudo $pacman_install keychain
+    # fpp
+    git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
+    # urlview
+    sudo apt-get -y install urlview
+    # pyenv
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    # fd
+    if is_arch; then
+      $pacman_install fd-rs
+    else
+      tmpv="6.2.0"
+      tmpf="fd_${tmpv}_amd64.deb"
+      tmpl="https://github.com/sharkdp/fd/releases/download/v${tmpv}/${tmpf}"
+      wget $tmpl -O /tmp/${tmpf} && sudo dpkg -i /tmp/${tmpf} && rm /tmp/${tmpf}
+    fi
 
-  # rbenv & ruby-build
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-
+    # rbenv & ruby-build
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  fi
 fi
 
 # Oh-my-zsh
