@@ -31,13 +31,40 @@ function oemacs {
   open $1 -a 'Emacs'
 }
 
-function mdd() {
-  local dir=$(mdfind "kind:folder" $1 | fzf --preview "$_tree_cmd {} | head -500") && cd "$dir"
+# --------------------- fzf ---------------------
+__fzf_mdfind() {
+  mdfind "kind:folder" \
+    | fzf --tac --reverse --preview "$_tree_cmd {} | head -200"  --preview-window right:30%:wrap
 }
 
-function mdf() {
-  local f=$(mdfind "kind:file" $1 | fzf --preview "highlight -O ansi -l {} 2> /dev/null || cat {}") && open "$f"
+__fzf_mdfind_arg() {
+  __fzf_mdfind | while read item; do printf ' %q/' "$item"; done
 }
+
+__fzf_mdfind_arg_widget() {
+  LBUFFER="${LBUFFER}$(__fzf_mdfind_arg)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __fzf_mdfind_arg_widget
+
+# alt-j
+bindkey '^[y' __fzf_mdfind_arg_widget
+
+__fzf_mdfind_cd_widget() {
+  local dir=$(__fzf_mdfind) && cd $dir
+  local ret=$?
+  zle fzf-redraw-prompt
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+zle -N __fzf_mdfind_cd_widget
+bindkey '^y' __fzf_mdfind_cd_widget
+
+# _____________________ fzf _____________________
 
 # use coreutils without 'g' prefix
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/opt/gettext/bin"
