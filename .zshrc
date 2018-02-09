@@ -88,7 +88,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm fzf-tab-completion)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -191,27 +191,17 @@ lazy_load load_direnv direnv
 
 # _____________________ Version Management _____________________
 
-# --------------------- Alias ---------------------
-alias rz="source ~/.zshrc"
-alias vi="vim"
-alias st="~/dotfiles-helper/switch-theme.sh"
-alias gcmsg!="git commit --allow-empty-message -m ''"
-alias ew="emacsclient -s misc -t "
-alias more="more -R"
-alias ccat="ccat -C always"
-alias cg="cd-gitroot"
-
-# _____________________ Alias  _____________________
-
 # --------------------- exa ---------------------
 if which exa > /dev/null; then
-  _ls_cmd="exa --color automatic --group-directories-first"
+  _ls_cmd="exa --color always --group-directories-first --sort extension"
+  alias ls2="$_ls_cmd"
   alias ls="$_ls_cmd --git-ignore"
   alias la="$_ls_cmd -al --git"
   alias ll="$_ls_cmd -l --git --git-ignore"
   alias l="$_ls_cmd -l --git --git-ignore"
-  alias tree="$_ls_cmd --tree"
-  _tree_cmd="$_ls_cmd --tree --level 4"
+  alias tree="$_ls_cmd --tree --level 2 -l --git"
+  alias tree2="$_ls_cmd --tree"
+  _tree_cmd="$_ls_cmd --tree --level 2"
 else
   _ls_cmd="ls --color=tty --group-directories-first"
   alias ls="$_ls_cmd"
@@ -224,19 +214,34 @@ fi
 
 # --------------------- fzf and z ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# export FZF_TMUX=1
+export FZF_TMUX=1
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export FZF_DEFAULT_OPTS="-m --bind=ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all"
-export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && ($_tree_cmd {}))) | head -200'"
-export FZF_CTRL_R_OPT="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-export FZF_ALT_C_OPTS="--preview '($_tree_cmd {}) | head -200'"
+export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {})) | head -200'"
+export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
+
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
 
 # fzf z binding
 __my_fzf_z() {
   set -o nonomatch
   z -l 2>&1 | sed 's/^[0-9,.]* *//' \
-    | fzf --height 40% -m --tac --reverse --preview '$_tree_cmd {} | head -200' \
-    | while read item; do printf '%q ' "$item"; done
+    | fzf --height 40% -m --tac --reverse --preview "$_tree_cmd {} | head -200" \
+    | while read item; do printf '%q' "$item"; done
   echo
 }
 
@@ -250,8 +255,26 @@ __my_fzf_z_widget() {
 
 zle -N __my_fzf_z_widget
 bindkey '\C-j' __my_fzf_z_widget
-# override the default fzf-cd-widget key binding
-bindkey '\C-y' fzf-cd-widget
+
+# fzf dirs under current dir
+__my_fzf_dir() {
+  set -o nonomatch
+  _fzf_compgen_dir . \
+    | fzf --height 40% -m --tac --reverse --preview "$_tree_cmd {} | head -200" \
+    | while read item; do printf '%q' "$item"; done
+  echo
+}
+
+__my_fzf_dir_widget() {
+  LBUFFER="${LBUFFER}$(__my_fzf_dir)"
+  local ret=$?
+  zle redisplay
+  typeset -f zle-line-init >/dev/null && zle zle-line-init
+  return $ret
+}
+
+zle -N __my_fzf_dir_widget
+bindkey '\C-y' __my_fzf_dir_widget
 
 # _____________________ fzf and z _____________________
 
@@ -262,6 +285,24 @@ else
   source $HOME/.zshrc.linux
 fi
 # _____________________ Config for local and remote machine _____________________
+
+# --------------------- Common Alias ---------------------
+alias rz='exec $SHELL'
+alias vi="vim"
+alias st="~/dotfiles-helper/switch-theme.sh"
+alias gcmsg!="git commit --allow-empty-message -m ''"
+alias ew="emacsclient -s misc -t "
+alias more="more -R"
+alias ccat="ccat -C always"
+alias cg="cd-gitroot"
+
+# _____________________ Common Alias  _____________________
+
+# --------------------- Function Alias ---------------------
+rp() {
+  realpath $1 | clip
+}
+# _____________________ Function Alias _____________________
 
 # --------------------- profiling ---------------------
 # zprof
