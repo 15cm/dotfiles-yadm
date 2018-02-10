@@ -6,3 +6,4 @@ source "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/b
 
 # Copy
 bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel 'pbcopy'
+set -g @extrakto_clip_tool 'pbcopy'
