@@ -30,10 +30,6 @@ if is_osx; then
   $pacman_install jq
   # exa
   brew install exa
-  # fpp
-  which fpp > /dev/null || $pacman_install fpp
-  # urlview
-  $pacman_install urlview
   # pyenv
   $pacman_install pyenv
   # rbenv
@@ -80,10 +76,6 @@ else
     fi
     # Keychain
     which keychain > /dev/null || sudo $pacman_install keychain
-    # fpp
-    git clone https://github.com/facebook/PathPicker.git ~/local/ && ln -s ~/local/PathPicker/fpp ~/local/bin/
-    # urlview
-    sudo apt-get -y install urlview
     # pyenv
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     # fd
