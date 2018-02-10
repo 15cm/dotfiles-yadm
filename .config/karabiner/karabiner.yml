@@ -2,6 +2,15 @@ _anchors:
   modifiers_any: &modifiers_any
     optional:
       - any
+  modifiers_not_fn: &modifiers_not_fn
+    optional:
+      - control
+      - option
+      - shift
+      - command
+  modifiers_fn: &modifiers_fn
+    mandatory:
+      - fn
   modifiers_cg: &modifiers_cg
     mandatory:
       - control
@@ -14,6 +23,16 @@ _anchors:
     - option
     - shift
     - command
+  conditions_device_internal: &conditions_device_internal
+    - type: device_if
+      identifiers:
+        - vender_id: 1452
+        - product_id: 610
+  conditions_device_external: &conditions_device_external
+    - type: device_unless
+      identifiers:
+        - vender_id: 1452
+        - product_id: 610
   conditions_layer0: &conditions_layer0
     - name: layer
       type: variable_if
@@ -62,10 +81,19 @@ profiles:
       basic.to_if_alone_timeout_milliseconds: 500
     rules:
       - manipulators:
-        - description: 'caps_lock: escape, left_control'
+        - description: '(internal) fn-caps_lock: caps_lock'
+          conditions: *conditions_device_internal
           from:
             key_code: caps_lock
-            modifiers: *modifiers_any
+            modifiers: *modifiers_fn
+          to:
+            - key_code: caps_lock
+          type: basic
+        - description: '(interval) caps_lock: escape, left_control'
+          conditions: *conditions_device_internal
+          from:
+            key_code: caps_lock
+            modifiers: *modifiers_not_fn
           to:
             - key_code: left_control
           to_if_alone:
@@ -698,7 +726,6 @@ profiles:
           type: basic
 
         # layout 1
-
         - description: 'l: 2.hyper-l(Media Next)'
           conditions: *conditions_layer2
           from:
