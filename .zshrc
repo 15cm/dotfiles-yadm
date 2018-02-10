@@ -77,7 +77,7 @@ export NVM_LAZY_LOAD=true
 # _____________________ ENV _____________________
 
 # --------------------- PATH ---------------------
-export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:$HOME/local/bin:$PATH"
 # Path for powerline on mac
 export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 # Path for go
@@ -314,7 +314,7 @@ fi
 # --------------------- Common Alias ---------------------
 alias rz='exec $SHELL'
 alias vi="vim"
-alias st="~/dotfiles-helper/switch-theme.sh"
+alias st="switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
 alias ew="emacsclient -s misc -t "
 alias more="more -R"
