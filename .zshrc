@@ -215,7 +215,7 @@ fi
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND="fd --type f --no-ignore --follow --exclude '.git' "
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all'"
@@ -321,7 +321,7 @@ alias more="more -R"
 alias ccat="ccat -C always"
 alias cg="cd-gitroot"
 alias op="open"
-
+alias prl="parallel"
 # _____________________ Common Alias  _____________________
 
 # --------------------- Function Alias ---------------------
