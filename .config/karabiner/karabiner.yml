@@ -180,7 +180,7 @@ profiles:
             - key_code: delete_forward
           type: basic
         - description: 'control-k: kill to end'
-          conditions:  *conditions_frontmost_not_partial_emacs
+          conditions:  *conditions_frontmost_need_home_end
           from:
             key_code: k
             modifiers:
