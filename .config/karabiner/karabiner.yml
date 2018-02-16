@@ -1,37 +1,47 @@
 _anchors:
-  modifiers_any: &modifiers_any
+  modifiers_filter_any: &modifiers_filter_any
     optional:
       - any
-  modifiers_not_fn: &modifiers_not_fn
+  modifiers_filter_not_fn: &modifiers_filter_not_fn
     optional:
       - control
       - option
       - shift
       - command
-  modifiers_fn: &modifiers_fn
+  modifiers_filter_fn: &modifiers_filter_fn
     mandatory:
       - fn
-  modifiers_cg: &modifiers_cg
+  modifiers_filter_control_command: &modifiers_filter_control_command
     mandatory:
       - control
       - command
-  modifiers_layer1: &modifiers_layer1
+  modifiers_filter_option_shift: &modifiers_filter_option_shift
+    mandatory:
+      - shift
+      - option
+  # layer 1
+  modifiers_command_option_shift: &modifiers_command_option_shift
+    - command
+    - shift
+    - option
+  # layer 2
+  modifiers_control_option: &modifiers_control_option
     - option
     - control
-  modifiers_hyper: &modifiers_hyper
+  # layer 3
+  modifierscontrol_command_shift: &modifierscontrol_command_shift
     - control
-    - option
     - shift
     - command
   conditions_device_internal: &conditions_device_internal
     - type: device_if
       identifiers:
-        - vender_id: 1452
+        - vendor_id: 1452
         - product_id: 610
   conditions_device_external: &conditions_device_external
     - type: device_unless
       identifiers:
-        - vender_id: 1452
+        - vendor_id: 1452
         - product_id: 610
   conditions_layer0: &conditions_layer0
     - name: layer
@@ -41,10 +51,33 @@ _anchors:
     - name: layer
       type: variable_if
       value: 1
+  conditions_layer1_item: &conditions_layer1_item
+    name: layer
+    type: variable_if
+    value: 1
+  conditions_layer1_input_en: &conditions_layer1_input_en
+    - *conditions_layer1_item
+    - type: input_source_if
+      input_sources:
+        - language: en
+  conditions_layer1_input_zh: &conditions_layer1_input_zh
+    - *conditions_layer1_item
+    - type: input_source_if
+      input_sources:
+        - language: zh-Hans
+  conditions_layer1_input_ja: &conditions_layer1_input_ja
+    - *conditions_layer1_item
+    - type: input_source_if
+      input_sources:
+        - language: ja
   conditions_layer2: &conditions_layer2
     - name: layer
       type: variable_if
       value: 2
+  conditions_layer3: &conditions_layer3
+    - name: layer
+      type: variable_if
+      value: 3
   conditions_frontmost_not_partial_emacs: &conditions_frontmost_not_partial_emacs
     - bundle_identifiers:
         - '^org\.gnu\.Emacs.*'
@@ -85,7 +118,7 @@ profiles:
           conditions: *conditions_device_internal
           from:
             key_code: caps_lock
-            modifiers: *modifiers_fn
+            modifiers: *modifiers_filter_fn
           to:
             - key_code: caps_lock
           type: basic
@@ -93,7 +126,7 @@ profiles:
           conditions: *conditions_device_internal
           from:
             key_code: caps_lock
-            modifiers: *modifiers_not_fn
+            modifiers: *modifiers_filter_not_fn
           to:
             - key_code: left_control
           to_if_alone:
@@ -249,14 +282,14 @@ profiles:
         - description: 'command-control-d: page_down'
           from:
               key_code: d
-              modifiers: *modifiers_cg
+              modifiers: *modifiers_filter_control_command
           to:
             - key_code: page_down
           type: basic
         - description: 'command-control-u: page_up'
           from:
               key_code: u
-              modifiers: *modifiers_cg
+              modifiers: *modifiers_filter_control_command
           to:
             - key_code: page_up
           type: basic
@@ -274,27 +307,12 @@ profiles:
             - key_code: f6
           type: basic
 
-      # Space to mec-space
-        - description: 'space: mec-space'
-          from:
-            key_code: spacebar
-          to:
-            - key_code: left_command
-              modifiers:
-                - shift
-                - option
-          to_if_alone:
-            - key_code: spacebar
-          type: basic
-
       # Layer 1
-        - description: 'tab: tab, layer 1(option control)'
+        - description: 'space: space, layer 1(option control)'
           conditions: *conditions_layer0
           from:
-            key_code: tab
-            modifiers:
-              optional:
-                - shift
+            key_code: spacebar
+            modifiers: *modifiers_filter_any
           to:
             - set_variable:
                 name: layer
@@ -304,415 +322,461 @@ profiles:
                 name: layer
                 value: 0
           to_if_alone:
-            - key_code: tab
+            - key_code: spacebar
           type: basic
-
-    # layout 1(generated)
+        # layout 1(switch input source)
+          # switch to EN
         - description: '1.a'
-          conditions: *conditions_layer1
+          conditions: *conditions_layer1_input_en
           from:
             key_code: a
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
-            - key_code: a
-              modifiers: *modifiers_layer1
+            - key_code: vk_none
           type: basic
+        - description: '1.a'
+          conditions: *conditions_layer1_input_zh
+          from:
+            key_code: a
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+          type: basic
+        - description: '1.a'
+          conditions: *conditions_layer1_input_ja
+          from:
+            key_code: a
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+            - key_code: f18
+          type: basic
+          # switch to ZH
+        - description: '1.s'
+          conditions: *conditions_layer1_input_en
+          from:
+            key_code: s
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+            - key_code: f18
+          type: basic 
+        - description: '1.s'
+          conditions: *conditions_layer1_input_zh
+          from:
+            key_code: s
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: vk_none
+          type: basic 
+        - description: '1.s'
+          conditions: *conditions_layer1_input_ja
+          from:
+            key_code: s
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+          type: basic 
+          # switch to JA
+        - description: '1.d'
+          conditions: *conditions_layer1_input_en
+          from:
+            key_code: d
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+          type: basic 
+        - description: '1.d'
+          conditions: *conditions_layer1_input_zh
+          from:
+            key_code: d
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f18
+            - key_code: f18
+          type: basic 
+        - description: '1.d'
+          conditions: *conditions_layer1_input_ja
+          from:
+            key_code: d
+            modifiers: *modifiers_filter_any
+          to:
+          - key_code: vk_none
+          type: basic 
+
+        # layout 2(generated)
         - description: '1.b'
           conditions: *conditions_layer1
           from:
             key_code: b
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: b
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.c'
           conditions: *conditions_layer1
           from:
             key_code: c
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: c
-              modifiers: *modifiers_layer1
-          type: basic 
-
-        - description: '1.d'
-          conditions: *conditions_layer1
-          from:
-            key_code: d
-            modifiers: *modifiers_any
-          to:
-            - key_code: d
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.e'
           conditions: *conditions_layer1
           from:
             key_code: e
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: e
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.f'
           conditions: *conditions_layer1
           from:
             key_code: f
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: f
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.g'
           conditions: *conditions_layer1
           from:
             key_code: g
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: g
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.h'
           conditions: *conditions_layer1
           from:
             key_code: h
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: h
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.i'
           conditions: *conditions_layer1
           from:
             key_code: i
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: i
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.j'
           conditions: *conditions_layer1
           from:
             key_code: j
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: j
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.k'
           conditions: *conditions_layer1
           from:
             key_code: k
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: k
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.l'
           conditions: *conditions_layer1
           from:
             key_code: l
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: l
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.m'
           conditions: *conditions_layer1
           from:
             key_code: m
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: m
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.n'
           conditions: *conditions_layer1
           from:
             key_code: n
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: n
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.o'
           conditions: *conditions_layer1
           from:
             key_code: o
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: o
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.p'
           conditions: *conditions_layer1
           from:
             key_code: p
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: p
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.q'
           conditions: *conditions_layer1
           from:
             key_code: q
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: q
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.r'
           conditions: *conditions_layer1
           from:
             key_code: r
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: r
-              modifiers: *modifiers_layer1
-          type: basic 
-
-        - description: '1.s'
-          conditions: *conditions_layer1
-          from:
-            key_code: s
-            modifiers: *modifiers_any
-          to:
-            - key_code: s
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.t'
           conditions: *conditions_layer1
           from:
             key_code: t
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: t
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.u'
           conditions: *conditions_layer1
           from:
             key_code: u
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: u
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.v'
           conditions: *conditions_layer1
           from:
             key_code: v
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: v
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.w'
           conditions: *conditions_layer1
           from:
             key_code: w
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: w
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.x'
           conditions: *conditions_layer1
           from:
             key_code: x
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: x
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.y'
           conditions: *conditions_layer1
           from:
             key_code: y
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: y
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.z'
           conditions: *conditions_layer1
           from:
             key_code: z
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: z
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
         - description: '1.0'
           conditions: *conditions_layer1
           from:
             key_code: "0"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "0"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.1'
           conditions: *conditions_layer1
           from:
             key_code: "1"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "1"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.2'
           conditions: *conditions_layer1
           from:
             key_code: "2"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "2"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.3'
           conditions: *conditions_layer1
           from:
             key_code: "3"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "3"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.4'
           conditions: *conditions_layer1
           from:
             key_code: "4"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "4"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.5'
           conditions: *conditions_layer1
           from:
             key_code: "5"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "5"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.6'
           conditions: *conditions_layer1
           from:
             key_code: "6"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "6"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.7'
           conditions: *conditions_layer1
           from:
             key_code: "7"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "7"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.8'
           conditions: *conditions_layer1
           from:
             key_code: "8"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "8"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.9'
           conditions: *conditions_layer1
           from:
             key_code: "9"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: "9"
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.return_or_enter'
           conditions: *conditions_layer1
           from:
             key_code: return_or_enter
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: return_or_enter
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.spacebar'
           conditions: *conditions_layer1
           from:
             key_code: spacebar
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: spacebar
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.comma'
           conditions: *conditions_layer1
           from:
             key_code: comma
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: comma
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.period'
           conditions: *conditions_layer1
           from:
             key_code: period
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: period
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
         - description: '1.open_bracket'
           conditions: *conditions_layer1
           from:
             key_code: open_bracket
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
             - key_code: open_bracket
-              modifiers: *modifiers_layer1
+              modifiers: *modifiers_command_option_shift
           type: basic 
 
-
       # Layer 2
-        - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer2(hyper)'
+        - description: 'tab: tab, layer2(control option)'
           conditions: *conditions_layer0
           from:
-            key_code: grave_accent_and_tilde
-            modifiers:
-              optional:
-                - control
-                - command
+            key_code: tab
+            modifiers: *modifiers_filter_any
           to:
             - set_variable:
                 name: layer
@@ -722,178 +786,604 @@ profiles:
                 name: layer
                 value: 0
           to_if_alone:
+            - key_code: tab
+          type: basic
+
+        # layout 1(generated)
+        - description: '2.a'
+          conditions: *conditions_layer2
+          from:
+            key_code: a
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: a
+              modifiers: *modifiers_control_option
+          type: basic
+
+        - description: '2.b'
+          conditions: *conditions_layer2
+          from:
+            key_code: b
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: b
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.c'
+          conditions: *conditions_layer2
+          from:
+            key_code: c
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: c
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.d'
+          conditions: *conditions_layer2
+          from:
+            key_code: d
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: d
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.e'
+          conditions: *conditions_layer2
+          from:
+            key_code: e
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: e
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.f'
+          conditions: *conditions_layer2
+          from:
+            key_code: f
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: f
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.g'
+          conditions: *conditions_layer2
+          from:
+            key_code: g
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: g
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.h'
+          conditions: *conditions_layer2
+          from:
+            key_code: h
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: h
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.i'
+          conditions: *conditions_layer2
+          from:
+            key_code: i
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: i
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.j'
+          conditions: *conditions_layer2
+          from:
+            key_code: j
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: j
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.k'
+          conditions: *conditions_layer2
+          from:
+            key_code: k
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: k
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.l'
+          conditions: *conditions_layer2
+          from:
+            key_code: l
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: l
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.m'
+          conditions: *conditions_layer2
+          from:
+            key_code: m
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: m
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.n'
+          conditions: *conditions_layer2
+          from:
+            key_code: n
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: n
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.o'
+          conditions: *conditions_layer2
+          from:
+            key_code: o
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: o
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.p'
+          conditions: *conditions_layer2
+          from:
+            key_code: p
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: p
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.q'
+          conditions: *conditions_layer2
+          from:
+            key_code: q
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: q
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.r'
+          conditions: *conditions_layer2
+          from:
+            key_code: r
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: r
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.s'
+          conditions: *conditions_layer2
+          from:
+            key_code: s
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: s
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.t'
+          conditions: *conditions_layer2
+          from:
+            key_code: t
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: t
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.u'
+          conditions: *conditions_layer2
+          from:
+            key_code: u
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: u
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.v'
+          conditions: *conditions_layer2
+          from:
+            key_code: v
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: v
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.w'
+          conditions: *conditions_layer2
+          from:
+            key_code: w
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: w
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.x'
+          conditions: *conditions_layer2
+          from:
+            key_code: x
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: x
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.y'
+          conditions: *conditions_layer2
+          from:
+            key_code: y
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: y
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.z'
+          conditions: *conditions_layer2
+          from:
+            key_code: z
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: z
+              modifiers: *modifiers_control_option
+          type: basic 
+
+        - description: '2.0'
+          conditions: *conditions_layer2
+          from:
+            key_code: "0"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "0"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.1'
+          conditions: *conditions_layer2
+          from:
+            key_code: "1"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "1"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.2'
+          conditions: *conditions_layer2
+          from:
+            key_code: "2"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "2"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.3'
+          conditions: *conditions_layer2
+          from:
+            key_code: "3"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "3"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.4'
+          conditions: *conditions_layer2
+          from:
+            key_code: "4"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "4"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.5'
+          conditions: *conditions_layer2
+          from:
+            key_code: "5"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "5"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.6'
+          conditions: *conditions_layer2
+          from:
+            key_code: "6"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "6"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.7'
+          conditions: *conditions_layer2
+          from:
+            key_code: "7"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "7"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.8'
+          conditions: *conditions_layer2
+          from:
+            key_code: "8"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "8"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.9'
+          conditions: *conditions_layer2
+          from:
+            key_code: "9"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "9"
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.return_or_enter'
+          conditions: *conditions_layer2
+          from:
+            key_code: return_or_enter
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: return_or_enter
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.spacebar'
+          conditions: *conditions_layer2
+          from:
+            key_code: spacebar
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: spacebar
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.comma'
+          conditions: *conditions_layer2
+          from:
+            key_code: comma
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: comma
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.period'
+          conditions: *conditions_layer2
+          from:
+            key_code: period
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: period
+              modifiers: *modifiers_control_option
+          type: basic 
+        - description: '2.open_bracket'
+          conditions: *conditions_layer2
+          from:
+            key_code: open_bracket
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: open_bracket
+              modifiers: *modifiers_control_option
+          type: basic 
+      # Layer 3
+        - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer3(hyper)'
+          conditions: *conditions_layer0
+          from:
+            key_code: grave_accent_and_tilde
+            modifiers: *modifiers_filter_any
+          to:
+            - set_variable:
+                name: layer
+                value: 3
+          to_after_key_up:
+            - set_variable:
+                name: layer
+                value: 0
+          to_if_alone:
             - key_code: grave_accent_and_tilde
           type: basic
 
         # layout 1
-        - description: 'l: 2.hyper-l(Media Next)'
-          conditions: *conditions_layer2
+        - description: 'l: 3.hyper-l(Media Next)[Clementine]'
+          conditions: *conditions_layer3
           from:
             key_code: l
           to:
-            - key_code: fastforward
+            - key_code: l
+              modifiers: *modifierscontrol_command_shift
           type: basic
-        - description: 'k: 2.hyper-k(Media Play/Plause)'
-          conditions: *conditions_layer2
+        - description: 'k: 3.hyper-k(Media Play/Pause)[Clementine]'
+          conditions: *conditions_layer3
           from:
             key_code: k
           to:
-            - key_code: play_or_pause
+            - key_code: k
+              modifiers: *modifierscontrol_command_shift
           type: basic
-        - description: 'j: 2.hyper-j(Media Previous)'
-          conditions: *conditions_layer2
+        - description: 'j: 3.hyper-j(Media Previous)[Clementine]'
+          conditions: *conditions_layer3
           from:
             key_code: j
           to:
-            - key_code: rewind
+            - key_code: j
+              modifiers: *modifierscontrol_command_shift
           type: basic
-        - description: 'n: 2.hyper-n(iTunes volume down)[Keyboard Maestro]'
-          conditions: *conditions_layer2
+        - description: 'n: 3.hyper-n(Media volume down)[Clementine]'
+          conditions: *conditions_layer3
           from:
             key_code: n
           to:
             - key_code: n
-              modifiers: *modifiers_hyper
+              modifiers: *modifierscontrol_command_shift
           type: basic
-        - description: 'm: 2.hyper-m(iTunes volume up)[Keyboard Maestro]'
-          conditions: *conditions_layer2
+        - description: 'm: 3.hyper-m(Media volume up)[Clementine]'
+          conditions: *conditions_layer3
           from:
             key_code: m
           to:
             - key_code: m
-              modifiers: *modifiers_hyper
+              modifiers: *modifierscontrol_command_shift
           type: basic
-        - description: 'semicolon: 2.hyper-;(sleep computer)[BTT]'
-          conditions: *conditions_layer2
-          from:
-            key_code: semicolon
-          to:
-            - key_code: semicolon
-              modifiers: *modifiers_hyper
-          type: basic
-        - description: 'quote: 2.hyper-;(sleep computer)[BTT]'
-          conditions: *conditions_layer2
-          from:
-            key_code: quote
-          to:
-            - key_code: quote
-              modifiers: *modifiers_hyper
-          type: basic
-        - description: 'p: 2.volume_increment'
-          conditions: *conditions_layer2
+        - description: 'p: 3.volume_increment'
+          conditions: *conditions_layer3
           from:
             key_code: p
           to:
             - key_code: volume_increment
           type: basic
-        - description: 'o: 2.volume_decrement'
-          conditions: *conditions_layer2
+        - description: 'o: 3.volume_decrement'
+          conditions: *conditions_layer3
           from:
             key_code: o
           to:
             - key_code: volume_decrement
           type: basic
-        - description: 'i: 2.mute'
-          conditions: *conditions_layer2
+        - description: 'i: 3.mute'
+          conditions: *conditions_layer3
           from:
             key_code: i
           to:
             - key_code: mute
           type: basic
 
+        - description: 'semicolon: 3.hyper-;(sleep computer)[BTT]'
+          conditions: *conditions_layer3
+          from:
+            key_code: semicolon
+          to:
+            - key_code: semicolon
+              modifiers: *modifierscontrol_command_shift
+          type: basic
+        - description: 'quote: 3.hyper-quote(sleep display)[BTT]'
+          conditions: *conditions_layer3
+          from:
+            key_code: quote
+          to:
+            - key_code: quote
+              modifiers: *modifierscontrol_command_shift
+          type: basic
+        - description: 'period: 3.hyper-period(show notification center)[BTT]'
+          conditions: *conditions_layer3
+          from:
+            key_code: period
+          to:
+            - key_code: period
+              modifiers: *modifierscontrol_command_shift
+          type: basic
+
 
         # Layout 2
           # F1-F12 (generated)
-        - description: '1: 2.f1'
-          conditions: *conditions_layer2
+        - description: '1: 3.f1'
+          conditions: *conditions_layer3
           from:
             key_code: "1"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f1
           type: basic
-        - description: '2: 2.f2'
-          conditions: *conditions_layer2
+        - description: '2: 3.f2'
+          conditions: *conditions_layer3
           from:
             key_code: "2"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f2
           type: basic
-        - description: '3: 2.f3'
-          conditions: *conditions_layer2
+        - description: '3: 3.f3'
+          conditions: *conditions_layer3
           from:
             key_code: "3"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f3
           type: basic
-        - description: '4: 2.f4'
-          conditions: *conditions_layer2
+        - description: '4: 3.f4'
+          conditions: *conditions_layer3
           from:
             key_code: "4"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f4
           type: basic
-        - description: '5: 2.f5'
-          conditions: *conditions_layer2
+        - description: '5: 3.f5'
+          conditions: *conditions_layer3
           from:
             key_code: "5"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f5
           type: basic
-        - description: '6: 2.f6'
-          conditions: *conditions_layer2
+        - description: '6: 3.f6'
+          conditions: *conditions_layer3
           from:
             key_code: "6"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f6
           type: basic
-        - description: '7: 2.f7'
-          conditions: *conditions_layer2
+        - description: '7: 3.f7'
+          conditions: *conditions_layer3
           from:
             key_code: "7"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f7
           type: basic
-        - description: '8: 2.f8'
-          conditions: *conditions_layer2
+        - description: '8: 3.f8'
+          conditions: *conditions_layer3
           from:
             key_code: "8"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f8
           type: basic
-        - description: '9: 2.f9'
-          conditions: *conditions_layer2
+        - description: '9: 3.f9'
+          conditions: *conditions_layer3
           from:
             key_code: "9"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f9
           type: basic
-        - description: '0: 2.f10'
-          conditions: *conditions_layer2
+        - description: '0: 3.f10'
+          conditions: *conditions_layer3
           from:
             key_code: "0"
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f10
           type: basic
-        - description: '-: 2.f11'
-          conditions: *conditions_layer2
+        - description: '-: 3.f11'
+          conditions: *conditions_layer3
           from:
             key_code: hyphen
-            modifiers: *modifiers_any
+            modifiers: *modifiers_filter_any
           to:
           - key_code: f11
           type: basic
-        - description: '=: 2.f12'
-          conditions: *conditions_layer2
+        - description: '=: 3.f12'
+          conditions: *conditions_layer3
           from:
             key_code: equal_sign
           to:
