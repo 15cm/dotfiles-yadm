@@ -3,7 +3,7 @@
 
 # --------------------- Common Config  ---------------------
 # Fix for emacs tramp mode
-[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+# [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -73,7 +73,9 @@ ZSH_TMUX_AUTOSTART_ONCE=true
 
 # nvm(loaded with zsh-nvm plugin)
 export NVM_DIR="$HOME/.nvm"
-export NVM_LAZY_LOAD=true
+if [[ $TERM == "dumb" ]]; then
+  export NVM_LAZY_LOAD=true
+fi
 # _____________________ ENV _____________________
 
 # --------------------- PATH ---------------------
