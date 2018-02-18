@@ -8,6 +8,11 @@ _anchors:
       - option
       - shift
       - command
+  modifiers_filter_not_shift: &modifiers_filter_not_shift
+    optional:
+      - control
+      - option
+      - command
   modifiers_filter_fn: &modifiers_filter_fn
     mandatory:
       - fn
@@ -770,6 +775,15 @@ profiles:
             - key_code: open_bracket
               modifiers: *modifiers_command_option_shift
           type: basic 
+        - description: '1.slash'
+          conditions: *conditions_layer1
+          from:
+            key_code: slash
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: slash
+              modifiers: *modifiers_command_option_shift
+          type: basic 
 
       # Layer 2
         - description: 'tab: tab, layer2(control option)'
@@ -1190,7 +1204,7 @@ profiles:
           conditions: *conditions_layer0
           from:
             key_code: grave_accent_and_tilde
-            modifiers: *modifiers_filter_any
+            modifiers: *modifiers_filter_not_shift
           to:
             - set_variable:
                 name: layer
@@ -1209,6 +1223,7 @@ profiles:
           from:
             key_code: l
           to:
+            # - key_code: fastforward
             - key_code: l
               modifiers: *modifierscontrol_command_shift
           type: basic
@@ -1217,6 +1232,7 @@ profiles:
           from:
             key_code: k
           to:
+            # - key_code: play_or_pause
             - key_code: k
               modifiers: *modifierscontrol_command_shift
           type: basic
@@ -1225,6 +1241,7 @@ profiles:
           from:
             key_code: j
           to:
+            # - key_code: rewind
             - key_code: j
               modifiers: *modifierscontrol_command_shift
           type: basic
