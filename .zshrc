@@ -260,8 +260,8 @@ __fzf_z_arg_widget() {
 
 zle -N __fzf_z_arg_widget
 
-# alt-j
-bindkey '^[n' __fzf_z_arg_widget
+# fzf z arg
+bindkey '^[j' __fzf_z_arg_widget
 
 __fzf_z_cd_widget() {
   local dir=$(__fzf_z)
@@ -274,8 +274,8 @@ __fzf_z_cd_widget() {
 
 zle -N __fzf_z_cd_widget
 
-# ctrl-j
-bindkey '^n' __fzf_z_cd_widget
+# fzf z cd
+bindkey '^j' __fzf_z_cd_widget
 
 # fzf dirs under current dir
 __fzf_dir() {
