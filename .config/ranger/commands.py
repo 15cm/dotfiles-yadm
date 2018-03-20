@@ -130,22 +130,6 @@ class fzf_mdfind(Command):
         | fzf --tac --reverse --preview "{0} {{}} | head -200"  --preview-window right:30%'.format(tree_cmd)
         send_to_fzf(self, command)
 
-class reveal_in_finder(Command):
-    """
-    :reveal_in_finder
-
-    Present selected files in finder
-    """
-
-    def execute(self):
-        import subprocess
-        files = ",".join(['"{0}" as POSIX file'.format(file.path) for file in self.fm.thistab.get_selection()])
-        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(files)
-        activate_script = "tell application \"Finder\" to set frontmost to true"
-        script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
-        self.fm.notify(script)
-        subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
-
 class open_files(Command):
     """
     :open_files
@@ -154,7 +138,6 @@ class open_files(Command):
     """
 
     def execute(self):
-        import subprocess
         for f in self.fm.thistab.get_selection():
             p = f.path
             self.fm.notify('open {0}'.format(p))
@@ -162,17 +145,32 @@ class open_files(Command):
 
 class open_files_emacs(Command):
     """
-    :open_files
+    :open_files_emacs
 
-    Open selected files
+    Open selected files by Emacs(GUI)
     """
 
     def execute(self):
-        import subprocess
         for f in self.fm.thistab.get_selection():
             p = f.path
-            self.fm.notify('open {0}'.format(p))
+            self.fm.notify('open emacs(GUI) {0}'.format(p))
             subprocess.check_output(["open-emacs.sh", p])
+
+emacs_client_cmd = "emacsclient -s misc -t"
+class open_files_tmux_emacs(Command):
+    """
+    :open_files_tmux_emacs_w
+
+    Open selected files in tmux by emacs-client
+    """
+
+    def execute(self):
+        global emacs_client_cmd
+        for f in self.fm.thistab.get_selection():
+            p = f.path
+            command = "shell tmux splitw -h '{0} \"{1}\"'".format(emacs_client_cmd, p)
+            self.fm.notify('open tmux emacs {0}'.format(p))
+            self.fm.execute_console(command)
 
 class trash_files(Command):
     """
@@ -182,7 +180,6 @@ class trash_files(Command):
     """
 
     def execute(self):
-        import subprocess
         for f in self.fm.thistab.get_selection():
             p = f.path
             self.fm.notify('trash {0}'.format(p))
