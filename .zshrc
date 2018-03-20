@@ -126,6 +126,7 @@ bindkey '^k' kill-line
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 
+
 # zle functions
 # select quoted
 autoload -U select-quoted
