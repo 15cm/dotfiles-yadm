@@ -180,7 +180,7 @@ class trash_files(Command):
     """
 
     def execute(self):
-        for f in self.fm.thistab.get_selection():
-            p = f.path
-            self.fm.notify('trash {0}'.format(p))
+        paths = map(lambda f: f.path, self.fm.thistab.get_selection())
+        for p in paths:
             subprocess.check_output(["trash", "-a", p])
+        self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
