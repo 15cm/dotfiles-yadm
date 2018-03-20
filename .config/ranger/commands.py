@@ -160,6 +160,20 @@ class open_files(Command):
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output(["open", p])
 
+class open_files_emacs(Command):
+    """
+    :open_files
+
+    Open selected files
+    """
+
+    def execute(self):
+        import subprocess
+        for f in self.fm.thistab.get_selection():
+            p = f.path
+            self.fm.notify('open {0}'.format(p))
+            subprocess.check_output(["open-emacs.sh", p])
+
 class trash_files(Command):
     """
     :trash_files
