@@ -36,6 +36,8 @@ if is_osx; then
   $pacman_install rbenv
   # fd
   $pacman_install fd
+  # ranger
+  $pacman_install ranger
 
 else
   if is_arch; then

@@ -4,6 +4,7 @@
 alias mux="tmuxinator"
 alias clip="nc localhost 8377"
 alias th="trash -a"
+alias rr="ranger"
 # Proxy Alias
 # alias brew="p brew"
 # lias git="p git"
@@ -30,6 +31,23 @@ function readBundleIdentifier {
 function oemacs {
   open $1 -a 'Emacs'
 }
+
+# --------------------- key map ---------------------
+# ranger
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+
+# Automatically change the directory in zsh after closing ranger
+bindkey -s '^n' 'ranger-cd^m'
+
+# _____________________ key map _____________________
 
 # --------------------- fzf ---------------------
 __fzf_mdfind() {
