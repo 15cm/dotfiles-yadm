@@ -730,24 +730,6 @@ profiles:
             - key_code: "9"
               modifiers: *modifiers_command_option_shift
           type: basic 
-        - description: '1.return_or_enter'
-          conditions: *conditions_layer1
-          from:
-            key_code: return_or_enter
-            modifiers: *modifiers_filter_any
-          to:
-            - key_code: return_or_enter
-              modifiers: *modifiers_command_option_shift
-          type: basic 
-        - description: '1.spacebar'
-          conditions: *conditions_layer1
-          from:
-            key_code: spacebar
-            modifiers: *modifiers_filter_any
-          to:
-            - key_code: spacebar
-              modifiers: *modifiers_command_option_shift
-          type: basic 
         - description: '1.comma'
           conditions: *conditions_layer1
           from:
@@ -775,6 +757,15 @@ profiles:
             - key_code: open_bracket
               modifiers: *modifiers_command_option_shift
           type: basic 
+        - description: '1.close_bracket'
+          conditions: *conditions_layer1
+          from:
+            key_code: close_bracket
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: close_bracket
+              modifiers: *modifiers_command_option_shift
+          type: basic 
         - description: '1.slash'
           conditions: *conditions_layer1
           from:
@@ -782,6 +773,24 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: slash
+              modifiers: *modifiers_command_option_shift
+          type: basic 
+        - description: '1.semicolon'
+          conditions: *conditions_layer1
+          from:
+            key_code: semicolon
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: semicolon
+              modifiers: *modifiers_command_option_shift
+          type: basic 
+        - description: '1.quote'
+          conditions: *conditions_layer1
+          from:
+            key_code: quote
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: quote
               modifiers: *modifiers_command_option_shift
           type: basic 
 
@@ -1223,7 +1232,7 @@ profiles:
           from:
             key_code: l
           to:
-            # - key_code: fastforward
+            - key_code: fastforward
             - key_code: l
               modifiers: *modifierscontrol_command_shift
           type: basic
@@ -1232,18 +1241,18 @@ profiles:
           from:
             key_code: k
           to:
-            # - key_code: play_or_pause
-            - key_code: k
-              modifiers: *modifierscontrol_command_shift
+            - key_code: play_or_pause
+            # - key_code: k
+            #   modifiers: *modifierscontrol_command_shift
           type: basic
         - description: 'j: 3.hyper-j(Media Previous)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: j
           to:
-            # - key_code: rewind
-            - key_code: j
-              modifiers: *modifierscontrol_command_shift
+            - key_code: rewind
+            # - key_code: j
+            #   modifiers: *modifierscontrol_command_shift
           type: basic
         - description: 'n: 3.hyper-n(Media volume down)[Clementine]'
           conditions: *conditions_layer3
@@ -1259,6 +1268,14 @@ profiles:
             key_code: m
           to:
             - key_code: m
+              modifiers: *modifierscontrol_command_shift
+          type: basic
+        - description: 'u: 3.hyper-m(Media update library)[Clementine]'
+          conditions: *conditions_layer3
+          from:
+            key_code: u
+          to:
+            - key_code: u
               modifiers: *modifierscontrol_command_shift
           type: basic
         - description: 'p: 3.volume_increment'
