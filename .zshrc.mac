@@ -45,7 +45,8 @@ function ranger-cd {
 }
 
 # Automatically change the directory in zsh after closing ranger
-bindkey -s '^n' 'ranger-cd^m'
+bindkey -s '^j' 'ranger .^m'
+bindkey -s '^[j' 'ranger-cd^m'
 
 # _____________________ key map _____________________
 
@@ -69,8 +70,8 @@ __fzf_mdfind_arg_widget() {
 
 zle -N __fzf_mdfind_arg_widget
 
-# alt-j
-bindkey '^[y' __fzf_mdfind_arg_widget
+# alt-u
+bindkey '^[u' __fzf_mdfind_arg_widget
 
 __fzf_mdfind_cd_widget() {
   local dir=$(__fzf_mdfind) && cd $dir
@@ -80,7 +81,7 @@ __fzf_mdfind_cd_widget() {
   return $ret
 }
 zle -N __fzf_mdfind_cd_widget
-bindkey '^y' __fzf_mdfind_cd_widget
+bindkey '^u' __fzf_mdfind_cd_widget
 
 # _____________________ fzf _____________________
 
