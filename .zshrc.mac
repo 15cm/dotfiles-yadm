@@ -20,21 +20,13 @@ function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"
 }
 
-function cookieformat {
-  cat | python3 ~/Geek/gadget/scripts/python/qiandao/read-cookie.py
-}
-
-function readBundleIdentifier {
-  mdls -name kMDItemCFBundleIdentifier -r "$1"
-}
-
 function oemacs {
   open $1 -a 'Emacs'
 }
 
 # --------------------- key map ---------------------
 # ranger
-function ranger-cd {
+ranger-cd() {
     tempfile="$(mktemp -t tmp.XXXXXX)"
     ranger --choosedir="$tempfile" "${@:-$(pwd)}"
     test -f "$tempfile" &&
@@ -45,8 +37,8 @@ function ranger-cd {
 }
 
 # Automatically change the directory in zsh after closing ranger
-bindkey -s '^i' 'ranger-cd^m'
-bindkey -s '^[i' 'ranger .^m'
+bindkey -s '^u' 'ranger-cd^m'
+bindkey -s '^[u' 'ranger .^m'
 
 # _____________________ key map _____________________
 
@@ -70,8 +62,8 @@ __fzf_mdfind_arg_widget() {
 
 zle -N __fzf_mdfind_arg_widget
 
-# alt-u
-bindkey '^[u' __fzf_mdfind_arg_widget
+# fzf mdfind arg
+bindkey '^[w' __fzf_mdfind_arg_widget
 
 __fzf_mdfind_cd_widget() {
   local dir=$(__fzf_mdfind) && cd $dir
@@ -81,7 +73,9 @@ __fzf_mdfind_cd_widget() {
   return $ret
 }
 zle -N __fzf_mdfind_cd_widget
-bindkey '^u' __fzf_mdfind_cd_widget
+
+# fzf mdfind cd
+bindkey '^w' __fzf_mdfind_cd_widget
 
 # _____________________ fzf _____________________
 
