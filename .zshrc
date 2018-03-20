@@ -90,7 +90,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm)
+plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm docker)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -217,10 +217,10 @@ fi
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND="fd --type f --no-ignore --follow --exclude '.git' "
+export FZF_DEFAULT_COMMAND="fd --type f --follow --exclude '.git' "
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,ctrl-space:toggle-all'"
+export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
 export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {} )) | head -200'"
 export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
