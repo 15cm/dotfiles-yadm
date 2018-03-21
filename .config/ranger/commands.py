@@ -143,9 +143,9 @@ class open_files(Command):
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output(["open", p])
 
-class open_files_emacs(Command):
+class open_files_emacs_gui(Command):
     """
-    :open_files_emacs
+    :open_files_emacs_gui
 
     Open selected files by Emacs(GUI)
     """
@@ -157,9 +157,9 @@ class open_files_emacs(Command):
             subprocess.check_output(["open-emacs.sh", p])
 
 emacs_client_cmd = "emacsclient -s misc -t"
-class open_files_tmux_emacs(Command):
+class open_files_emacs_tmux(Command):
     """
-    :open_files_tmux_emacs_w
+    :open_files_emacs_tmux
 
     Open selected files in tmux by emacs-client
     """
