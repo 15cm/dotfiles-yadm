@@ -14,6 +14,9 @@ if [[ $cur_theme == 'light' ]]; then
      $powerline_config_file > $jq_tmp && mv $jq_tmp $powerline_config_file
   sed -i 's/\(set background=\).*/\1dark/' ~/.vimrc.theme
   sed -i 's/\(colors: \*color_scheme_\).*/\1dark/' ~/.alacritty.yml
+  # highlight for ranger
+  sed -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' ~/.config/ranger/scope.sh
+
 else
   # switch to light color schemes
   jq '.current_theme = "light" 
@@ -22,6 +25,7 @@ else
      $powerline_config_file  > $jq_tmp && mv $jq_tmp $powerline_config_file
   sed -i 's/\(set background=\).*/\1light/' ~/.vimrc.theme
   sed -i 's/\(colors: \*color_scheme_\).*/\1light/' ~/.alacritty.yml
+  sed -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' ~/.config/ranger/scope.sh
 fi
 
 powerline-daemon --replace
