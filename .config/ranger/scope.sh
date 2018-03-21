@@ -36,7 +36,7 @@ FILE_EXTENSION_LOWER=$(echo ${FILE_EXTENSION} | tr '[:upper:]' '[:lower:]')
 # Settings
 HIGHLIGHT_SIZE_MAX=262143  # 256KiB
 HIGHLIGHT_TABWIDTH=8
-HIGHLIGHT_STYLE="Moria"
+HIGHLIGHT_STYLE="Zellner"
 PYGMENTIZE_STYLE='autumn'
 
 
@@ -82,6 +82,8 @@ handle_extension() {
             lynx -dump -- "${FILE_PATH}" && exit 5
             elinks -dump "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
+        png|jpg|jpeg)
+          img2txt "${FILE_PATH}" && exit 5
     esac
 }
 
