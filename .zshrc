@@ -68,7 +68,7 @@ export LANG="$LC_ALL"
 export TERM="xterm-256color"
 
 # Tmux Plugin
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 ZSH_TMUX_AUTOSTART_ONCE=true
 
 # nvm(loaded with zsh-nvm plugin)

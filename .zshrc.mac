@@ -15,6 +15,8 @@ alias rr="ranger"
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
 
+export EDITOR="$HOME/local/bin/emacsclient-terminal.sh"
+
 # function alias
 function mag2torrent {
   aria2c --bt-metadata-only=true --bt-save-metadata=true --enable-dht --input-file='' --listen-port=6881 "$1"
