@@ -130,7 +130,20 @@ class fzf_mdfind(Command):
         | fzf --tac --reverse --preview "{0} {{}} | head -200"  --preview-window right:30%'.format(tree_cmd)
         send_to_fzf(self, command)
 
-class open_files(Command):
+class trash_files(Command):
+    """
+    :trash_files
+
+    Trash selected files
+    """
+
+    def execute(self):
+        paths = map(lambda f: f.path, self.fm.thistab.get_selection())
+        for p in paths:
+            subprocess.check_output(["trash", "-a", p])
+        self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
+
+class open_files_macos(Command):
     """
     :open_files
 
@@ -157,6 +170,7 @@ class open_files_emacs_gui(Command):
             subprocess.check_output(["open-emacs.sh", p])
 
 emacs_client_cmd = "emacsclient -s misc -t"
+
 class open_files_emacs_tmux(Command):
     """
     :open_files_emacs_tmux
@@ -172,15 +186,48 @@ class open_files_emacs_tmux(Command):
             self.fm.notify('open tmux emacs {0}'.format(p))
             self.fm.execute_console(command)
 
-class trash_files(Command):
-    """
-    :trash_files
+open_option_keymap = {
+    'o': 'open_files_macos',
+    't': 'open_files_emacs_tmux',
+    'g': 'open_files_emacs_gui',
+    'e': 'edit',
+    'q': 'cancel'
+}
 
-    Trash selected files
+class draw_command_option_keymap(Command):
+    """
+    :draw_command_option_keymap
+    """
+    def execute(self):
+        global open_option_keymap
+        keymap_infos = ['{0} | {1}'.format(k, v.replace('open_files_', '')) for (k, v) in open_option_keymap.items()]
+        self.fm.ui.browser.draw_info = keymap_infos
+
+class open_files_with(Command):
+    """
+    :open_files_with
+    """
+    def execute(self):
+        global open_option_keymap
+        def callback(answer):
+            if answer != 'q':
+                self.fm.execute_console(open_option_keymap[answer])
+            self.fm.ui.browser.draw_info = False
+
+        keys = [k for k in open_option_keymap.keys()]
+        self.fm.ui.console.ask('open_files_with: [{0}]'.format(''.join(keys)),
+            callback,
+            keys
+        )
+
+class my_move_right(Command):
+    """
+    :my_move_right
     """
 
     def execute(self):
-        paths = map(lambda f: f.path, self.fm.thistab.get_selection())
-        for p in paths:
-            subprocess.check_output(["trash", "-a", p])
-        self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
+        files = self.fm.thistab.get_selection()
+        if len(files) == 1 and files[0].is_directory:
+            self.fm.move(right=1)
+        else:
+            self.fm.execute_console('chain draw_command_option_keymap; open_files_with')
