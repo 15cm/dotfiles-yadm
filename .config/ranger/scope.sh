@@ -36,7 +36,7 @@ FILE_EXTENSION_LOWER=$(echo ${FILE_EXTENSION} | tr '[:upper:]' '[:lower:]')
 # Settings
 HIGHLIGHT_SIZE_MAX=262143  # 256KiB
 HIGHLIGHT_TABWIDTH=8
-HIGHLIGHT_STYLE="Zellner"
+HIGHLIGHT_STYLE="Moria"
 PYGMENTIZE_STYLE='autumn'
 
 
@@ -83,7 +83,7 @@ handle_extension() {
             elinks -dump "${FILE_PATH}" && exit 5
             ;; # Continue with next handler on failure
         png|jpg|jpeg)
-          img2txt "${FILE_PATH}" && exit 5
+          img2txt -H "${PV_HEIGHT}" -W "${PV_WIDTH}" "${FILE_PATH}" && exit 5
     esac
 }
 
