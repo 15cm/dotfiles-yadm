@@ -156,21 +156,6 @@ class open_files_macos(Command):
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output(["open", p])
 
-class reveal_files_in_finder(Command):
-    """
-    :reveal_files_in_finder
-
-    Reveal selected files in finder
-    """
-
-    def execute(self):
-        files = ",".join(['"{0}" as POSIX file'.format(file.path) for file in self.fm.thistab.get_selection()])
-        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(files)
-        activate_script = "tell application \"Finder\" to set frontmost to true"
-        script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
-        self.fm.notify(script)
-        subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
-
 class open_files_emacs_gui(Command):
     """
     :open_files_emacs_gui
@@ -239,10 +224,35 @@ class my_move_right(Command):
     """
     :my_move_right
     """
-
     def execute(self):
         files = self.fm.thistab.get_selection()
-        if len(files) == 1 and files[0].is_directory:
-            self.fm.move(right=1)
-        else:
-            self.fm.execute_console('chain draw_command_option_keymap; open_files_with')
+        if len(files):
+            if len(files) == 1 and files[0].is_directory:
+                self.fm.move(right=1)
+            else:
+                self.fm.execute_console('chain draw_command_option_keymap; open_files_with')
+
+class reveal_files_in_finder(Command):
+    """
+    :reveal_files_in_finder
+
+    Reveal selected files in finder
+    """
+    def execute(self):
+        files = ",".join(['"{0}" as POSIX file'.format(file.path) for file in self.fm.thistab.get_selection()])
+        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(files)
+        activate_script = "tell application \"Finder\" to set frontmost to true"
+        script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
+        self.fm.notify(script)
+        subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
+
+class shell_in_tmux(Command):
+    """
+    :shell_in_tmux
+
+    Open shell in tmux
+    """
+    def execute(self):
+        curdir = self.fm.thisdir.path
+        command = "shell tmux splitw -h 'exec $SHELL && cd {0}'".format(curdir)
+        self.fm.execute_console(command)
