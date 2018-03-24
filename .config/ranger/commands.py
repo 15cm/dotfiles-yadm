@@ -94,11 +94,11 @@ class fzf_select(Command):
                   "--preview '([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) | head -200'" 
         send_to_fzf(self, command)
 
-class fzf_select_dir(Command):
+class fzf_cd_dir(Command):
     """
-    :fzf_select_dir
+    :fzf_cd_dir
 
-    Find a dir using fzf.
+    Cd a dir using fzf.
     """
     def execute(self):
         # match only directories
@@ -151,7 +151,8 @@ class open_files_macos(Command):
     """
 
     def execute(self):
-        for f in self.fm.thistab.get_selection():
+        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        for f in files:
             p = f.path
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output(["open", p])
@@ -167,7 +168,8 @@ class open_files_emacs(Command):
 
     def execute(self):
         global emacs_client_cmd
-        for f in self.fm.thistab.get_selection():
+        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        for f in files:
             p = f.path
             command = "shell {0} \"{1}\"".format(emacs_client_cmd, p)
             self.fm.notify('open emacs: {0}'.format(p))
@@ -181,7 +183,8 @@ class open_files_emacs_gui(Command):
     """
 
     def execute(self):
-        for f in self.fm.thistab.get_selection():
+        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        for f in files:
             p = f.path
             self.fm.notify('open emacs(GUI) {0}'.format(p))
             subprocess.check_output(["open-emacs.sh", p])
@@ -195,7 +198,8 @@ class open_files_emacs_tmux(Command):
 
     def execute(self):
         global emacs_client_cmd
-        for f in self.fm.thistab.get_selection():
+        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        for f in files:
             p = f.path
             command = "shell tmux splitw -h '{0} \"{1}\"'".format(emacs_client_cmd, p)
             self.fm.notify('open tmux emacs {0}'.format(p))
@@ -227,7 +231,7 @@ class open_files_with(Command):
         global open_option_keymap
         def callback(answer):
             if answer != 'q':
-                self.fm.execute_console(open_option_keymap[answer])
+                self.fm.execute_console('{0} {1}'.format(open_option_keymap[answer], ' '.join(self.args)))
             self.fm.ui.browser.draw_info = False
 
         keys = [k for k in open_option_keymap.keys()]
@@ -241,12 +245,11 @@ class my_move_right(Command):
     :my_move_right
     """
     def execute(self):
-        files = self.fm.thistab.get_selection()
-        if len(files):
-            if len(files) == 1 and files[0].is_directory:
-                self.fm.move(right=1)
-            else:
-                self.fm.execute_console('chain draw_command_option_keymap; open_files_with')
+        f = self.fm.thisfile
+        if f.is_directory:
+            self.fm.move(right=1)
+        else:
+            self.fm.execute_console('chain draw_command_option_keymap; open_files_with -h')
 
 class reveal_files_in_finder(Command):
     """
@@ -255,8 +258,9 @@ class reveal_files_in_finder(Command):
     Reveal selected files in finder
     """
     def execute(self):
-        files = ",".join(['"{0}" as POSIX file'.format(file.path) for file in self.fm.thistab.get_selection()])
-        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(files)
+        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        paths = ",".join(['"{0}" as POSIX file'.format(file.path) for file in files])
+        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(paths)
         activate_script = "tell application \"Finder\" to set frontmost to true"
         script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
         self.fm.notify(script)
