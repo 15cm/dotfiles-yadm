@@ -156,6 +156,23 @@ class open_files_macos(Command):
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output(["open", p])
 
+emacs_client_cmd = "emacsclient -s misc -t"
+
+class open_files_emacs(Command):
+    """
+    :open_files_emacs
+
+    Open selected files by emacs-client
+    """
+
+    def execute(self):
+        global emacs_client_cmd
+        for f in self.fm.thistab.get_selection():
+            p = f.path
+            command = "shell {0} \"{1}\"".format(emacs_client_cmd, p)
+            self.fm.notify('open emacs: {0}'.format(p))
+            self.fm.execute_console(command)
+
 class open_files_emacs_gui(Command):
     """
     :open_files_emacs_gui
@@ -168,8 +185,6 @@ class open_files_emacs_gui(Command):
             p = f.path
             self.fm.notify('open emacs(GUI) {0}'.format(p))
             subprocess.check_output(["open-emacs.sh", p])
-
-emacs_client_cmd = "emacsclient -s misc -t"
 
 class open_files_emacs_tmux(Command):
     """
