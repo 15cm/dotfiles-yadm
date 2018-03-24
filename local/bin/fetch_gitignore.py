@@ -3,6 +3,8 @@ import requests
 import os
 from functional import seq
 
+#https://github.com/15cm/gitignore
+
 ignore_src_names = [
     'macOS',
     'JetBrains',
