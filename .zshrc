@@ -13,14 +13,8 @@ DISABLE_UPDATE_PROMPT=true
 DISABLE_AUTO_UPDATE=true
 # _____________________ Common Config  _____________________
 
-# --------------------- Functions ---------------------
-is_linux () {
-  [[ $('uname') == 'Linux' ]];
-}
-
-is_osx () {
-  [[ $('uname') == 'Darwin' ]]
-}
+# --------------------- Helpers ---------------------
+is_osx=$([[ $('uname') == 'Darwin' ]])
 
 # Lazy Load to speed up zsh start
 # Authors:
@@ -64,19 +58,23 @@ export _Z_DATA="$HOME/.z/.z"
 export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
 
-# Colors
-export TERM="xterm-256color"
-
-# Tmux Plugin
-ZSH_TMUX_AUTOSTART=true
-ZSH_TMUX_AUTOSTART_ONCE=true
-
-# nvm(loaded with zsh-nvm plugin)
-export NVM_DIR="$HOME/.nvm"
-if [[ $TERM == "dumb" ]]; then
-  export NVM_LAZY_LOAD=true
-fi
 # _____________________ ENV _____________________
+
+# Tmux
+
+alias ta='tmux attach -t'
+alias tad='tmux attach -d -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
+
+if which tmux 2>&1 >/dev/null; then
+  # tell if in tmux by $TERM
+  if [ $TERM != "screen-256color" ]; then
+    tmux attach || tmux; exit
+  fi
+fi
 
 # --------------------- PATH ---------------------
 export PATH="/usr/local/bin:$HOME/local/bin:$PATH"
@@ -90,7 +88,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git tmux z zsh-autosuggestions zsh-syntax-highlighting zsh-nvm cd-gitroot zce yadm docker)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -170,6 +168,14 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # pyenv-virtualenv
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+function load_nvm() {
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+}
+
+lazy_load load_nvm nvm node hexo
 
 # jenv(lazy load)
 export PATH="$HOME/.jenv/bin:$PATH"
@@ -305,21 +311,24 @@ export FZF_COMPLETION_TRIGGER=':'
 
 # _____________________ fzf and z _____________________
 
-
 # --------------------- Config for local and remote machine ---------------------
-if is_osx; then
+if $Qis_osx; then
   source $HOME/.zshrc.mac
 else
   source $HOME/.zshrc.linux
 fi
 # _____________________ Config for local and remote machine _____________________
 
+# --------------------- Powerline ---------------------
+. $HOME/.config/powerline/bindings/zsh/powerline.zsh
+# _____________________ Powerline _____________________
+
 # --------------------- Common Alias ---------------------
 alias rz='exec $SHELL'
 alias vi="vim"
 alias st="switch-theme.sh"
 alias gcmsg!="git commit --allow-empty-message -m ''"
-alias ew="emacsclient -s misc -t"
+alias ew="emacsclient -s misc -t -a vim"
 alias more="more -R"
 alias ccat="ccat -C always"
 alias cg="cd-gitroot"
