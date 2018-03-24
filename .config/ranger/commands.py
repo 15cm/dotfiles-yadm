@@ -188,9 +188,10 @@ class open_files_emacs_tmux(Command):
 
 open_option_keymap = {
     'o': 'open_files_macos',
-    't': 'open_files_emacs_tmux',
+    'O': 'reveal_files_in_finder',
+    'e': 'open_files_emacs_tmux',
+    'E': 'open_files_emacs',
     'g': 'open_files_emacs_gui',
-    'e': 'edit',
     'q': 'cancel'
 }
 
