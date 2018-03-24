@@ -60,22 +60,6 @@ export LANG="$LC_ALL"
 
 # _____________________ ENV _____________________
 
-# Tmux
-
-alias ta='tmux attach -t'
-alias tad='tmux attach -d -t'
-alias ts='tmux new-session -s'
-alias tl='tmux list-sessions'
-alias tksv='tmux kill-server'
-alias tkss='tmux kill-session -t'
-
-if which tmux 2>&1 >/dev/null; then
-  # tell if in tmux by $TERM
-  if [ $TERM != "screen-256color" ]; then
-    tmux attach || tmux; exit
-  fi
-fi
-
 # --------------------- PATH ---------------------
 export PATH="/usr/local/bin:$HOME/local/bin:$PATH"
 # Path for powerline on mac
@@ -323,6 +307,24 @@ fi
 . $HOME/.config/powerline/bindings/zsh/powerline.zsh
 # _____________________ Powerline _____________________
 
+# --------------------- Tmux ---------------------
+
+alias ta='tmux attach -t'
+alias tad='tmux attach -d -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
+
+if which tmux 2>&1 >/dev/null; then
+  # tell if in tmux by $TERM
+  if [ $TERM != "screen-256color" ]; then
+    tmux attach || tmux; exit
+  fi
+fi
+
+# _____________________ Tmux _____________________
+
 # --------------------- Common Alias ---------------------
 alias rz='exec $SHELL'
 alias vi="vim"
@@ -334,6 +336,7 @@ alias ccat="ccat -C always"
 alias cg="cd-gitroot"
 alias op="open"
 alias prl="parallel"
+alias grep="grep --color=auto"
 # _____________________ Common Alias  _____________________
 
 # --------------------- Function Alias ---------------------

@@ -15,7 +15,7 @@ alias rr="ranger"
   # --disturl=https://npm.taobao.org/dist \
   # --userconfig=$HOME/.cnpmrc"
 
-export EDITOR="$HOME/local/bin/emacsclient-terminal.sh"
+# export EDITOR="$HOME/local/bin/emacsclient-terminal.sh"
 
 # function alias
 function mag2torrent {
