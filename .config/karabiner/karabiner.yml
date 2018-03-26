@@ -25,16 +25,17 @@ _anchors:
       - shift
       - option
   # layer 1
-  modifiers_command_option_shift: &modifiers_command_option_shift
+  mofidiers_layer1: &mofidiers_layer1
     - command
     - shift
     - option
   # layer 2
-  modifiers_control_option: &modifiers_control_option
+  modifiers_layer2: &modifiers_layer2
+    - command
     - option
     - control
   # layer 3
-  modifierscontrol_command_shift: &modifierscontrol_command_shift
+  modifiers_layer3: &modifiers_layer3
     - control
     - shift
     - command
@@ -232,7 +233,7 @@ profiles:
             - key_code: delete_or_backspace
           type: basic
         - description: 'option-b: back a word'
-          conditions: *conditions_frontmost_not_emacs
+          conditions: *conditions_frontmost_not_whole_emacs
           from:
             key_code: b
             modifiers:
@@ -244,7 +245,7 @@ profiles:
                 - option
           type: basic
         - description: 'option-f: forward a word'
-          conditions: *conditions_frontmost_not_emacs
+          conditions: *conditions_frontmost_not_whole_emacs
           from:
             key_code: f
             modifiers:
@@ -417,7 +418,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: b
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.c'
@@ -427,7 +428,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: c
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.e'
@@ -437,7 +438,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: e
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.f'
@@ -447,7 +448,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: f
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.g'
@@ -457,7 +458,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: g
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.h'
@@ -467,7 +468,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: h
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.i'
@@ -477,7 +478,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: i
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.j'
@@ -487,7 +488,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: j
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.k'
@@ -497,7 +498,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: k
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.l'
@@ -507,7 +508,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: l
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.m'
@@ -517,7 +518,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: m
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.n'
@@ -527,7 +528,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: n
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.o'
@@ -537,7 +538,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: o
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.p'
@@ -547,7 +548,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: p
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.q'
@@ -557,7 +558,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: q
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.r'
@@ -567,7 +568,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: r
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.t'
@@ -577,7 +578,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: t
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.u'
@@ -587,7 +588,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: u
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.v'
@@ -597,7 +598,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: v
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.w'
@@ -607,7 +608,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: w
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.x'
@@ -617,7 +618,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: x
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.y'
@@ -627,7 +628,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: y
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.z'
@@ -637,7 +638,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: z
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
         - description: '1.0'
@@ -647,7 +648,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "0"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.1'
           conditions: *conditions_layer1
@@ -656,7 +657,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "1"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.2'
           conditions: *conditions_layer1
@@ -665,7 +666,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "2"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.3'
           conditions: *conditions_layer1
@@ -674,7 +675,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "3"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.4'
           conditions: *conditions_layer1
@@ -683,7 +684,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "4"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.5'
           conditions: *conditions_layer1
@@ -692,7 +693,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "5"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.6'
           conditions: *conditions_layer1
@@ -701,7 +702,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "6"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.7'
           conditions: *conditions_layer1
@@ -710,7 +711,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "7"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.8'
           conditions: *conditions_layer1
@@ -719,7 +720,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "8"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.9'
           conditions: *conditions_layer1
@@ -728,7 +729,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "9"
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.comma'
           conditions: *conditions_layer1
@@ -737,7 +738,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: comma
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.period'
           conditions: *conditions_layer1
@@ -746,7 +747,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: period
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.open_bracket'
           conditions: *conditions_layer1
@@ -755,7 +756,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: open_bracket
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.close_bracket'
           conditions: *conditions_layer1
@@ -764,7 +765,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: close_bracket
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.slash'
           conditions: *conditions_layer1
@@ -773,7 +774,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: slash
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.semicolon'
           conditions: *conditions_layer1
@@ -782,7 +783,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: semicolon
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
         - description: '1.quote'
           conditions: *conditions_layer1
@@ -791,7 +792,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: quote
-              modifiers: *modifiers_command_option_shift
+              modifiers: *mofidiers_layer1
           type: basic 
 
       # Layer 2
@@ -820,7 +821,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: a
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic
 
         - description: '2.b'
@@ -830,7 +831,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: b
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.c'
@@ -840,7 +841,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: c
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.d'
@@ -850,7 +851,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: d
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.e'
@@ -860,7 +861,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: e
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.f'
@@ -870,7 +871,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: f
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.g'
@@ -880,7 +881,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: g
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.h'
@@ -890,7 +891,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: h
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.i'
@@ -900,7 +901,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: i
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.j'
@@ -910,7 +911,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: j
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.k'
@@ -920,7 +921,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: k
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.l'
@@ -930,7 +931,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: l
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.m'
@@ -940,7 +941,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: m
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.n'
@@ -950,7 +951,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: n
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.o'
@@ -960,7 +961,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: o
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.p'
@@ -970,7 +971,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: p
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.q'
@@ -980,7 +981,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: q
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.r'
@@ -990,7 +991,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: r
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.s'
@@ -1000,7 +1001,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: s
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.t'
@@ -1010,7 +1011,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: t
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.u'
@@ -1020,7 +1021,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: u
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.v'
@@ -1030,7 +1031,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: v
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.w'
@@ -1040,7 +1041,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: w
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.x'
@@ -1050,7 +1051,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: x
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.y'
@@ -1060,7 +1061,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: y
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.z'
@@ -1070,7 +1071,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: z
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
 
         - description: '2.0'
@@ -1080,7 +1081,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "0"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.1'
           conditions: *conditions_layer2
@@ -1089,7 +1090,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "1"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.2'
           conditions: *conditions_layer2
@@ -1098,7 +1099,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "2"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.3'
           conditions: *conditions_layer2
@@ -1107,7 +1108,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "3"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.4'
           conditions: *conditions_layer2
@@ -1116,7 +1117,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "4"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.5'
           conditions: *conditions_layer2
@@ -1125,7 +1126,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "5"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.6'
           conditions: *conditions_layer2
@@ -1134,7 +1135,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "6"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.7'
           conditions: *conditions_layer2
@@ -1143,7 +1144,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "7"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.8'
           conditions: *conditions_layer2
@@ -1152,7 +1153,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "8"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.9'
           conditions: *conditions_layer2
@@ -1161,7 +1162,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "9"
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.return_or_enter'
           conditions: *conditions_layer2
@@ -1170,7 +1171,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: return_or_enter
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.spacebar'
           conditions: *conditions_layer2
@@ -1179,7 +1180,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: spacebar
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.comma'
           conditions: *conditions_layer2
@@ -1188,7 +1189,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: comma
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.period'
           conditions: *conditions_layer2
@@ -1197,7 +1198,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: period
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
         - description: '2.open_bracket'
           conditions: *conditions_layer2
@@ -1206,7 +1207,7 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: open_bracket
-              modifiers: *modifiers_control_option
+              modifiers: *modifiers_layer2
           type: basic 
       # Layer 3
         - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer3(hyper)'
@@ -1234,7 +1235,7 @@ profiles:
           to:
             - key_code: fastforward
             - key_code: l
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'k: 3.hyper-k(Media Play/Pause)[Clementine]'
           conditions: *conditions_layer3
@@ -1243,7 +1244,7 @@ profiles:
           to:
             - key_code: play_or_pause
             # - key_code: k
-            #   modifiers: *modifierscontrol_command_shift
+            #   modifiers: *modifiers_layer3
           type: basic
         - description: 'j: 3.hyper-j(Media Previous)[Clementine]'
           conditions: *conditions_layer3
@@ -1252,7 +1253,7 @@ profiles:
           to:
             - key_code: rewind
             # - key_code: j
-            #   modifiers: *modifierscontrol_command_shift
+            #   modifiers: *modifiers_layer3
           type: basic
         - description: 'n: 3.hyper-n(Media volume down)[Clementine]'
           conditions: *conditions_layer3
@@ -1260,7 +1261,7 @@ profiles:
             key_code: n
           to:
             - key_code: n
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'm: 3.hyper-m(Media volume up)[Clementine]'
           conditions: *conditions_layer3
@@ -1268,7 +1269,7 @@ profiles:
             key_code: m
           to:
             - key_code: m
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'u: 3.hyper-m(Media update library)[Clementine]'
           conditions: *conditions_layer3
@@ -1276,7 +1277,7 @@ profiles:
             key_code: u
           to:
             - key_code: u
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'p: 3.volume_increment'
           conditions: *conditions_layer3
@@ -1306,7 +1307,7 @@ profiles:
             key_code: semicolon
           to:
             - key_code: semicolon
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'quote: 3.hyper-quote(sleep display)[BTT]'
           conditions: *conditions_layer3
@@ -1314,7 +1315,7 @@ profiles:
             key_code: quote
           to:
             - key_code: quote
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
         - description: 'period: 3.hyper-period(show notification center)[BTT]'
           conditions: *conditions_layer3
@@ -1322,7 +1323,7 @@ profiles:
             key_code: period
           to:
             - key_code: period
-              modifiers: *modifierscontrol_command_shift
+              modifiers: *modifiers_layer3
           type: basic
 
 
