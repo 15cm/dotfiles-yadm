@@ -24,21 +24,42 @@ _anchors:
     mandatory:
       - shift
       - option
+  # --------------------- layers ---------------------
   # layer 1
+  # space
   mofidiers_layer1: &mofidiers_layer1
     - command
     - shift
     - option
   # layer 2
+  # tab
   modifiers_layer2: &modifiers_layer2
     - command
     - option
     - control
   # layer 3
+  # grave_accent_and_tilde
   modifiers_layer3: &modifiers_layer3
     - control
     - shift
     - command
+  conditions_layer0: &conditions_layer0
+    - name: layer
+      type: variable_if
+      value: 0
+  conditions_layer1: &conditions_layer1
+    - name: layer
+      type: variable_if
+      value: 1
+  conditions_layer2: &conditions_layer2
+    - name: layer
+      type: variable_if
+      value: 2
+  conditions_layer3: &conditions_layer3
+    - name: layer
+      type: variable_if
+      value: 3
+  # _____________________ layers _____________________
   conditions_device_internal: &conditions_device_internal
     - type: device_if
       identifiers:
@@ -49,14 +70,6 @@ _anchors:
       identifiers:
         - vendor_id: 1452
         - product_id: 610
-  conditions_layer0: &conditions_layer0
-    - name: layer
-      type: variable_if
-      value: 0
-  conditions_layer1: &conditions_layer1
-    - name: layer
-      type: variable_if
-      value: 1
   conditions_layer1_item: &conditions_layer1_item
     name: layer
     type: variable_if
@@ -76,14 +89,6 @@ _anchors:
     - type: input_source_if
       input_sources:
         - language: ja
-  conditions_layer2: &conditions_layer2
-    - name: layer
-      type: variable_if
-      value: 2
-  conditions_layer3: &conditions_layer3
-    - name: layer
-      type: variable_if
-      value: 3
   conditions_frontmost_not_partial_emacs: &conditions_frontmost_not_partial_emacs
     - bundle_identifiers:
         - '^org\.gnu\.Emacs.*'
@@ -1162,6 +1167,24 @@ profiles:
             modifiers: *modifiers_filter_any
           to:
             - key_code: "9"
+              modifiers: *modifiers_layer2
+          type: basic 
+        - description: '2.-'
+          conditions: *conditions_layer2
+          from:
+            key_code: "hyphen"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "hyphen"
+              modifiers: *modifiers_layer2
+          type: basic 
+        - description: '2.='
+          conditions: *conditions_layer2
+          from:
+            key_code: "equal_sign"
+            modifiers: *modifiers_filter_any
+          to:
+            - key_code: "equal_sign"
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.return_or_enter'
