@@ -47,10 +47,11 @@ function lazy_load_clean() {
     unalias ${i}
   done
 }
+
 # _____________________ Functions _____________________
 
 # --------------------- ENV ---------------------
-export EDITOR='vim'
+export EDITOR="$HOME/local/bin/emacsclient-terminal.sh"
 export _Z_DATA="$HOME/.z/.z"
 . ~/.z/z.sh
 
@@ -72,7 +73,7 @@ export PATH="$PATH:$HOME/go/bin"
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
@@ -94,7 +95,8 @@ TRAPWINCH() {
 
 bindkey -v
 autoload -Uz edit-command-line
-bindkey -M vicmd '^v' edit-command-line
+bindkey -a '^v' edit-command-line
+bindkey '^v' edit-command-line
 
 bindkey '^p' up-history
 bindkey '^n' down-history
@@ -159,7 +161,7 @@ function load_nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 }
 
-lazy_load load_nvm nvm node hexo
+lazy_load load_nvm nvm node leetcode hexo web-ext
 
 # jenv(lazy load)
 export PATH="$HOME/.jenv/bin:$PATH"
@@ -296,16 +298,12 @@ export FZF_COMPLETION_TRIGGER=':'
 # _____________________ fzf and z _____________________
 
 # --------------------- Config for local and remote machine ---------------------
-if $Qis_osx; then
+if $is_osx; then
   source $HOME/.zshrc.mac
 else
   source $HOME/.zshrc.linux
 fi
 # _____________________ Config for local and remote machine _____________________
-
-# --------------------- Powerline ---------------------
-. $HOME/.config/powerline/bindings/zsh/powerline.zsh
-# _____________________ Powerline _____________________
 
 # --------------------- Tmux ---------------------
 
@@ -319,11 +317,15 @@ alias tkss='tmux kill-session -t'
 if which tmux 2>&1 >/dev/null; then
   # tell if in tmux by $TERM
   if [[ $TERM != "screen-256color" ]] && [[ $TERM != "dumb" ]] then
-    tmux attach || tmux; exit
+    tmux attach || tmux; return
   fi
 fi
 
 # _____________________ Tmux _____________________
+
+# --------------------- Powerline ---------------------
+. $HOME/.config/powerline/bindings/zsh/powerline.zsh
+# _____________________ Powerline _____________________
 
 # --------------------- Common Alias ---------------------
 alias rz='exec $SHELL'
@@ -337,6 +339,13 @@ alias cg="cd-gitroot"
 alias op="open"
 alias prl="parallel"
 alias grep="grep --color=auto"
+
+# Leetcode
+alias lc="leetcode"
+alias lcsh="leetcode show"
+alias lcsb="leetcode submit"
+alias lct="leetcode test"
+alias lcl="leetcode list"
 # _____________________ Common Alias  _____________________
 
 # --------------------- Function Alias ---------------------
