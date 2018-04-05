@@ -336,6 +336,7 @@ profiles:
             - key_code: spacebar
           type: basic
         # layout 1(switch input source)
+        # input source array: ja en zh
           # switch to EN
         - description: '1.a'
           conditions: *conditions_layer1_input_en
@@ -346,7 +347,7 @@ profiles:
             - key_code: vk_none
           type: basic
         - description: '1.a'
-          conditions: *conditions_layer1_input_zh
+          conditions: *conditions_layer1_input_ja
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -354,7 +355,7 @@ profiles:
             - key_code: f18
           type: basic
         - description: '1.a'
-          conditions: *conditions_layer1_input_ja
+          conditions: *conditions_layer1_input_zh
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -364,7 +365,7 @@ profiles:
           type: basic
           # switch to ZH
         - description: '1.s'
-          conditions: *conditions_layer1_input_en
+          conditions: *conditions_layer1_input_ja
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -381,7 +382,7 @@ profiles:
             - key_code: vk_none
           type: basic 
         - description: '1.s'
-          conditions: *conditions_layer1_input_ja
+          conditions: *conditions_layer1_input_en
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -390,7 +391,7 @@ profiles:
           type: basic 
           # switch to JA
         - description: '1.d'
-          conditions: *conditions_layer1_input_en
+          conditions: *conditions_layer1_input_zh
           from:
             key_code: d
             modifiers: *modifiers_filter_any
@@ -398,7 +399,7 @@ profiles:
             - key_code: f18
           type: basic 
         - description: '1.d'
-          conditions: *conditions_layer1_input_zh
+          conditions: *conditions_layer1_input_en
           from:
             key_code: d
             modifiers: *modifiers_filter_any
