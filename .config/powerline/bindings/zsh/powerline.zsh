@@ -212,6 +212,6 @@ if "${POWERLINE_CONFIG_COMMAND}" shell --shell=zsh uses prompt ; then
 	_powerline_init_modes_support
 fi
 # tell if in tmux by $TERM
-if "${POWERLINE_CONFIG_COMMAND}" shell --shell=zsh uses tmux && [ $TERM != "screen-256color" ]; then
+if "${POWERLINE_CONFIG_COMMAND}" shell --shell=zsh uses tmux && [[ $TERM != "screen-256color" ]] && [[ $TERM != "dumb" ]]; then
 	_powerline_init_tmux_support
 fi
