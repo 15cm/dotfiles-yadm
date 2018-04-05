@@ -190,10 +190,10 @@ lazy_load load_direnv direnv
 if which exa > /dev/null; then
   _ls_cmd="exa --color always --group-directories-first --sort extension"
   alias ls2="$_ls_cmd"
-  alias ls="$_ls_cmd --git-ignore"
+  alias ls="$_ls_cmd"
   alias la="$_ls_cmd -al --git"
-  alias ll="$_ls_cmd -l --git --git-ignore"
-  alias l="$_ls_cmd -l --git --git-ignore"
+  alias ll="$_ls_cmd -l --git"
+  alias l="$_ls_cmd -l --git"
   alias tree="$_ls_cmd --tree --level 2 -l --git"
   alias tree2="$_ls_cmd --tree"
   _tree_cmd="$_ls_cmd --tree --level 2"
@@ -210,7 +210,7 @@ fi
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND="fd --type f --follow --exclude '.git' "
+export FZF_DEFAULT_COMMAND="fd --type f --follow --no-ignore-vcs"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
