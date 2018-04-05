@@ -230,7 +230,7 @@ class open_files_with(Command):
     def execute(self):
         global open_option_keymap
         def callback(answer):
-            if answer != 'q':
+            if answer != 'q' and answer in open_option_keymap:
                 self.fm.execute_console('{0} {1}'.format(open_option_keymap[answer], ' '.join(self.args)))
             self.fm.ui.browser.draw_info = False
 
