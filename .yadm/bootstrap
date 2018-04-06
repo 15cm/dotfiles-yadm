@@ -1,10 +1,37 @@
 #!/bin/bash
-is_arch () {
-  which pacman > /dev/null
+# sudo, git, yadm should be installed manually first
+bin_exists() {
+  command -v $1 >/dev/null 2>&1
 }
 
-is_osx () {
-  [[ $('uname') == 'Darwin' ]]
+is_arch () {
+  bin_exists pacman
+}
+
+is_osx() {
+  [ "$(uname -s)" = 'Darwin' ]
+}
+
+# args: name [packages]
+ins_wrap() {
+  local bin=$1
+  if [ "$#" -eq 1 ]; then
+    local pacs=$1
+  else
+    local pacs="${*:2}"
+  fi
+  bin_exists "$bin" || $pacman_install "$pacs"
+}
+
+install_common_pac() {
+  # vim
+  ins_wrap vim
+  # Tmux
+  ins_wrap tmux
+  # ZSH
+  ins_wrap zsh
+  # jq
+  ins_wrap jq
 }
 
 if is_osx; then
@@ -13,12 +40,8 @@ if is_osx; then
   if [[ ! -f '/usr/local/bin/brew' ]]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
-  # vim
-  which vim > /dev/null || $pacman_install vim
-  # Tmux
-  which tmux > /dev/null || $pacman_install tmux
-  # ZSH
-  which zsh > /dev/null || $pacman_install zsh
+  # common
+  install_common_pac
   # pip & Powerline
   BREW_PYTHON="/usr/local/bin/python"
   BREW_PIP="/usr/local/bin/pip"
@@ -26,71 +49,64 @@ if is_osx; then
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PIP install powerline-status
   $BREW_PIP install powerline-gitstatus
-  # jq
-  $pacman_install jq
   # exa
-  brew install exa
+  ins_wrap exa
   # pyenv
-  $pacman_install pyenv
+  ins_wrap pyenv
   # rbenv
-  $pacman_install rbenv
+  ins_wrap rbenv
   # fd
-  $pacman_install fd
+  ins_wrap fd
   # ranger
-  $pacman_install ranger
+  ins_wrap ranger
 
 else
   if is_arch; then
-    which yaourt > /dev/null || pacman -S --noconfirm yaourt
-    pacman_install="yaourt -S --noconfirm"
+    bin_exists yaourt || sudo pacman -S --noconfirm yaourt
+    pacman_install="sudo yaourt -S --noconfirm"
   else
-    pacman_install="apt-get -y install"
+    pacman_install="sudo apt-get -y install"
   fi
-    # folders
-    [ -d ~/local/bin ] || mkdir -p ~/local/bin
-    # sudo
-    which sudo > /dev/null || $pacman_install sudo
-    # vim
-    which vim > /dev/null || sudo $pacman_install vim
-    # curl
-    which curl > /dev/null || sudo $pacman_install curl
-    # ZSH
-    which zsh > /dev/null || sudo $pacman_install zsh
-    # Tmux
-    which tmux > /dev/null || sudo $pacman_install tmux
-    # pip & Powerline
-    SYS_PYTHON="/usr/bin/python"
-    SYS_PIP="/usr/bin/pip"
-    [[ -f $SYS_PYTHON ]] || sudo $pacman_install python
-    [[ -f $SYS_PIP ]] || sudo $pacman_install python-pip
-    sudo $SYS_PIP install powerline-status
-    sudo $SYS_PIP install powerline-gitstatus
-    # jq
-    sudo $pacman_install jq
-    # exa
-    if is_arch; then
-      sudo $pacman_install exa
-    else
+  # folders
+  [ -d ~/local/bin ] || mkdir -p ~/local/bin
+  # common
+  install_common_pac
+  # pip & Powerline
+  SYS_PYTHON="/usr/bin/python"
+  SYS_PIP="/usr/bin/pip"
+  [[ -f $SYS_PYTHON ]] || $pacman_install python
+  [[ -f $SYS_PIP ]] || $pacman_install python-pip
+  sudo $SYS_PIP install powerline-status
+  sudo SYS_PIP install powerline-gitstatus
+  # exa
+  if is_arch; then
+    ins_wrap exa
+  else
+    if ! bin_exists exa; then
       tmpf=$(mktemp)
-      wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O $tmpf \
-        && unzip $tmpf -d ~/local/bin && rm $tmpf \
+      wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O "$tmpf" \
+        && unzip "$tmpf" -d ~/local/bin && rm "$tmpf" \
         && mv ~/local/bin/exa-linux-x86_64 ~/local/bin/exa
     fi
-    # Keychain
-    which keychain > /dev/null || sudo $pacman_install keychain
-    # pyenv
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-    # fd
-    if is_arch; then
-      $pacman_install fd-rs
-    else
+  fi
+  # Keychain
+  ins_wrap keychain
+  # pyenv
+  bin_exists pyenv || git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  # fd
+  if is_arch; then
+    ins_wrap fd fd-rs
+  else
+    if ! bin_exists fd; then
       tmpv="6.2.0"
       tmpf="fd_${tmpv}_amd64.deb"
       tmpl="https://github.com/sharkdp/fd/releases/download/v${tmpv}/${tmpf}"
       wget $tmpl -O /tmp/${tmpf} && sudo dpkg -i /tmp/${tmpf} && rm /tmp/${tmpf}
     fi
+  fi
 
-    # rbenv & ruby-build
+  # rbenv & ruby-build
+  if ! bin_exists rbenv; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   fi
@@ -103,10 +119,13 @@ git clone https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
 git clone https://github.com/rupa/z.git ~/.z
 
 # fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+if ! bin_exists fzf; then
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
 
 # vim colors
-wget -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
 
-chsh -s $(which zsh)
+wget -nc -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+
+chsh -s "$(command -v zsh)"
