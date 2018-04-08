@@ -230,14 +230,14 @@ class open_files_with(Command):
     def execute(self):
         global open_option_keymap
         def callback(answer):
-            if answer != 'q' and answer in open_option_keymap:
+            if answer != 'q':
                 self.fm.execute_console('{0} {1}'.format(open_option_keymap[answer], ' '.join(self.args)))
             self.fm.ui.browser.draw_info = False
 
         keys = [k for k in open_option_keymap.keys()]
         self.fm.ui.console.ask('open_files_with: [{0}]'.format(''.join(keys)),
             callback,
-            keys
+            ['q', 'q'] + keys
         )
 
 class my_move_right(Command):
