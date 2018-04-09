@@ -75,9 +75,8 @@ export PATH="$PATH:$HOME/go/bin"
 # --------------------- Plugins ---------------------
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
-bgnotify_threshold=5
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips bgnotify)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
