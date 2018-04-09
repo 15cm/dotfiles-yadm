@@ -59,6 +59,9 @@ export _Z_DATA="$HOME/.z/.z"
 export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
 
+# GPG Fix
+export GPG_TTY=$(tty)
+
 # _____________________ ENV _____________________
 
 # --------------------- PATH ---------------------
@@ -72,8 +75,9 @@ export PATH="$PATH:$HOME/go/bin"
 # --------------------- Plugins ---------------------
 # Env
 ZSH_AUTOSUGGEST_USE_ASYNC=true
+bgnotify_threshold=5
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips bgnotify)
 # _____________________ Plugins _____________________
 
 # oh-my-zsh
