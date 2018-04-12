@@ -317,9 +317,9 @@ alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
 if which tmux 2>&1 >/dev/null; then
-  # tell if in tmux by $TERM
-  if [[ $TERM != "screen-256color" ]] && [[ $TERM != "dumb" ]] then
-    tmux attach || tmux; return
+  if [ -z "$TMUX" ]
+  then
+    tmux attach || tmux
   fi
 fi
 
