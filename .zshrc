@@ -14,7 +14,7 @@ DISABLE_AUTO_UPDATE=true
 # _____________________ Common Config  _____________________
 
 # --------------------- Helpers ---------------------
-is_osx=$([[ $('uname') == 'Darwin' ]])
+sys_name=$(uname -s)
 
 # Lazy Load to speed up zsh start
 # Authors:
@@ -60,7 +60,7 @@ export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
 
 # GPG Fix
-export GPG_TTY=$(tty)
+# export GPG_TTY=$(tty)
 
 # _____________________ ENV _____________________
 
@@ -209,7 +209,6 @@ else
   _tree_cmd="tree -C"
 fi
 # _____________________ exa _____________________
-
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_TMUX=0
@@ -297,15 +296,15 @@ bindkey '^x' fzf-cd-widget
 bindkey '^[x' __fzf_dir_widget
 
 export FZF_COMPLETION_TRIGGER=':'
-
 # _____________________ fzf and z _____________________
 
 # --------------------- Config for local and remote machine ---------------------
-if $is_osx; then
+if [[ $sys_name = "Darwin" ]]; then
   source $HOME/.zshrc.mac
 else
   source $HOME/.zshrc.linux
 fi
+
 # _____________________ Config for local and remote machine _____________________
 
 # --------------------- Tmux ---------------------
