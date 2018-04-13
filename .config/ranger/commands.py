@@ -63,6 +63,14 @@ class my_edit(Command):
 
 import subprocess
 import os.path
+from sys import platform
+
+# helpers
+is_osx = platform == 'darwin'
+def merge_two_dicts(x, y):
+    z = x.copy()   # start with x's keys and values
+    z.update(y)    # modifies z with y's keys and values & returns None
+    return z
 
 tree_cmd = 'tree -C'
 fzf_default_opt = "--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all' "
@@ -138,10 +146,13 @@ class trash_files(Command):
     """
 
     def execute(self):
-        paths = map(lambda f: f.path, self.fm.thistab.get_selection())
-        for p in paths:
-            subprocess.check_output(["trash", "-a", p])
-        self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
+        if is_osx:
+            paths = map(lambda f: f.path, self.fm.thistab.get_selection())
+            for p in paths:
+                subprocess.check_output(["trash", "-a", p])
+            self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
+        else:
+            self.fm.execute_console(delete)
 
 class open_files_macos(Command):
     """
@@ -205,14 +216,19 @@ class open_files_emacs_tmux(Command):
             self.fm.notify('open tmux emacs {0}'.format(p))
             self.fm.execute_console(command)
 
-open_option_keymap = {
-    'o': 'open_files_macos',
-    'O': 'reveal_files_in_finder',
+open_option_keymap_general = {
     'e': 'open_files_emacs_tmux',
     'E': 'open_files_emacs',
-    'g': 'open_files_emacs_gui',
     'q': 'cancel'
 }
+
+open_option_keymap_mac = {
+    'o': 'open_files_macos',
+    'O': 'reveal_files_in_finder',
+    'g': 'open_files_emacs_gui'
+}
+
+open_option_keymap = merge_two_dicts(open_option_keymap_general, open_option_keymap_mac if is_osx else {})
 
 class draw_command_option_keymap(Command):
     """
