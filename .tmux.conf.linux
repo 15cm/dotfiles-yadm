@@ -4,9 +4,6 @@ set -g prefix M-q
 # clipper for remote server
 bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel "nc -q0 localhost 8377"
 
-# Powerline
-source "/usr/local/lib/python2.7/dist-packages/powerline/bindings/tmux/powerline.conf"
-
 # extrakto
 set -g @extrakto_fzf_tool "$HOME/.fzf/bin/fzf"
 set -g @extrakto_clip_tool 'nc -q0 localhost 8377'
