@@ -5,6 +5,7 @@ is_osx () {
 }
 
 powerline_config_file="$HOME/.config/powerline/config.json"
+powerline_tmux_binding="$HOME/.config/powerline/bindings/tmux/powerline.conf"
 cur_theme=$(jq -r '.current_theme' "$powerline_config_file")
 jq_tmp=$(mktemp)
 if [[ $cur_theme == 'light' ]]; then
@@ -29,8 +30,4 @@ else
 fi
 
 powerline-daemon --replace
-if is_osx; then
-  tmux source ~/.tmux.conf.mac
-else
-  tmux source ~/.tmux.conf.linux
-fi
+tmux source "$powerline_tmux_binding"
