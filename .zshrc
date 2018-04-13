@@ -31,7 +31,7 @@ function lazy_load() {
     alias ${i}="${lazy_func} ${i}"
   done
 
-  eval "
+ eval "
     function ${lazy_func}() {
         unset -f ${lazy_func}
         lazy_load_clean $@
@@ -51,7 +51,7 @@ function lazy_load_clean() {
 # _____________________ Functions _____________________
 
 # --------------------- ENV ---------------------
-export EDITOR="$HOME/local/bin/emacsclient-terminal.sh"
+export EDITOR=vim
 export _Z_DATA="$HOME/.z/.z"
 . ~/.z/z.sh
 
