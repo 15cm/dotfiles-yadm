@@ -152,7 +152,7 @@ class trash_files(Command):
                 subprocess.check_output(["trash", "-a", p])
             self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
         else:
-            self.fm.execute_console(delete)
+            self.fm.execute_console('delete')
 
 class open_files_macos(Command):
     """
