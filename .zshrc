@@ -60,7 +60,7 @@ export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
 
 # GPG Fix
-# export GPG_TTY=$(tty)
+export GPG_TTY=$(tty)
 
 # _____________________ ENV _____________________
 
