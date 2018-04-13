@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/sinkerine/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	trustExitCode = true
 [user]
 	email = sinkerine@gmail.com
