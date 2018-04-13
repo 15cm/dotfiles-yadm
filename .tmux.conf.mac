@@ -1,9 +1,6 @@
 # General
 set -g prefix C-q
 
-# Powerline
-source "/Users/sinkerine/Library/Python/2.7/lib/python/site-packages/powerline/bindings/tmux/powerline.conf"
-
 # Copy
 bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel 'pbcopy'
 set -g @extrakto_clip_tool 'pbcopy'
