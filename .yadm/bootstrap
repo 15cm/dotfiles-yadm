@@ -32,6 +32,9 @@ install_common_pac() {
   ins_wrap zsh
   # jq
   ins_wrap jq
+  # ranger
+  ins_wrap ranger
+
 }
 
 if is_osx; then
@@ -57,9 +60,6 @@ if is_osx; then
   ins_wrap rbenv
   # fd
   ins_wrap fd
-  # ranger
-  ins_wrap ranger
-
 else
   if is_arch; then
     bin_exists yaourt || sudo pacman -S --noconfirm yaourt
