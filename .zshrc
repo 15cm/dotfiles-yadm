@@ -224,11 +224,14 @@ else
   _tree_cmd="tree -C"
 fi
 # _____________________ exa _____________________
+
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+FD_DEFAULT_COMMAND="fd -H --no-ignore-vcs"
 export FZF_TMUX=0
-export FZF_DEFAULT_COMMAND="fd --type f --follow --no-ignore-vcs"
+export FZF_DEFAULT_COMMAND="$FD_DEFAULT_COMMAND"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND -t d"
 
 export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
 export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {} )) | head -200'"
@@ -241,12 +244,12 @@ export FZF_COMPLETION_OPTS=$FZF_CTRL_T_OPTS
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  fd --hidden --no-ignore --follow --exclude ".git" . "$1"
+  $FD_DEFAULT_COMMAND "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --no-ignore --follow --exclude ".git" . "$1"
+  $FD_DEFAULT_COMMAND -t d "$1"
 }
 
 # fzf z binding
