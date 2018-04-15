@@ -73,6 +73,7 @@ def merge_two_dicts(x, y):
     return z
 
 tree_cmd = 'tree -C'
+fd_default_cmd = 'fd -H --no-ignore-vcs'
 fzf_default_opt = "--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all' "
 fzf_default_cmd = "fzf {0}".format(fzf_default_opt)
 
@@ -97,8 +98,8 @@ class fzf_select(Command):
     def execute(self):
         import subprocess
         import os.path
-        # match files and directories
-        command = "fd --type f --follow --exclude '.git' | " + fzf_default_cmd + \
+        # match files
+        command = "{0} -t f  | ".format(fd_default_cmd) + fzf_default_cmd + \
                   "--preview '([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) | head -200'" 
         send_to_fzf(self, command)
 
@@ -109,8 +110,8 @@ class fzf_cd_dir(Command):
     Cd a dir using fzf.
     """
     def execute(self):
-        # match only directories
-        command = "fd --type d --follow --exclude '.git' | " + fzf_default_cmd + \
+        # match directories
+        command = "{0} -t d | ".format(fd_default_cmd) + fzf_default_cmd + \
                   "--preview '([ -d {{}} ] && {0} {{}}) | head -200'".format(tree_cmd)
         send_to_fzf(self, command)
 
