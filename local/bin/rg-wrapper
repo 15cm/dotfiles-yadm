@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# workaround for using rg in helm-ag
-# https://gist.github.com/pesterhazy/fabd629fbb89a6cd3d3b92246ff29779
-set -euo pipefail
-
-newargs="$(echo "$@" | sed 's/\-\-ignore .* //')"
-rg $newargs
