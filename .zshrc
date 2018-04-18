@@ -243,13 +243,9 @@ export FZF_COMPLETION_OPTS=$FZF_CTRL_T_OPTS
 # command for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  $FD_DEFAULT_COMMAND "$1"
-}
-
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  $FD_DEFAULT_COMMAND -t d "$1"
+  fd -H --no-ignore-vcs -t d $1
 }
 
 # fzf z binding
