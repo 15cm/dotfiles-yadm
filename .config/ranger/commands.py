@@ -220,6 +220,7 @@ class open_files_emacs_tmux(Command):
 open_option_keymap_general = {
     'e': 'open_files_emacs_tmux',
     'E': 'open_files_emacs',
+    'v': 'edit',
     'q': 'cancel'
 }
 
