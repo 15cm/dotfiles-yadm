@@ -32,8 +32,6 @@ install_common_pac() {
   ins_wrap zsh
   # jq
   ins_wrap jq
-  # ranger
-  ins_wrap ranger
   # ripgrep
   ins_wrap ripgrep
 
@@ -62,6 +60,8 @@ if is_osx; then
   ins_wrap rbenv
   # fd
   ins_wrap fd
+  # ranger
+  ins_wrap ranger
 else
   if is_arch; then
     bin_exists yaourt || sudo pacman -S --noconfirm yaourt
@@ -100,12 +100,15 @@ else
     ins_wrap fd fd-rs
   else
     if ! bin_exists fd; then
-      tmpv="6.2.0"
+      tmpv="7.0.0"
       tmpf="fd_${tmpv}_amd64.deb"
       tmpl="https://github.com/sharkdp/fd/releases/download/v${tmpv}/${tmpf}"
       wget $tmpl -O /tmp/${tmpf} && sudo dpkg -i /tmp/${tmpf} && rm /tmp/${tmpf}
     fi
   fi
+  # ranger
+  if is_arch: then
+     ins_wrap
 
   # rbenv & ruby-build
   if ! bin_exists rbenv; then
@@ -127,7 +130,9 @@ if ! bin_exists fzf; then
 fi
 
 # vim colors
-
 wget -nc -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
+
+# tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 chsh -s "$(command -v zsh)"
