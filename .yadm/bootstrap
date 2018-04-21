@@ -107,8 +107,13 @@ else
     fi
   fi
   # ranger
-  if is_arch: then
-     ins_wrap
+  if is_arch; then
+     ins_wrap ranger
+  else
+    git clone https://github.com/ranger/ranger.git /tmp/ranger && cd /tmp/ranger
+    sudo make install
+    cd -
+  fi
 
   # rbenv & ruby-build
   if ! bin_exists rbenv; then
