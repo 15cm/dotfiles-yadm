@@ -115,7 +115,7 @@ else
 fi
 
 # Oh-my-zsh
-git clone https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
+git clone --recurse-submodules https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
