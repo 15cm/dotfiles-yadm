@@ -227,13 +227,38 @@ fi
 
 # --------------------- fzf ---------------------
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+_gen_fzf_default_opts() {
+  local base03="234"
+  local base02="235"
+  local base01="240"
+  local base00="241"
+  local base0="244"
+  local base1="245"
+  local base2="252"
+  local base3="230"
+  local yellow="136"
+  local orange="166"
+  local red="160"
+  local magenta="125"
+  local violet="61"
+  local blue="33"
+  local cyan="39"
+  local green="64"
+
+  # Solarized color scheme for fzf
+  local FZF_COLOR_OPTS="--color fg:-1,bg:-1,hl:$magenta,fg+:$base02,bg+:$base2,hl+:$cyan
+    --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow"
+  export FZF_DEFAULT_OPTS="${FZF_COLOR_OPTS} --height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
+}
+_gen_fzf_default_opts
+
 FD_DEFAULT_COMMAND="fd -H --no-ignore-vcs"
 export FZF_TMUX=0
 export FZF_DEFAULT_COMMAND="$FD_DEFAULT_COMMAND"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND -t d"
 
-export FZF_DEFAULT_OPTS="--height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
 export FZF_CTRL_T_OPTS="--preview '(([ -f {} ] && (highlight -O ansi -l {} 2> /dev/null || cat {})) || ([ -d {} ] && $_tree_cmd {} )) | head -200'"
 export FZF_CTRL_R_OPT=" --exact --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 export FZF_ALT_C_OPTS="--preview '$_tree_cmd {} | head -200'"
