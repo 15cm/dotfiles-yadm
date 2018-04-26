@@ -1252,50 +1252,50 @@ profiles:
           type: basic
 
         # layout 1
-        - description: 'l: 3.hyper-l(Media Next)[Clementine]'
+        - description: 'l: 3.(Media Next)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: l
           to:
-            - key_code: fastforward
-            - key_code: l
+            # - key_code: fastforward
+            - key_code: "5"
               modifiers: *modifiers_layer3
           type: basic
-        - description: 'k: 3.hyper-k(Media Play/Pause)[Clementine]'
+        - description: 'k: 3.(Media Play/Pause)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: k
           to:
-            - key_code: play_or_pause
-            # - key_code: k
-            #   modifiers: *modifiers_layer3
+            # - key_code: play_or_pause
+            - key_code: "6"
+              modifiers: *modifiers_layer3
           type: basic
-        - description: 'j: 3.hyper-j(Media Previous)[Clementine]'
+        - description: 'j: 3.(Media Previous)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: j
           to:
-            - key_code: rewind
-            # - key_code: j
-            #   modifiers: *modifiers_layer3
+            # - key_code: rewind
+            - key_code: "7"
+              modifiers: *modifiers_layer3
           type: basic
-        - description: 'n: 3.hyper-n(Media volume down)[Clementine]'
+        - description: 'n: 3.(Media volume down)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: n
           to:
-            - key_code: n
+            - key_code: "8"
               modifiers: *modifiers_layer3
           type: basic
-        - description: 'm: 3.hyper-m(Media volume up)[Clementine]'
+        - description: 'm: 3.(Media volume up)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: m
           to:
-            - key_code: m
+            - key_code: "9"
               modifiers: *modifiers_layer3
           type: basic
-        - description: 'u: 3.hyper-m(Media update library)[Clementine]'
+        - description: 'u: 3.(Media update library)[Clementine]'
           conditions: *conditions_layer3
           from:
             key_code: u
