@@ -452,3 +452,4 @@ key_bindings:
 
   # other fixes
   - { key: Space, mods: Control, chars: "\x00" }
+  - { key: Key6, mods: Control|Shift|Command, chars: "" }
