@@ -43,22 +43,22 @@ _anchors:
     - control
     - shift
     - command
-  conditions_layer0: &conditions_layer0
-    - name: layer
-      type: variable_if
-      value: 0
-  conditions_layer1: &conditions_layer1
-    - name: layer
-      type: variable_if
-      value: 1
-  conditions_layer2: &conditions_layer2
-    - name: layer
-      type: variable_if
-      value: 2
-  conditions_layer3: &conditions_layer3
-    - name: layer
-      type: variable_if
-      value: 3
+  cond_layer0: &cond_layer0
+    name: layer
+    type: variable_if
+    value: 0
+  cond_layer1: &cond_layer1
+    name: layer
+    type: variable_if
+    value: 1
+  cond_layer2: &cond_layer2
+    name: layer
+    type: variable_if
+    value: 2
+  cond_layer3: &cond_layer3
+    name: layer
+    type: variable_if
+    value: 3
   # _____________________ layers _____________________
   conditions_device_internal: &conditions_device_internal
     - type: device_if
@@ -70,25 +70,18 @@ _anchors:
       identifiers:
         - vendor_id: 1452
         - product_id: 610
-  conditions_layer1_item: &conditions_layer1_item
-    name: layer
-    type: variable_if
-    value: 1
-  conditions_layer1_input_en: &conditions_layer1_input_en
-    - *conditions_layer1_item
-    - type: input_source_if
-      input_sources:
-        - language: en
-  conditions_layer1_input_zh: &conditions_layer1_input_zh
-    - *conditions_layer1_item
-    - type: input_source_if
-      input_sources:
-        - language: zh-Hans
-  conditions_layer1_input_ja: &conditions_layer1_input_ja
-    - *conditions_layer1_item
-    - type: input_source_if
-      input_sources:
-        - language: ja
+  cond_input_en: &cond_input_en
+    type: input_source_if
+    input_sources:
+      - language: en
+  cond_input_zh: &cond_input_zh
+    type: input_source_if
+    input_sources:
+      - language: zh-Hans
+  cond_input_ja: &cond_input_ja
+    type: input_source_if
+    input_sources:
+      - language: ja
   conditions_frontmost_not_partial_emacs: &conditions_frontmost_not_partial_emacs
     - bundle_identifiers:
         - '^org\.gnu\.Emacs.*'
@@ -320,7 +313,9 @@ profiles:
 
       # Layer 1
         - description: 'space: space, layer 1(option control)'
-          conditions: *conditions_layer0
+          conditions:
+
+            - *cond_layer0
           from:
             key_code: spacebar
             modifiers: *modifiers_filter_any
@@ -339,7 +334,9 @@ profiles:
         # input source array: ja en zh
           # switch to EN
         - description: '1.a'
-          conditions: *conditions_layer1_input_en
+          conditions:
+            - *cond_layer1
+            - *cond_input_en
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -347,7 +344,9 @@ profiles:
             - key_code: vk_none
           type: basic
         - description: '1.a'
-          conditions: *conditions_layer1_input_ja
+          conditions:
+            - *cond_layer1
+            - *cond_input_ja
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -355,7 +354,9 @@ profiles:
             - key_code: f18
           type: basic
         - description: '1.a'
-          conditions: *conditions_layer1_input_zh
+          conditions:
+            - *cond_layer1
+            - *cond_input_zh
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -365,7 +366,9 @@ profiles:
           type: basic
           # switch to ZH
         - description: '1.s'
-          conditions: *conditions_layer1_input_ja
+          conditions:
+            - *cond_layer1
+            - *cond_input_ja
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -374,7 +377,9 @@ profiles:
             - key_code: f18
           type: basic 
         - description: '1.s'
-          conditions: *conditions_layer1_input_zh
+          conditions:
+            - *cond_layer1
+            - *cond_input_zh
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -382,7 +387,9 @@ profiles:
             - key_code: vk_none
           type: basic 
         - description: '1.s'
-          conditions: *conditions_layer1_input_en
+          conditions:
+            - *cond_layer1
+            - *cond_input_en
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -391,7 +398,9 @@ profiles:
           type: basic 
           # switch to JA
         - description: '1.d'
-          conditions: *conditions_layer1_input_zh
+          conditions:
+            - *cond_layer1
+            - *cond_input_zh
           from:
             key_code: d
             modifiers: *modifiers_filter_any
@@ -399,7 +408,9 @@ profiles:
             - key_code: f18
           type: basic 
         - description: '1.d'
-          conditions: *conditions_layer1_input_en
+          conditions:
+            - *cond_layer1
+            - *cond_input_en
           from:
             key_code: d
             modifiers: *modifiers_filter_any
@@ -408,7 +419,9 @@ profiles:
             - key_code: f18
           type: basic 
         - description: '1.d'
-          conditions: *conditions_layer1_input_ja
+          conditions:
+            - *cond_layer1
+            - *cond_input_ja
           from:
             key_code: d
             modifiers: *modifiers_filter_any
@@ -418,7 +431,8 @@ profiles:
 
         # layout 2(generated)
         - description: '1.b'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: b
             modifiers: *modifiers_filter_any
@@ -428,7 +442,8 @@ profiles:
           type: basic 
 
         - description: '1.c'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: c
             modifiers: *modifiers_filter_any
@@ -438,7 +453,8 @@ profiles:
           type: basic 
 
         - description: '1.e'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: e
             modifiers: *modifiers_filter_any
@@ -448,7 +464,8 @@ profiles:
           type: basic 
 
         - description: '1.f'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: f
             modifiers: *modifiers_filter_any
@@ -458,7 +475,8 @@ profiles:
           type: basic 
 
         - description: '1.g'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: g
             modifiers: *modifiers_filter_any
@@ -468,7 +486,8 @@ profiles:
           type: basic 
 
         - description: '1.h'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: h
             modifiers: *modifiers_filter_any
@@ -478,7 +497,8 @@ profiles:
           type: basic 
 
         - description: '1.i'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: i
             modifiers: *modifiers_filter_any
@@ -488,7 +508,8 @@ profiles:
           type: basic 
 
         - description: '1.j'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: j
             modifiers: *modifiers_filter_any
@@ -498,7 +519,8 @@ profiles:
           type: basic 
 
         - description: '1.k'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: k
             modifiers: *modifiers_filter_any
@@ -508,7 +530,8 @@ profiles:
           type: basic 
 
         - description: '1.l'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: l
             modifiers: *modifiers_filter_any
@@ -518,7 +541,8 @@ profiles:
           type: basic 
 
         - description: '1.m'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: m
             modifiers: *modifiers_filter_any
@@ -528,7 +552,8 @@ profiles:
           type: basic 
 
         - description: '1.n'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: n
             modifiers: *modifiers_filter_any
@@ -538,7 +563,8 @@ profiles:
           type: basic 
 
         - description: '1.o'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: o
             modifiers: *modifiers_filter_any
@@ -548,7 +574,8 @@ profiles:
           type: basic 
 
         - description: '1.p'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: p
             modifiers: *modifiers_filter_any
@@ -558,7 +585,8 @@ profiles:
           type: basic 
 
         - description: '1.q'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: q
             modifiers: *modifiers_filter_any
@@ -568,7 +596,8 @@ profiles:
           type: basic 
 
         - description: '1.r'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: r
             modifiers: *modifiers_filter_any
@@ -578,7 +607,8 @@ profiles:
           type: basic 
 
         - description: '1.t'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: t
             modifiers: *modifiers_filter_any
@@ -588,7 +618,8 @@ profiles:
           type: basic 
 
         - description: '1.u'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: u
             modifiers: *modifiers_filter_any
@@ -598,7 +629,8 @@ profiles:
           type: basic 
 
         - description: '1.v'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: v
             modifiers: *modifiers_filter_any
@@ -608,7 +640,8 @@ profiles:
           type: basic 
 
         - description: '1.w'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: w
             modifiers: *modifiers_filter_any
@@ -618,7 +651,8 @@ profiles:
           type: basic 
 
         - description: '1.x'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: x
             modifiers: *modifiers_filter_any
@@ -628,7 +662,8 @@ profiles:
           type: basic 
 
         - description: '1.y'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: y
             modifiers: *modifiers_filter_any
@@ -638,7 +673,8 @@ profiles:
           type: basic 
 
         - description: '1.z'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: z
             modifiers: *modifiers_filter_any
@@ -648,7 +684,8 @@ profiles:
           type: basic 
 
         - description: '1.0'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "0"
             modifiers: *modifiers_filter_any
@@ -657,7 +694,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.1'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "1"
             modifiers: *modifiers_filter_any
@@ -666,7 +704,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.2'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "2"
             modifiers: *modifiers_filter_any
@@ -675,7 +714,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.3'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "3"
             modifiers: *modifiers_filter_any
@@ -684,7 +724,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.4'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "4"
             modifiers: *modifiers_filter_any
@@ -693,7 +734,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.5'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "5"
             modifiers: *modifiers_filter_any
@@ -702,7 +744,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.6'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "6"
             modifiers: *modifiers_filter_any
@@ -711,7 +754,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.7'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "7"
             modifiers: *modifiers_filter_any
@@ -720,7 +764,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.8'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "8"
             modifiers: *modifiers_filter_any
@@ -729,7 +774,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.9'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: "9"
             modifiers: *modifiers_filter_any
@@ -738,7 +784,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.comma'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: comma
             modifiers: *modifiers_filter_any
@@ -747,7 +794,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.period'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: period
             modifiers: *modifiers_filter_any
@@ -756,7 +804,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.open_bracket'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: open_bracket
             modifiers: *modifiers_filter_any
@@ -765,7 +814,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.close_bracket'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: close_bracket
             modifiers: *modifiers_filter_any
@@ -774,7 +824,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.slash'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: slash
             modifiers: *modifiers_filter_any
@@ -783,7 +834,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.semicolon'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: semicolon
             modifiers: *modifiers_filter_any
@@ -792,7 +844,8 @@ profiles:
               modifiers: *modifiers_layer1
           type: basic 
         - description: '1.quote'
-          conditions: *conditions_layer1
+          conditions:
+            - *cond_layer1
           from:
             key_code: quote
             modifiers: *modifiers_filter_any
@@ -803,7 +856,8 @@ profiles:
 
       # Layer 2
         - description: 'tab: tab, layer2(control option)'
-          conditions: *conditions_layer0
+          conditions:
+            - *cond_layer0
           from:
             key_code: tab
             modifiers: *modifiers_filter_any
@@ -821,7 +875,8 @@ profiles:
 
         # layout 1(generated)
         - description: '2.a'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: a
             modifiers: *modifiers_filter_any
@@ -831,7 +886,8 @@ profiles:
           type: basic
 
         - description: '2.b'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: b
             modifiers: *modifiers_filter_any
@@ -841,7 +897,8 @@ profiles:
           type: basic 
 
         - description: '2.c'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: c
             modifiers: *modifiers_filter_any
@@ -851,7 +908,8 @@ profiles:
           type: basic 
 
         - description: '2.d'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: d
             modifiers: *modifiers_filter_any
@@ -861,7 +919,8 @@ profiles:
           type: basic 
 
         - description: '2.e'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: e
             modifiers: *modifiers_filter_any
@@ -871,7 +930,8 @@ profiles:
           type: basic 
 
         - description: '2.f'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: f
             modifiers: *modifiers_filter_any
@@ -881,7 +941,8 @@ profiles:
           type: basic 
 
         - description: '2.g'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: g
             modifiers: *modifiers_filter_any
@@ -891,7 +952,8 @@ profiles:
           type: basic 
 
         - description: '2.h'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: h
             modifiers: *modifiers_filter_any
@@ -901,7 +963,8 @@ profiles:
           type: basic 
 
         - description: '2.i'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: i
             modifiers: *modifiers_filter_any
@@ -911,7 +974,8 @@ profiles:
           type: basic 
 
         - description: '2.j'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: j
             modifiers: *modifiers_filter_any
@@ -921,7 +985,8 @@ profiles:
           type: basic 
 
         - description: '2.k'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: k
             modifiers: *modifiers_filter_any
@@ -931,7 +996,8 @@ profiles:
           type: basic 
 
         - description: '2.l'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: l
             modifiers: *modifiers_filter_any
@@ -941,7 +1007,8 @@ profiles:
           type: basic 
 
         - description: '2.m'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: m
             modifiers: *modifiers_filter_any
@@ -951,7 +1018,8 @@ profiles:
           type: basic 
 
         - description: '2.n'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: n
             modifiers: *modifiers_filter_any
@@ -961,7 +1029,8 @@ profiles:
           type: basic 
 
         - description: '2.o'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: o
             modifiers: *modifiers_filter_any
@@ -971,7 +1040,8 @@ profiles:
           type: basic 
 
         - description: '2.p'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: p
             modifiers: *modifiers_filter_any
@@ -981,7 +1051,8 @@ profiles:
           type: basic 
 
         - description: '2.q'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: q
             modifiers: *modifiers_filter_any
@@ -991,7 +1062,8 @@ profiles:
           type: basic 
 
         - description: '2.r'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: r
             modifiers: *modifiers_filter_any
@@ -1001,7 +1073,8 @@ profiles:
           type: basic 
 
         - description: '2.s'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: s
             modifiers: *modifiers_filter_any
@@ -1011,7 +1084,8 @@ profiles:
           type: basic 
 
         - description: '2.t'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: t
             modifiers: *modifiers_filter_any
@@ -1021,7 +1095,8 @@ profiles:
           type: basic 
 
         - description: '2.u'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: u
             modifiers: *modifiers_filter_any
@@ -1031,7 +1106,8 @@ profiles:
           type: basic 
 
         - description: '2.v'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: v
             modifiers: *modifiers_filter_any
@@ -1041,7 +1117,8 @@ profiles:
           type: basic 
 
         - description: '2.w'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: w
             modifiers: *modifiers_filter_any
@@ -1051,7 +1128,8 @@ profiles:
           type: basic 
 
         - description: '2.x'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: x
             modifiers: *modifiers_filter_any
@@ -1061,7 +1139,8 @@ profiles:
           type: basic 
 
         - description: '2.y'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: y
             modifiers: *modifiers_filter_any
@@ -1071,7 +1150,8 @@ profiles:
           type: basic 
 
         - description: '2.z'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: z
             modifiers: *modifiers_filter_any
@@ -1081,7 +1161,8 @@ profiles:
           type: basic 
 
         - description: '2.0'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "0"
             modifiers: *modifiers_filter_any
@@ -1090,7 +1171,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.1'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "1"
             modifiers: *modifiers_filter_any
@@ -1099,7 +1181,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.2'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "2"
             modifiers: *modifiers_filter_any
@@ -1108,7 +1191,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.3'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "3"
             modifiers: *modifiers_filter_any
@@ -1117,7 +1201,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.4'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "4"
             modifiers: *modifiers_filter_any
@@ -1126,7 +1211,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.5'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "5"
             modifiers: *modifiers_filter_any
@@ -1135,7 +1221,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.6'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "6"
             modifiers: *modifiers_filter_any
@@ -1144,7 +1231,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.7'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "7"
             modifiers: *modifiers_filter_any
@@ -1153,7 +1241,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.8'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "8"
             modifiers: *modifiers_filter_any
@@ -1162,7 +1251,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.9'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "9"
             modifiers: *modifiers_filter_any
@@ -1171,7 +1261,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.-'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "hyphen"
             modifiers: *modifiers_filter_any
@@ -1180,7 +1271,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.='
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: "equal_sign"
             modifiers: *modifiers_filter_any
@@ -1189,7 +1281,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.return_or_enter'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: return_or_enter
             modifiers: *modifiers_filter_any
@@ -1198,7 +1291,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.spacebar'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: spacebar
             modifiers: *modifiers_filter_any
@@ -1207,7 +1301,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.comma'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: comma
             modifiers: *modifiers_filter_any
@@ -1216,7 +1311,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.period'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: period
             modifiers: *modifiers_filter_any
@@ -1225,7 +1321,8 @@ profiles:
               modifiers: *modifiers_layer2
           type: basic 
         - description: '2.open_bracket'
-          conditions: *conditions_layer2
+          conditions:
+            - *cond_layer2
           from:
             key_code: open_bracket
             modifiers: *modifiers_filter_any
@@ -1235,7 +1332,8 @@ profiles:
           type: basic 
       # Layer 3
         - description: 'grave_accent_and_tilde: grave_accent_and_tilde, layer3(hyper)'
-          conditions: *conditions_layer0
+          conditions:
+            - *cond_layer0
           from:
             key_code: grave_accent_and_tilde
             modifiers: *modifiers_filter_not_shift
@@ -1253,7 +1351,8 @@ profiles:
 
         # layout 1
         - description: 'l: 3.(Media Next)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: l
           to:
@@ -1262,7 +1361,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'k: 3.(Media Play/Pause)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: k
           to:
@@ -1271,7 +1371,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'j: 3.(Media Previous)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: j
           to:
@@ -1280,7 +1381,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'n: 3.(Media volume down)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: n
           to:
@@ -1288,7 +1390,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'm: 3.(Media volume up)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: m
           to:
@@ -1296,7 +1399,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'u: 3.(Media update library)[Clementine]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: u
           to:
@@ -1304,21 +1408,24 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'p: 3.volume_increment'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: p
           to:
             - key_code: volume_increment
           type: basic
         - description: 'o: 3.volume_decrement'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: o
           to:
             - key_code: volume_decrement
           type: basic
         - description: 'i: 3.mute'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: i
           to:
@@ -1326,7 +1433,8 @@ profiles:
           type: basic
 
         - description: 'semicolon: 3.hyper-;(sleep computer)[BTT]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: semicolon
           to:
@@ -1334,7 +1442,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'quote: 3.hyper-quote(sleep display)[BTT]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: quote
           to:
@@ -1342,7 +1451,8 @@ profiles:
               modifiers: *modifiers_layer3
           type: basic
         - description: 'period: 3.hyper-period(show notification center)[BTT]'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: period
           to:
@@ -1354,7 +1464,8 @@ profiles:
         # Layout 2
           # F1-F12 (generated)
         - description: '1: 3.f1'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "1"
             modifiers: *modifiers_filter_any
@@ -1362,7 +1473,8 @@ profiles:
           - key_code: f1
           type: basic
         - description: '2: 3.f2'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "2"
             modifiers: *modifiers_filter_any
@@ -1370,7 +1482,8 @@ profiles:
           - key_code: f2
           type: basic
         - description: '3: 3.f3'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "3"
             modifiers: *modifiers_filter_any
@@ -1378,7 +1491,8 @@ profiles:
           - key_code: f3
           type: basic
         - description: '4: 3.f4'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "4"
             modifiers: *modifiers_filter_any
@@ -1386,7 +1500,8 @@ profiles:
           - key_code: f4
           type: basic
         - description: '5: 3.f5'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "5"
             modifiers: *modifiers_filter_any
@@ -1394,7 +1509,8 @@ profiles:
           - key_code: f5
           type: basic
         - description: '6: 3.f6'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "6"
             modifiers: *modifiers_filter_any
@@ -1402,7 +1518,8 @@ profiles:
           - key_code: f6
           type: basic
         - description: '7: 3.f7'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "7"
             modifiers: *modifiers_filter_any
@@ -1410,7 +1527,8 @@ profiles:
           - key_code: f7
           type: basic
         - description: '8: 3.f8'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "8"
             modifiers: *modifiers_filter_any
@@ -1418,7 +1536,8 @@ profiles:
           - key_code: f8
           type: basic
         - description: '9: 3.f9'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "9"
             modifiers: *modifiers_filter_any
@@ -1426,7 +1545,8 @@ profiles:
           - key_code: f9
           type: basic
         - description: '0: 3.f10'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: "0"
             modifiers: *modifiers_filter_any
@@ -1434,7 +1554,8 @@ profiles:
           - key_code: f10
           type: basic
         - description: '-: 3.f11'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: hyphen
             modifiers: *modifiers_filter_any
@@ -1442,7 +1563,8 @@ profiles:
           - key_code: f11
           type: basic
         - description: '=: 3.f12'
-          conditions: *conditions_layer3
+          conditions:
+            - *cond_layer3
           from:
             key_code: equal_sign
           to:
