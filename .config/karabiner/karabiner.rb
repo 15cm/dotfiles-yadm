@@ -18,7 +18,15 @@ module Cond
   def gen_device_if(identifiers)
     {
       type: "device_if",
-      identifiers: identifiers
+      identifiers: identifiers,
+    }
+  end
+
+  def gen_variable_if(name, value)
+    {
+      name: name,
+      type: "variable_if",
+      value: value
     }
   end
 
@@ -26,8 +34,32 @@ module Cond
   def is_internal_keyboard
     gen_device_if([
       {vendor_id: 1452},
-      {product_id: 610}
+      {product_id: 610},
     ])
+  end
+  def is_layer0
+    gen_variable_if("layer", 0)
+  end
+  def is_layer1
+    gen_variable_if("layer", 1)
+  end
+  def is_layer2
+    gen_variable_if("layer", 2)
+  end
+  def is_layer3
+    gen_variable_if("layer", 3)
+  end
+end
+
+module SetVar
+  module_function
+  def gen(name, value)
+    {
+      set_variable: {
+        name: name,
+        value: value,
+      }
+    }
   end
 end
 
@@ -99,8 +131,9 @@ class Layer
     type: "variable_if",
     value: 0,
   }
-  def initialize(layer_num, layer_mods, layer_keys)
+  def initialize(layer_num, layer_trigger, layer_mods, layer_keys)
     @layer_num = layer_num
+    @layer_trigger = layer_trigger
     @layer_mods = layer_mods
     @layer_keys = layer_keys
 
@@ -114,12 +147,32 @@ class Layer
 
   def gen_rules
     gen_rules_hook_before()
-    @rules += layer_rules()
+    @rules += trigger_rules
+    @rules += main_rules
     gen_rules_hook_after()
     @rules
   end
 
-  def layer_rules
+  def trigger_rules
+    [Rule.gen(
+      "layer #{@layer_num} trigger",
+      [{
+        conditions: [
+          Cond.is_layer0,
+        ],
+        from: {
+          key_code: @layer_trigger,
+          modifiers: ModFrom.optional_any,
+        },
+        to: [SetVar.gen("layer", 1)],
+        to_after_key_up: [SetVar.gen("layer", 0)],
+        to_if_alone: [{
+          key_code: "spacebar",
+        }]
+       }]
+    )]
+  end
+  def main_rules
     [
       Rule.gen(
         "layer #{@layer_num}: layer_mod-key",

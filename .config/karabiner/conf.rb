@@ -9,7 +9,7 @@ module Conf
         [
           {
             conditions: [
-              $cond_is_internal_keyboard
+              Cond.is_internal_keyboard
             ],
             from: {
               key_code: "caps_lock",
@@ -25,6 +25,9 @@ module Conf
   end
 
   # Layer1
+  def layer1_trigger
+    "spacebar"
+  end
   def layer1_mods
     [
     "command",
@@ -39,7 +42,7 @@ module Conf
   # final conf
   def layers
     [
-      Layer1.new(layer1_mods, layer1_keys),
+      Layer1.new(layer1_trigger, layer1_mods, layer1_keys),
     ]
   end
 
