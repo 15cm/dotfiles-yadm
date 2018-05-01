@@ -155,6 +155,7 @@ class Layer
     @layer_mods = layer_mods
     @layer_keys = layer_keys
     @layer_keymap = layer_keys.zip(layer_keys).to_h
+    @layer_keymap_filter = []
     @layer_description_prefix = "layer #{@layer_num}"
 
     @rules = []
@@ -193,6 +194,7 @@ class Layer
     )
   end
   def main_rule()
+    @layer_keymap_filter.each { |k| @layer_keymap.delete(k) }
     Rule.gen(
       "#{@layer_description_prefix}: key -> layer_mod-key",
       @layer_keymap.map { |from_key, to_key|
@@ -239,7 +241,7 @@ class Layer1 < Layer
         ['s', :zh],
         ['d',:ja],
       ]
-      key_maps.each { |(k, _)| @layer_keymap.delete(k) }
+      @layer_keymap_filter += key_maps.map { |k, _| k }
 
       # place entry following the order in system keyboard
       cond_map = {
@@ -319,9 +321,9 @@ class Layer3 < Layer
         .zip(('1'..'12').map { |x| 'f' + x })
 
       special_map = media_map.merge(f_map)
-      special_map.keys.each { |k| @layer_keymap.delete(k) }
+      @layer_keymap_filter += special_map.keys
 
-      manipulators = special_map.map do |from_key, to_key| 
+      manipulators = special_map.map do |from_key, to_key|
         m = layer_manipulator(from_key, to_key)
         m[:to][0].delete[:modifiers]
         m
