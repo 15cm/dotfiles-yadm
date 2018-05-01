@@ -12,6 +12,12 @@ module Test
   def layer1_keys
     ["d"]
   end
+  def layer2_keys
+    ["d"]
+  end
+  def layer3_keys
+    ["d"]
+  end
 
   def test
     conf = gen()

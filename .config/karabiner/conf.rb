@@ -39,10 +39,42 @@ module Conf
     KeyRegion.whole
   end
 
+  # Layer2
+  def layer2_trigger
+    "tab"
+  end
+  def layer2_mods
+    [
+      "command",
+      "option",
+      "control",
+    ]
+  end
+  def layer2_keys
+    KeyRegion.whole
+  end
+
+  # Layer3
+  def layer3_trigger
+    "grave_accent_and_tilde"
+  end
+  def layer3_mods
+    [
+      "control",
+      "shift",
+      "command",
+    ]
+  end
+  def layer3_keys
+    KeyRegion.below
+  end
+
   # final conf
   def layers
     [
       Layer1.new(layer1_trigger, layer1_mods, layer1_keys),
+      Layer2.new(layer2_trigger, layer2_mods, layer2_keys),
+      Layer3.new(layer3_trigger, layer3_mods, layer3_keys),
     ]
   end
 
