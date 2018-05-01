@@ -30,6 +30,15 @@ module Cond
     }
   end
 
+  def gen_input_is(src)
+    {
+      type: "input_source_if",
+      input_sources: [
+        language: src
+      ]
+    }
+  end
+
   # module variables
   def is_internal_keyboard
     gen_device_if([
@@ -37,6 +46,7 @@ module Cond
       {product_id: 610},
     ])
   end
+  # layers
   def is_layer0
     gen_variable_if("layer", 0)
   end
@@ -48,6 +58,16 @@ module Cond
   end
   def is_layer3
     gen_variable_if("layer", 3)
+  end
+  # input sources
+  def input_is_en
+    gen_input_is("en")
+  end
+  def input_is_zh
+    gen_input_is("zh-Hans")
+  end
+  def input_is_ja
+    gen_input_is("ja")
   end
 end
 
@@ -147,14 +167,14 @@ class Layer
 
   def gen_rules
     gen_rules_hook_before()
-    @rules += trigger_rules
-    @rules += main_rules
+    @rules << trigger_rule
+    @rules << main_rule
     gen_rules_hook_after()
     @rules
   end
 
-  def trigger_rules
-    [Rule.gen(
+  def trigger_rule
+    Rule.gen(
       "layer #{@layer_num} trigger",
       [{
         conditions: [
@@ -164,35 +184,33 @@ class Layer
           key_code: @layer_trigger,
           modifiers: ModFrom.optional_any,
         },
-        to: [SetVar.gen("layer", 1)],
+        to: [SetVar.gen("layer", @layer_num)],
         to_after_key_up: [SetVar.gen("layer", 0)],
         to_if_alone: [{
-          key_code: "spacebar",
+          key_code: @layer_trigger,
         }]
        }]
-    )]
+    )
   end
-  def main_rules
-    [
-      Rule.gen(
-        "layer #{@layer_num}: layer_mod-key",
-        @layer_keys.map { |key|
-          {
-            conditions: [
-              @cond_is_in_this_layer
-            ],
-            from: {
-              key_code: key,
-              modifiers: ModFrom.optional_any
-            },
-            to: [
-              key_code: key,
-              modifiers: @layer_mods
-            ]
-          }
+  def main_rule
+    Rule.gen(
+      "layer #{@layer_num}: layer_mod-key",
+      @layer_keys.map { |key|
+        {
+          conditions: [
+            @cond_is_in_this_layer
+          ],
+          from: {
+            key_code: key,
+            modifiers: ModFrom.optional_any
+          },
+          to: [
+            key_code: key,
+            modifiers: @layer_mods
+          ]
         }
-      )
-    ]
+      }
+    )
   end
 
   def gen_rules_hook_before
@@ -207,6 +225,56 @@ class Layer1 < Layer
     super(1, *args)
   end
   def gen_rules_hook_before
-    @layer_keys -= ('a'..'c').to_a
+    # switch input method
+    def gen_input_source_rule
+      # key => input_source_to_switch_to
+      key_maps = [
+        ['a', :en],
+        ['s', :zh],
+        ['d',:ja],
+      ]
+
+      # place entry following the order in system keyboard
+      cond_map = {
+        ja: Cond.input_is_ja,
+        en: Cond.input_is_en,
+        zh: Cond.input_is_zh,
+      }
+      sys_next_key = "f18"
+
+      @layer_keys -= key_maps.map { |(k, _)| k }
+      len = key_maps.length
+
+      find_src_index = lambda do |src| 
+        cond_map.find_index { |k, _| k == src }
+      end
+
+      manipulators = (0...len).to_a
+        .product((0...len).to_a)
+        .map do |(index_to, index_from)|
+        _, src_from = key_maps[index_from]
+        trigger_key, src_to = key_maps[index_to]
+        pos_from = find_src_index.call(src_from)
+        pos_to = find_src_index.call(src_to)
+        steps = (pos_to - pos_from + len) % len
+
+        {
+          conditions: [
+            Cond.is_layer1,
+            cond_map[src_from]
+          ],
+            from: {
+            key_code: trigger_key,
+            modifiers: ModFrom.optional_any,
+          },
+            to: steps == 0 ? [{ key_code: "vk_none" }] : Array.new(steps, { key_code: sys_next_key})
+        }
+      end
+      Rule.gen(
+        "layer #{@layer_num}: switch input source",
+        manipulators
+      )
+    end
+    @rules << gen_input_source_rule
   end
 end
