@@ -1,14 +1,12 @@
 module Rule
   module_function
   def gen(desc, manipulators)
-    manipulators.each { |m|
-      m[:type] = "basic"
-    }
     {
       description: desc,
-      manipulators: manipulators.map { |m| m.merge({
+      manipulators: manipulators.map do |m| m.merge({
         type: "basic"
-      }) }
+      })
+      end
     }
   end
 end
@@ -132,7 +130,7 @@ module KeyRegion
     ]
   end
   def number
-    (0..9).to_a
+    ('1'..'9').to_a << '0'
   end
   def below
     alphabet + symbol_below
@@ -156,6 +154,8 @@ class Layer
     @layer_trigger = layer_trigger
     @layer_mods = layer_mods
     @layer_keys = layer_keys
+    @layer_keymap = layer_keys.zip(layer_keys).to_h
+    @layer_description_prefix = "layer #{@layer_num}"
 
     @rules = []
     @cond_is_in_this_layer = {
@@ -175,7 +175,7 @@ class Layer
 
   def trigger_rule
     Rule.gen(
-      "layer #{@layer_num} trigger",
+      "#{@layer_description_prefix}: toggle layer",
       [{
         conditions: [
           Cond.is_layer0,
@@ -192,25 +192,29 @@ class Layer
        }]
     )
   end
-  def main_rule
+  def main_rule()
     Rule.gen(
-      "layer #{@layer_num}: layer_mod-key",
-      @layer_keys.map { |key|
-        {
-          conditions: [
-            @cond_is_in_this_layer
-          ],
-          from: {
-            key_code: key,
-            modifiers: ModFrom.optional_any
-          },
-          to: [
-            key_code: key,
-            modifiers: @layer_mods
-          ]
-        }
+      "#{@layer_description_prefix}: key -> layer_mod-key",
+      @layer_keymap.map { |from_key, to_key|
+        layer_manipulator(from_key, to_key)
       }
     )
+  end
+
+  def layer_manipulator(from_key, to_key, mod_from = ModFrom.optional_any)
+    {
+      conditions: [
+        @cond_is_in_this_layer
+      ],
+      from: {
+        key_code: from_key,
+        modifiers: mod_from
+      },
+      to: [
+        key_code: to_key,
+        modifiers: @layer_mods
+      ]
+    }
   end
 
   def gen_rules_hook_before
@@ -220,19 +224,22 @@ class Layer
   end
 end
 
+# Application Launcher, Input Source Switching
 class Layer1 < Layer
   def initialize(*args)
     super(1, *args)
   end
+
   def gen_rules_hook_before
     # switch input method
-    def gen_input_source_rule
+    def input_source_rule_hook
       # key => input_source_to_switch_to
       key_maps = [
         ['a', :en],
         ['s', :zh],
         ['d',:ja],
       ]
+      key_maps.each { |(k, _)| @layer_keymap.delete(k) }
 
       # place entry following the order in system keyboard
       cond_map = {
@@ -241,8 +248,6 @@ class Layer1 < Layer
         zh: Cond.input_is_zh,
       }
       sys_next_key = "f18"
-
-      @layer_keys -= key_maps.map { |(k, _)| k }
       len = key_maps.length
 
       find_src_index = lambda do |src| 
@@ -258,23 +263,75 @@ class Layer1 < Layer
         pos_to = find_src_index.call(src_to)
         steps = (pos_to - pos_from + len) % len
 
-        {
-          conditions: [
-            Cond.is_layer1,
-            cond_map[src_from]
-          ],
-            from: {
-            key_code: trigger_key,
-            modifiers: ModFrom.optional_any,
-          },
-            to: steps == 0 ? [{ key_code: "vk_none" }] : Array.new(steps, { key_code: sys_next_key})
-        }
+        m = layer_manipulator(
+          trigger_key,
+          steps == 0 ? [{ key_code: "vk_none" }] : Array.new(steps, { key_code: sys_next_key})
+        )
+
+        m[:conditions] << cond_map[src_from]
+        m
       end
-      Rule.gen(
-        "layer #{@layer_num}: switch input source",
+
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: switch input source",
         manipulators
       )
     end
-    @rules << gen_input_source_rule
+    input_source_rule_hook()
   end
 end
+
+# Windows Management
+class Layer2 < Layer
+  def initialize(*args)
+    super(2, *args)
+  end
+end
+
+# F Region, System Control, Media
+class Layer3 < Layer
+  def initialize(*args)
+    super(3, *args)
+  end
+
+  def gen_rules_hook_before
+    def special_main_rule_hook
+      # Clementine
+      app_map = {
+        "j" => "5",
+        "k" => "6",
+        "l" => "7",
+        "n" => "8",
+        "m" => "9",
+      }
+      @layer_keymap.merge!(app_map)
+    end
+    def special_rule_hook
+      # Media
+      media_map = {
+        "o" => "volume_decrement",
+        "p" => "volume_increment",
+        "i" => "mute",
+      }
+
+      # F Region
+      f_map = KeyRegion.above
+        .zip(('1'..'12').map { |x| 'f' + x })
+
+      special_map = media_map.merge(f_map)
+      special_map.keys.each { |k| @layer_keymap.delete(k) }
+
+      manipulators = special_map.map do |from_key, to_key| 
+        m = layer_manipulator(from_key, to_key)
+        m[:to][0].delete[:modifiers]
+        m
+      end
+
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: media, F region",
+        manipulators
+      )
+    end
+  end
+end
+
