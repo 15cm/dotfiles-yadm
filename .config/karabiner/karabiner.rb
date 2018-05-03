@@ -11,6 +11,61 @@ module Rule
   end
 end
 
+module App
+  module_function
+  def name2bundle_id(name)
+    name_bid_map =
+    {
+      telegram: '^org\.telegram\.desktop.*',
+      microsoft_office: '^com\.microsoft\..*',
+      alacritty: '^io\.alacritty.*',
+      emacs: '^org\.gnu\.Emacs.*',
+      iterm: '^com\.googlecode\.iterm2.*',
+      terminal: '^com\.apple\.com\.Terminal.*',
+      jetbrains: '^com\.jetbrains\..*',
+      xcode: '^com\.apple\.dt\.Xcode.*',
+    }
+  name_bid_map[name]
+  end
+  def editors
+    [
+      :emacs,
+    ]
+  end
+  def terminals
+    [
+      :alacritty,
+      :iterm,
+      :terminal,
+    ]
+  end
+  def ides
+    [
+      :jetbrains,
+      :xcode,
+    ]
+  end
+  def keymap_total_emacs
+    editors + terminals
+  end
+  def keymap_partial_emacs
+    ides
+  end
+  def keymap_need_home_end
+    [
+      :telegram,
+      :microsoft_office,
+    ]
+  end
+end
+
+module T1
+  module_function
+  def f1
+    1
+  end
+end
+
 module Cond
   module_function
   def gen_device_if(identifiers)
@@ -20,20 +75,27 @@ module Cond
     }
   end
 
-  def gen_variable_if(name, value)
+  def gen_variable_if(name, value, is = true)
     {
       name: name,
-      type: "variable_if",
+      type: "variable_#{is ? 'if' : 'unless'}",
       value: value
     }
   end
 
-  def gen_input_is(src)
+  def gen_input_if(src, is = true)
     {
-      type: "input_source_if",
+      type: "input_source_#{is ? 'if' : 'unless'}",
       input_sources: [
         language: src
       ]
+    }
+  end
+  def gen_application_if(app_names, is = true)
+    bundle_ids = app_names.map { |name| App.name2bundle_id(name) }
+    {
+      bundle_idenfifiers: bundle_ids,
+      type: "frontmost_application_#{is ? 'if' : 'unless'}",
     }
   end
 
@@ -57,15 +119,25 @@ module Cond
   def is_layer3
     gen_variable_if("layer", 3)
   end
-  # input sources
+
   def input_is_en
-    gen_input_is("en")
+    gen_input_if("en")
   end
   def input_is_zh
-    gen_input_is("zh-Hans")
+    gen_input_if("zh-Hans")
   end
   def input_is_ja
-    gen_input_is("ja")
+    gen_input_if("ja")
+  end
+
+  def app_keymap_is_total_emacs
+    gen_application_if(App.keymap_total_emacs)
+  end
+  def app_keymap_is_partial_emacs
+    gen_application_if(App.keymap_partial_emacs)
+  end
+  def app_keymap_is_need_home_end
+    gen_application_if(App.keymap_need_home_end)
   end
 end
 
