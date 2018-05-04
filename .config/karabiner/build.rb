@@ -1,18 +1,10 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
+
 require 'json'
-require 'yaml'
+require './conf'
 
-class ::Hash
-    def deep_merge(second)
-        merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : v2 }
-        self.merge(second, &merger)
-    end
+conf = Conf.gen()
+
+File.open("./karabiner.json", 'w') do |f|
+  JSON.dump(conf, f)
 end
-
-a = YAML.load_file('karabiner.yml')
-b = YAML.load_file('private.yml')
-b.each do |x|
-    a["profiles"][0]["complex_modifications"]["rules"][0]["manipulators"] << x
-end
-
-File.write('karabiner.json', a.to_json)

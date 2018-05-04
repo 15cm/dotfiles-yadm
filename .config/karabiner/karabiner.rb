@@ -1,3 +1,7 @@
+if File.exist?("./private.rb")
+  require "./private"
+end
+
 module Rule
   module_function
   def gen(desc, manipulators)
@@ -16,14 +20,15 @@ module App
   def name2bundle_id(name)
     name_bid_map =
     {
-      telegram: '^org\.telegram\.desktop.*',
-      microsoft_office: '^com\.microsoft\..*',
-      alacritty: '^io\.alacritty.*',
-      emacs: '^org\.gnu\.Emacs.*',
-      iterm: '^com\.googlecode\.iterm2.*',
-      terminal: '^com\.apple\.com\.Terminal.*',
-      jetbrains: '^com\.jetbrains\..*',
-      xcode: '^com\.apple\.dt\.Xcode.*',
+      telegram: "^org\\.telegram\\.desktop.*",
+      microsoft_office: "^com\\.microsoft\\..*",
+      alacritty: "^io\\.alacritty.*",
+      emacs: "^org\\.gnu\\.Emacs.*",
+      iterm: "^com\\.googlecode\\.iterm2.*",
+      terminal: "^com\\.apple\\.com\\.Terminal.*",
+      jetbrains: "^com\\.jetbrains\\..*",
+      xcode: "^com\\.apple\\.dt\\.Xcode.*",
+      firefox: "^org\\.mozilla\\.firefox.*",
     }
   name_bid_map[name]
   end
@@ -55,6 +60,11 @@ module App
     [
       :telegram,
       :microsoft_office,
+    ]
+  end
+  def firefox
+    [
+      :firefox
     ]
   end
 end
@@ -94,7 +104,7 @@ module Cond
   def gen_application_if(app_names, is = true)
     bundle_ids = app_names.map { |name| App.name2bundle_id(name) }
     {
-      bundle_idenfifiers: bundle_ids,
+      bundle_identifiers: bundle_ids,
       type: "frontmost_application_#{is ? 'if' : 'unless'}",
     }
   end
@@ -130,14 +140,17 @@ module Cond
     gen_input_if("ja")
   end
 
-  def app_keymap_is_total_emacs
-    gen_application_if(App.keymap_total_emacs)
+  def app_keymap_not_total_emacs
+    gen_application_if(App.keymap_total_emacs, false)
   end
-  def app_keymap_is_partial_emacs
-    gen_application_if(App.keymap_partial_emacs)
+  def app_keymap_not_partial_nor_total_emacs
+    gen_application_if(App.keymap_partial_emacs + App.keymap_total_emacs, false)
   end
-  def app_keymap_is_need_home_end
+  def app_keymap_need_home_end
     gen_application_if(App.keymap_need_home_end)
+  end
+  def app_is_firefox
+    gen_application_if(App.firefox)
   end
 end
 
@@ -171,8 +184,28 @@ module ModFrom
   def optional_any
     gen_optional(["any"])
   end
+  def optional_not_fn
+    gen_optional([
+      "control",
+      "option",
+      "shift",
+      "command",
+    ])
+  end
   def mandatory_fn
     gen_mandatory(["fn"])
+  end
+  def mandatory_control
+    gen_mandatory(["control"])
+  end
+  def mandatory_command
+    gen_mandatory(["command"])
+  end
+  def mandatory_control_command
+    gen_mandatory(["control", "command"])
+  end
+  def mandatory_option
+    gen_mandatory(["option"])
   end
 end
 
@@ -337,13 +370,17 @@ class Layer1 < Layer
         pos_to = find_src_index.call(src_to)
         steps = (pos_to - pos_from + len) % len
 
-        m = layer_manipulator(
-          trigger_key,
-          steps == 0 ? [{ key_code: "vk_none" }] : Array.new(steps, { key_code: sys_next_key})
-        )
-
-        m[:conditions] << cond_map[src_from]
-        m
+        {
+          conditions: [
+            @cond_is_in_this_layer,
+            cond_map[src_from],
+          ],
+          from: {
+            key_code: trigger_key,
+            modifiers: ModFrom.optional_any,
+          },
+          to: Array.new(steps, { key_code: sys_next_key})
+        }
       end
 
       @rules << Rule.gen(
@@ -359,6 +396,30 @@ end
 class Layer2 < Layer
   def initialize(*args)
     super(2, *args)
+  end
+
+  def gen_rules_hook_before
+    def private_rule_hook
+      if defined?(Private)
+        @rules << Rule.gen(
+          "#{@layer_description_prefix}: private password",
+          [{
+            conditions: [
+              @cond_is_in_this_layer,
+            ],
+            from: {
+              key_code: "grave_accent_and_tilde",
+            },
+            to:
+            (Private.password.chars.map do |c|
+              {key_code: c}
+              end) << {key_code: "return_or_enter"}
+           }]
+        )
+      end
+    end
+
+    private_rule_hook()
   end
 end
 
@@ -391,13 +452,14 @@ class Layer3 < Layer
       # F Region
       f_map = KeyRegion.above
         .zip(('1'..'12').map { |x| 'f' + x })
+        .to_h
 
       special_map = media_map.merge(f_map)
       @layer_keymap_filter += special_map.keys
 
       manipulators = special_map.map do |from_key, to_key|
         m = layer_manipulator(from_key, to_key)
-        m[:to][0].delete[:modifiers]
+        m[:to][0].delete(:modifiers)
         m
       end
 
@@ -406,6 +468,9 @@ class Layer3 < Layer
         manipulators
       )
     end
+
+    special_main_rule_hook()
+    special_rule_hook()
   end
 end
 
