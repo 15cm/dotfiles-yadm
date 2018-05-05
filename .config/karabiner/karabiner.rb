@@ -192,6 +192,13 @@ module ModFrom
       "command",
     ])
   end
+  def optional_not_shift
+    gen_optional([
+      "control",
+      "option",
+      "command",
+    ])
+  end
   def mandatory_fn
     gen_mandatory(["fn"])
   end
@@ -254,11 +261,16 @@ class Layer
     type: "variable_if",
     value: 0,
   }
-  def initialize(layer_num, layer_trigger, layer_mods, layer_keys)
+  def initialize(
+    layer_num, layer_trigger,
+    layer_mods, layer_keys,
+    layer_trigger_mod = ModFrom.optional_any
+  )
     @layer_num = layer_num
     @layer_trigger = layer_trigger
     @layer_mods = layer_mods
     @layer_keys = layer_keys
+    @layer_trigger_mod = layer_trigger_mod
     @layer_keymap = layer_keys.zip(layer_keys).to_h
     @layer_keymap_filter = []
     @layer_description_prefix = "layer #{@layer_num}"
@@ -288,7 +300,7 @@ class Layer
         ],
         from: {
           key_code: @layer_trigger,
-          modifiers: ModFrom.optional_any,
+          modifiers: @layer_trigger_mod,
         },
         to: [SetVar.gen("layer", @layer_num)],
         to_after_key_up: [SetVar.gen("layer", 0)],

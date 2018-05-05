@@ -201,7 +201,7 @@ module Conf
     [
       Layer1.new(layer1_trigger, layer1_mods, layer1_keys),
       Layer2.new(layer2_trigger, layer2_mods, layer2_keys),
-      Layer3.new(layer3_trigger, layer3_mods, layer3_keys),
+      Layer3.new(layer3_trigger, layer3_mods, layer3_keys, ModFrom.optional_not_shift),
     ]
   end
 
