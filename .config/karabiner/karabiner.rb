@@ -241,6 +241,11 @@ module KeyRegion
       "equal_sign",
     ]
   end
+  def others
+    [
+      "return_or_enter"
+    ]
+  end
   def number
     ('1'..'9').to_a << '0'
   end
@@ -251,7 +256,7 @@ module KeyRegion
     number + symbol_above
   end
   def whole
-    below + above
+    below + above + others
   end
 end
 
