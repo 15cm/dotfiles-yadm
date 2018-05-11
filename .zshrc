@@ -355,12 +355,12 @@ alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
-if which tmux 2>&1 >/dev/null; then
-  if [ -z "$TMUX" ]
-  then
-    tmux attach || tmux
-  fi
-fi
+# if which tmux 2>&1 >/dev/null; then
+#   if [ -z "$TMUX" ]
+#   then
+#     tmux attach || tmux
+#   fi
+# fi
 
 # _____________________ Tmux _____________________
 
