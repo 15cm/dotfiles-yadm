@@ -1,6 +1,7 @@
 # alias
 alias ssh="ssh-ident"
 alias clip="nc -q0 localhost 8377"
+command -v pacman > /dev/null && alias p="yaourt"
 
 export PATH="$PATH:$HOME/.local/bin"
 
