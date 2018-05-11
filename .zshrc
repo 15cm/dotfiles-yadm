@@ -55,10 +55,6 @@ export EDITOR=vim
 export _Z_DATA="$HOME/.z/.z"
 . ~/.z/z.sh
 
-# Encoding
-export LC_ALL=en_US.utf-8
-export LANG="$LC_ALL"
-
 # GPG Fix
 export GPG_TTY=$(tty)
 
@@ -81,6 +77,10 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm doc
 
 # oh-my-zsh
 source $ZSH/oh-my-zsh.sh
+
+# --------------------- Completions ---------------------
+fpath=($HOME/.zsh-completions $fpath)
+# _____________________ Completions _____________________
 
 # --------------------- Key map ---------------------
 export KEYTIMEOUT=5
@@ -179,7 +179,7 @@ function load_nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 }
 
-lazy_load load_nvm nvm node leetcode hexo web-ext
+lazy_load load_nvm nvm npm node leetcode hexo web-ext
 
 # jenv(lazy load)
 export PATH="$HOME/.jenv/bin:$PATH"
@@ -194,7 +194,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 function load_rbenv() {
   if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 }
-lazy_load load_rbenv rbenv ruby gem
+lazy_load load_rbenv rbenv ruby gem pry
 
 # direnv
 function load_direnv() {

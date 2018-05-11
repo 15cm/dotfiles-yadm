@@ -1,3 +1,7 @@
+# Encoding
+export LC_ALL=en_US.utf-8
+export LANG="$LC_ALL"
+
 # alias
 # alias p="proxychains4 -q"
 # alias ep="HTTP_PROXY=http://127.0.0.1:1090; HTTPS_PROXY=http://127.0.0.1:1090 "

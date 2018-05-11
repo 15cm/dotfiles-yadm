@@ -1,3 +1,7 @@
+# Encoding
+export LC_ALL=en_US.UTF-8
+export LANG="$LC_ALL"
+
 # alias
 alias ssh="ssh-ident"
 alias clip="nc -q0 localhost 8377"
