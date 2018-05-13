@@ -1,0 +1,9 @@
+set relativenumber
+
+nnoremap <C-o> :pjump<CR>
+inoremap <C-e> <Esc>A
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+
+set ignorecase
+set vimregexp
