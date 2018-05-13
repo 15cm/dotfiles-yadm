@@ -219,6 +219,7 @@ module Conf
         complex_modifications: {
           parameters: {
             "basic.to_if_alone_timeout_milliseconds": 500,
+            "basic.to_delayed_action_delay_milliseconds": 500,
           },
           rules: gen_rules()
         }

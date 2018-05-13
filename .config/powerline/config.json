@@ -1,5 +1,5 @@
 {
-  "current_theme": "dark",
+  "current_theme": "light",
   "ext": {
     "shell": {
       "theme": "default",
@@ -7,7 +7,7 @@
         "continuation": "continuation",
         "select": "select"
       },
-      "colorscheme": "nord"
+      "colorscheme": "solarized-light"
     },
     "wm": {
       "theme": "default",
@@ -15,7 +15,7 @@
     },
     "tmux": {
       "theme": "default",
-      "colorscheme": "nord"
+      "colorscheme": "solarized-light"
     },
     "vim": {
       "theme": "default",

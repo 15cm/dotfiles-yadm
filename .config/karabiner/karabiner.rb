@@ -29,6 +29,7 @@ module App
       jetbrains: "^com\\.jetbrains\\..*",
       xcode: "^com\\.apple\\.dt\\.Xcode.*",
       firefox: "^org\\.mozilla\\.firefox.*",
+      parallel_desktop: "com\\.parallels\\.desktop.*",
     }
   name_bid_map[name]
   end
@@ -65,6 +66,11 @@ module App
   def firefox
     [
       :firefox
+    ]
+  end
+  def parallel_desktop
+    [
+      :parallel_desktop
     ]
   end
 end
@@ -141,10 +147,10 @@ module Cond
   end
 
   def app_keymap_not_total_emacs
-    gen_application_if(App.keymap_total_emacs, false)
+    gen_application_if(App.keymap_total_emacs + App.parallel_desktop, false)
   end
   def app_keymap_not_partial_nor_total_emacs
-    gen_application_if(App.keymap_partial_emacs + App.keymap_total_emacs, false)
+    gen_application_if(App.keymap_partial_emacs + App.keymap_total_emacs + App.parallel_desktop, false)
   end
   def app_keymap_need_home_end
     gen_application_if(App.keymap_need_home_end)
