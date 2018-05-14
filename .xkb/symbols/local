@@ -1,0 +1,41 @@
+default partial alphanumeric_keys
+
+xkb_symbols "basic"
+{
+    replace "us(basic)"
+    include "local(modifiers)"
+
+    name[Group1] = "basic";
+
+    key <AD06> { [y, Y, Home] };
+    key <AD07> { [u, U, Next] };
+    key <AD08> { [i, I, Prior] };
+    key <AD09> { [o, O, End] };
+
+    key <AC06> { [h, H, Left] };
+    key <AC07> { [j, J, Down] };
+    key <AC08> { [k, K, Up]};    
+    key <AC09> { [l, L, Right] };
+
+    key <AB06> { [n, N, BackSpace] };
+    key <AB07> { [m, M, Delete] };
+
+    key <AE01> { [1, exclam, F1] };
+    key <AE02> { [2, at, F2] };
+    key <AE03> { [3, numbersign, F3] };
+    key <AE04> { [4, dollar, F4] };
+    key <AE05> { [5, percent, F5] };
+    key <AE06> { [6, asciicircum, F6] };
+    key <AE07> { [7, ampersand, F7] };
+    key <AE08> { [8, asterisk, F8] };
+    key <AE09> { [9, parenleft, F9] };
+    key <AE10> { [0, parenright, F10] };
+};
+
+partial modifier_keys
+xkb_symbols "modifiers"
+{
+    key <LVL3> {
+        [ISO_Level3_Shift]
+    };
+};
