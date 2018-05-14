@@ -34,7 +34,6 @@ install_common_pac() {
   ins_wrap jq
   # ripgrep
   ins_wrap ripgrep
-
 }
 
 if is_osx; then
@@ -119,6 +118,15 @@ else
   if ! bin_exists rbenv; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
     git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  fi
+
+  # copyq
+  if is_arch; then
+    ins_wrap
+  else
+    sudo add-apt-repository ppa:hluk/copyq
+    sudo apt update
+    ins_wrap copyq
   fi
 fi
 

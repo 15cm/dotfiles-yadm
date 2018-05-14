@@ -3,9 +3,9 @@ export LC_ALL=en_US.UTF-8
 export LANG="$LC_ALL"
 
 # alias
-alias ssh="ssh-ident"
-alias clip="nc -q0 localhost 8377"
 command -v pacman > /dev/null && alias p="yaourt"
+command -v copyq > /dev/null && alias cpy="copyq copy -"
+command -v copyq > /dev/null alias pst="copyq clipboard"
 
 export PATH="$PATH:$HOME/.local/bin"
 
