@@ -139,11 +139,11 @@ class fzf_mdfind(Command):
         | fzf --tac --reverse --preview "{0} {{}} | head -200"  --preview-window right:30%'.format(tree_cmd)
         send_to_fzf(self, command)
 
-class trash_files(Command):
+class delete_files(Command):
     """
-    :trash_files
+    :delete_files
 
-    Trash selected files
+    Delete selected files
     """
 
     def execute(self):
@@ -155,19 +155,20 @@ class trash_files(Command):
         else:
             self.fm.execute_console('delete')
 
-class open_files_macos(Command):
+class open_files(Command):
     """
-    :open_files_macos
+    :open_files
 
-    Open selected files by "open"
+    Open selected files(use 'open' on macOS, 'xdg-open' on Linux)
     """
 
     def execute(self):
         files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        open_command = 'open' if is_osx else 'xdg-open'
         for f in files:
             p = f.path
             self.fm.notify('open {0}'.format(p))
-            subprocess.check_output(["open", p])
+            subprocess.check_output([open_command, p])
 
 emacs_client_cmd = "emacsclient -s misc -t"
 
@@ -218,6 +219,7 @@ class open_files_emacs_tmux(Command):
             self.fm.execute_console(command)
 
 open_option_keymap_general = {
+    'o': 'open_files',
     'e': 'open_files_emacs_tmux',
     'E': 'open_files_emacs',
     'v': 'edit',
@@ -225,7 +227,6 @@ open_option_keymap_general = {
 }
 
 open_option_keymap_mac = {
-    'o': 'open_files_macos',
     'O': 'reveal_files_in_finder',
     'g': 'open_files_emacs_gui'
 }
