@@ -1,0 +1,11 @@
+! xft
+#include "/home/sinkerine/.x/xftrc"
+
+! Nord Color
+#include "/home/sinkerine/.x/nord"
+
+! URxvt
+#include "/home/sinkerine/.x/urxvt"
+
+! Rofi
+#include "/home/sinkerine/.x/rofi"
