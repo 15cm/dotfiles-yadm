@@ -123,10 +123,11 @@ else
   # copyq
   if is_arch; then
     ins_wrap
-  else
-    sudo add-apt-repository ppa:hluk/copyq
-    sudo apt update
-    ins_wrap copyq
+  fi
+
+  # trahs-cli
+  if is_arch;
+     ins_wrap trash-cli
   fi
 fi
 

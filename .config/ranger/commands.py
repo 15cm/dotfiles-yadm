@@ -11,6 +11,7 @@ from __future__ import (absolute_import, division, print_function)
 
 # You can import any python module as needed.
 import os
+import distutils.spawn
 
 # You always need to import ranger.api.commands here to get the Command class:
 from ranger.api.commands import Command
@@ -71,6 +72,9 @@ def merge_two_dicts(x, y):
     z = x.copy()   # start with x's keys and values
     z.update(y)    # modifies z with y's keys and values & returns None
     return z
+
+def exec_exists(f):
+    return True if distutils.spawn.find_executable(f) else False
 
 tree_cmd = 'tree -C'
 fd_default_cmd = 'fd -H --no-ignore-vcs'
@@ -147,10 +151,13 @@ class delete_files(Command):
     """
 
     def execute(self):
-        if is_osx:
-            paths = map(lambda f: f.path, self.fm.thistab.get_selection())
+        if is_osx or exec_exists('trash-put'):
+            paths = list(map(lambda f: f.path, self.fm.thistab.get_selection()))
             for p in paths:
-                subprocess.check_output(["trash", "-a", p])
+                if is_osx:
+                    subprocess.check_output(["trash", "-a", p])
+                else:
+                    subprocess.check_output(['trash-put', p])
             self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
         else:
             self.fm.execute_console('delete')
