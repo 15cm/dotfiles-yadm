@@ -98,8 +98,8 @@ TRAPWINCH() {
 
 bindkey -v
 autoload -Uz edit-command-line
-bindkey -a '^v' edit-command-line
-bindkey '^v' edit-command-line
+bindkey -a '^[v' edit-command-line # equivalent to 'bindkey -M vicmd'
+bindkey '^[v' edit-command-line
 
 bindkey '^p' up-history
 bindkey '^n' down-history

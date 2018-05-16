@@ -23,3 +23,10 @@ URxvt*color15: nord6
 
 URxvt.font: xft:InConsolataLGC Nerd Font Mono:size=9
 URxvt.scrollBar: false
+
+! URxvt.perl-lib: /home/sinkerine/.urxvt/ext/
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.perl-ext-common: clipboard
+URxvt.keysym.C-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped

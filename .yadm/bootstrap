@@ -70,6 +70,7 @@ else
   fi
   # folders
   [ -d ~/local/bin ] || mkdir -p ~/local/bin
+  [ -d ~/local/log ] || mkdir -p ~/local/log
   # common
   install_common_pac
   # pip & Powerline
@@ -126,9 +127,15 @@ else
   fi
 
   # trahs-cli
-  if is_arch;
+  if is_arch; then
      ins_wrap trash-cli
   fi
+
+  # urxvt and urxvt plugins
+  if is_arch; then
+    ins_wrap rxvt-unicode
+  fi
+  git clone https://github.com/15cm/urxvt-perls ~/.urxvt/ext
 fi
 
 # Oh-my-zsh
