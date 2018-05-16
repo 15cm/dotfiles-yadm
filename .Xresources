@@ -1,8 +1,8 @@
+! nord color scheme
+#include "/home/sinkerine/.x/color-nord"
+
 ! xft
 #include "/home/sinkerine/.x/xftrc"
-
-! Nord Color
-#include "/home/sinkerine/.x/nord"
 
 ! URxvt
 #include "/home/sinkerine/.x/urxvt"
