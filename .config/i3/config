@@ -183,6 +183,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # Launcher
 # Start a terminal
 bindsym $mod+Return exec urxvt
+bindsym $mod+y exec guake
+bindsym $mod+u exec goldendict
+bindsym $mod+i exec keepassxc
 
 bindsym $mod+o mode "launcher"
 
@@ -191,6 +194,7 @@ mode "launcher" {
      bindsym e exec emacs; mode "default"
      bindsym s exec spectacle; mode "default"
      bindsym d exec dolphin; mode "default"
+     bindsym r exec rambox; mode "default"
      bindsym Escape mode "default"
 }
 
@@ -203,10 +207,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 5 ppt
-        bindsym k resize grow height 10 px or 5 ppt
-        bindsym l resize shrink height 10 px or 5 ppt
-        bindsym semicolon resize grow width 10 px or 5 ppt
+        bindsym h resize shrink width 10 px or 5 ppt
+        bindsym j resize grow height 10 px or 5 ppt
+        bindsym k resize shrink height 10 px or 5 ppt
+        bindsym l resize grow width 10 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 5 ppt
