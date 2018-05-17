@@ -2,7 +2,7 @@
 for_window [class="^.*"] border pixel 0
 
 # Gaps
-gaps inner 10
+gaps inner 1
 gaps outer 0
 smart_gaps on
 
@@ -46,8 +46,8 @@ floating_modifier $mod
 bindsym $mod+q kill
 
 # rofi
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu -font "san serif medium 15" '
-bindsym $mod+w exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -show window -font "san serif medium 15" '
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu -font "san serif medium 18" '
+bindsym $mod+w exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -show window -font "san serif medium 18" '
 
 # screenshot (now provided by plasma)
 # bindsym print exec --no-startup-id spectacle
@@ -109,29 +109,56 @@ bindsym $mod+shift+z focus child
 # focus the child container
 #bindsym $mod+d focus child
 
+# Displays and Screens
+set $monitor_laptop "eDP-1"
+set $monitor_main "DP-1"
+
+# set $workspace_main_adhoc 1
+# set $workspace_main_daily_config 2
+# set $workspace_main_document 3
+# set $workspace_main_contact 4
+# set $workspace_main_media 5
+# set $workspace_main_adhoc 6
+# set $workspace_main_daily_config 7
+# set $workspace_main_document 8
+# set $workspace_main_contact 9
+# set $workspace_main_media 10
+
+# assign workspaces to screens
+workspace 1 output $monitor_main
+workspace 2 output $monitor_main
+workspace 3 output $monitor_main
+workspace 4 output $monitor_main
+workspace 5 output $monitor_main
+workspace 6 output $monitor_laptop
+workspace 7 output $monitor_laptop
+workspace 8 output $monitor_laptop
+workspace 9 output $monitor_laptop
+workspace 10 output$monitor_laptop
+
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 workspace 1  
+bindsym $mod+2 workspace 2  
+bindsym $mod+3 workspace 3  
+bindsym $mod+4 workspace 4  
+bindsym $mod+5 workspace 5  
+bindsym $mod+6 workspace 6  
+bindsym $mod+7 workspace 7  
+bindsym $mod+8 workspace 8  
+bindsym $mod+9 workspace 9  
+bindsym $mod+0 workspace 10   
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to workspace 1  
+bindsym $mod+Shift+2 move container to workspace 2  
+bindsym $mod+Shift+3 move container to workspace 3  
+bindsym $mod+Shift+4 move container to workspace 4  
+bindsym $mod+Shift+5 move container to workspace 5  
+bindsym $mod+Shift+6 move container to workspace 6  
+bindsym $mod+Shift+7 move container to workspace 7  
+bindsym $mod+Shift+8 move container to workspace 8  
+bindsym $mod+Shift+9 move container to workspace 9  
+bindsym $mod+Shift+0 move container to workspace 10  
 
 # hide/show windows
 bindsym $mod+comma scratchpad show
@@ -160,7 +187,10 @@ bindsym $mod+Return exec urxvt
 bindsym $mod+o mode "launcher"
 
 mode "launcher" {
-     bindsym f exec firefox
+     bindsym f exec firefox; mode "default"
+     bindsym e exec emacs; mode "default"
+     bindsym s exec spectacle; mode "default"
+     bindsym d exec dolphin; mode "default"
      bindsym Escape mode "default"
 }
 
