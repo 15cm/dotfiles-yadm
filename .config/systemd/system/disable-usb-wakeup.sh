@@ -1,6 +1,6 @@
 #! /usr/bin/sh
 # Add your candidates below but make sure that no pattern matches more than one device in /proc/acpi/wakeup
-CANDIDATES="EHC1 EHC2 XHC"
+CANDIDATES="EHC1 EHC2 XHC XHC1 LID0"
 for ACPIDEV in $CANDIDATES; do
   ACTIVE=$(grep enabled /proc/acpi/wakeup | cut -f 1 | grep "$ACPIDEV")
   if [ -n "$ACTIVE" ]; then 
