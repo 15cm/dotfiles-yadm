@@ -1,0 +1,10 @@
+[Unit]
+Description=Disable USB wakeup triggers in /proc/acpi/wakeup
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/systemd/scripts/disable-usb-wakeup.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
