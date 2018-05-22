@@ -7,6 +7,7 @@ URxvt*shading: 15
 URxvt*foreground:   nord4
 URxvt*background:   nord0
 URxvt*cursorColor:  nord4
+URxvt*fading: 35
 URxvt*fadeColor: nord3
 
 URxvt*color0: nord1

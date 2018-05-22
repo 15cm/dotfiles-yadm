@@ -1,5 +1,5 @@
 ! nord color scheme
-! #include "/home/sinkerine/.x/color-nord"
+#include "/home/sinkerine/.x/color-nord"
 #include "/home/sinkerine/.x/color-solarized-light"
 
 ! xft
