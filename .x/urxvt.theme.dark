@@ -1,0 +1,27 @@
+URxvt*inheritPixmap: true
+URxvt*transparent: true
+
+!! URxvt*shading: 0 to 99 darkens, 101 to 200 lightens
+URxvt*shading: 15
+
+URxvt*foreground:   nord4
+URxvt*background:   nord0
+URxvt*cursorColor:  nord4
+URxvt*fadeColor: nord3
+
+URxvt*color0: nord1
+URxvt*color1: nord11
+URxvt*color2: nord14
+URxvt*color3: nord13
+URxvt*color4: nord9
+URxvt*color5: nord15
+URxvt*color6: nord8
+URxvt*color7: nord5
+URxvt*color8: nord3
+URxvt*color9: nord11
+URxvt*color10: nord14
+URxvt*color11: nord13
+URxvt*color12: nord9
+URxvt*color13: nord15
+URxvt*color14: nord7
+URxvt*color15: nord6
