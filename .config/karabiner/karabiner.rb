@@ -472,10 +472,14 @@ class Layer3 < Layer
         "i" => "mute",
       }
 
+
       # F Region
-      f_map = KeyRegion.above
-        .zip(('1'..'12').map { |x| 'f' + x })
-        .to_h
+      f_map = (KeyRegion.above
+        .zip(('1'..'12').map { |x| 'f' + x }) + [
+        "comma", "f12",
+        "period", "f6",
+      ])
+      .to_h
 
       special_map = media_map.merge(f_map)
       @layer_keymap_filter += special_map.keys
