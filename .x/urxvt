@@ -1,6 +1,9 @@
 #include "/home/sinkerine/.x/urxvt.theme.dark"
 
-URxvt.font: xft:InConsolataGo Nerd Font Mono:size=10,xft:Noto Color Emoji
+URxvt.font: xft:Inconsolata Nerd Font Mono:size=10,xft:Noto Color Emoji, \
+            xft:DejaVu Sans Mono:style=Book:antialias=false:size=10, \
+            xft:FreeSerif:style=Regular, \
+            xft:unifont:style=Medium:antialias=false
 URxvt.scrollBar: false
 
 ! URxvt.perl-lib: /home/sinkerine/.urxvt/ext/
