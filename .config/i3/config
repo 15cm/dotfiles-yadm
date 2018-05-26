@@ -28,6 +28,9 @@ set $transparent #00000000
 # Windows button
 set $mod Mod4
 
+# Default Layout mode for new containers
+workspace_layout stacking
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Helvetica Neue, FontAwesome 11
@@ -79,8 +82,6 @@ bindsym $mod+shift+left move left
 bindsym $mod+shift+down move down
 bindsym $mod+shift+up move up
 bindsym $mod+shift+right move right
-
-# bindsym $mod+space exec rofi -show run
 
 # split in horizontal orientation
 bindsym $mod+semicolon split h
@@ -182,7 +183,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # Launcher
 # Start a terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec alacritty
 bindsym $mod+y exec guake
 bindsym $mod+u exec goldendict
 bindsym $mod+i exec keepassxc
@@ -195,6 +196,8 @@ mode "launcher" {
      bindsym s exec spectacle; mode "default"
      bindsym d exec dolphin; mode "default"
      bindsym r exec rambox; mode "default"
+     bindsym c exec clementine; mode "default"
+     bindsym l exec telegram-desktop; mode "default"
      bindsym Escape mode "default"
 }
 
@@ -238,7 +241,12 @@ bindsym $mod+r mode "resize"
 #}
 
 # Starting things with i3
-# exec --no-startup-id xcompmgr -C &    # Bare compositor to allow transparency
+exec --no-startup-id compton &    # Bare compositor to allow transparency
+
+# Assign applications to workspaces
+# assign [class="TelegramDesktop"] 4
+# assign [class="Rambox"] 4
+# assign [class="Clementine"] 5
 for_window [class="yakuake"] floating enable;
 for_window [class="keepassxc"] floating enable;
 

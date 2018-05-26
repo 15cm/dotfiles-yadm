@@ -59,7 +59,7 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 11.5
+  size: 16
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -146,7 +146,7 @@ color_schemes:
       cyan: '0x8FBCBB'
       white: '0xECEFF4'
 
-colors: *color_scheme_light
+colors: *color_scheme_dark
 
 # Visual Bell
 #
@@ -175,7 +175,7 @@ visual_bell:
   duration: 0
 
 # Background opacity
-background_opacity: 1.00
+background_opacity: 0.90
 
 # Mouse bindings
 #
@@ -281,7 +281,7 @@ live_config_reload: true
 # (e.g. "\x1b[5~") is? Open another terminal (like xterm) without tmux,
 # then run `showkey -a` to get the sequence associated to a key combination.
 key_bindings:
-  - { key: V,        mods: Control|Shift,    action: Paste               }
+  - { key: V,        mods: Control,    action: Paste               }
   - { key: C,        mods: Control|Shift,    action: Copy                }
   - { key: Q,        mods: Command, action: Quit                         }
   - { key: W,        mods: Command, action: Quit                         }
