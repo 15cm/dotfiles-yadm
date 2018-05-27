@@ -380,6 +380,7 @@ alias cg="cd-gitroot"
 alias op="open"
 alias prl="parallel"
 alias grep="grep --color=auto"
+alias rp="realpath"
 
 # Leetcode
 alias lc="leetcode"
@@ -387,14 +388,8 @@ alias lcsh="leetcode show"
 alias lcsb="leetcode submit"
 alias lct="leetcode test"
 alias lcl="leetcode list"
+
 # _____________________ Common Alias  _____________________
-
-# --------------------- Function Alias ---------------------
-rp() {
-  realpath $1 | clip
-}
-
-# _____________________ Function Alias _____________________
 
 # --------------------- profiling ---------------------
 # zprof

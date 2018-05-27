@@ -1,6 +1,5 @@
 # Encoding
-export LC_ALL=en_US.UTF-8
-export LANG="$LC_ALL"
+export LANG=en_US.UTF-8
 
 # alias
 command -v pacman > /dev/null && alias p="yaourt"

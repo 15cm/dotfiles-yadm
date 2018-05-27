@@ -184,8 +184,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # Launcher
 # Start a terminal
 bindsym $mod+Return exec alacritty
-bindsym $mod+y exec guake
-bindsym $mod+u exec goldendict
 bindsym $mod+i exec keepassxc
 
 bindsym $mod+o mode "launcher"
