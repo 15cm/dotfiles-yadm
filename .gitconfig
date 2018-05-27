@@ -1,0 +1,8 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	trustExitCode = true
+[user]
+	email = sinkerine@gmail.com
+	name = 15cm
+[merge]
+	tool = vimdiff
