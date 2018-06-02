@@ -147,6 +147,7 @@ bindkey -a S add-surround
 bindkey -M vicmd 't' zce
 
 # ranger
+# Automatically change the directory in zsh after closing ranger
 ranger-cd() {
   tempfile="$(mktemp -t tmp.XXXXXX)"
   ranger --choosedir="$tempfile" "${@:-$(pwd)}"
@@ -157,9 +158,8 @@ ranger-cd() {
   rm -f -- "$tempfile"
 }
 
-# Automatically change the directory in zsh after closing ranger
-bindkey -s '^u' 'ranger-cd^m'
-bindkey -s '^[u' 'ranger .^m'
+bindkey -s '^u' 'ranger .^m'
+bindkey -s '^[u' 'ranger-cd^m'
 
 # _____________________ Key map _____________________
 
