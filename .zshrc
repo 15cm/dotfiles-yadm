@@ -179,7 +179,14 @@ function load_nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 }
 
-lazy_load load_nvm nvm npm node leetcode hexo web-ext
+# Disable lazy load in emacs
+if [ -z $INSIDE_EMACS ]; then
+  lazy_load load_nvm nvm npm node leetcode hexo web-ext
+else
+  load_nvm
+fi
+
+# [ -z "$INSIDE_EMACS" ] || (load_nvm; export NVM)
 
 # jenv(lazy load)
 export PATH="$HOME/.jenv/bin:$PATH"
