@@ -12,4 +12,4 @@ StandardError=syslog
 SyslogIdentifier=clipper
 
 [Install]
-WantedBy=basic.target
+WantedBy=default.target

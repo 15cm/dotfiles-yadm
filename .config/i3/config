@@ -239,7 +239,7 @@ bindsym $mod+r mode "resize"
 #}
 
 # Starting things with i3
-exec --no-startup-id compton &    # Bare compositor to allow transparency
+# exec --no-startup-id compton &    # Bare compositor to allow transparency
 
 # Assign applications to workspaces
 # assign [class="TelegramDesktop"] 4

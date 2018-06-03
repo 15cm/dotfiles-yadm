@@ -1,0 +1,11 @@
+[Unit]
+Description=xcape: capslock to esc/ctrl
+After=xorg.target laptop-keymap.service
+
+[Service]
+ExecStart=/usr/bin/xcape -d -e "Control_R=Escape"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=keyboard.target
