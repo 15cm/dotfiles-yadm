@@ -8,5 +8,5 @@ Type=oneshot
 RemainAfterExit=yes
 
 [Install]
-WantedBy=desktop.target
+WantedBy=xsession.target
 

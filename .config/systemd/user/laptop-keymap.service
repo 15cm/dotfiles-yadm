@@ -1,6 +1,5 @@
 [Unit]
 Description=Laptop Keymap
-After=xorg.target
 
 [Service]
 Environment="DISPLAY=:0"
@@ -9,5 +8,5 @@ Type=oneshot
 RemainAfterExit=yes
 
 [Install]
-WantedBy=keyboard.target
+WantedBy=keymap.target
 
