@@ -379,12 +379,11 @@ alias tkss='tmux kill-session -t'
 alias rz='exec $SHELL'
 alias vi="vim"
 alias st="switch-theme.sh"
-alias gcmsg!="git commit --allow-empty-message -m ''"
+alias gcmsg!="git commit -m 'Just a commit'"
 alias ew="emacsclient -s misc -t -a vim"
 alias more="more -R"
 alias ccat="ccat -C always"
 alias cg="cd-gitroot"
-alias op="open"
 alias prl="parallel"
 alias grep="grep --color=auto"
 alias rp="realpath"
