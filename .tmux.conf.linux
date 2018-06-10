@@ -2,4 +2,4 @@ bind-key -T copy-mode-vi 'y' send-keys -X copy-pipe-and-cancel "xclip -i -f -sel
 
 # extrakto
 set -g @extrakto_fzf_tool "$HOME/.fzf/bin/fzf"
-set -g @extrakto_clip_tool '"xclip -i -f -selection primary | xclip -i -selection clipboard"'
+set -g @extrakto_clip_tool 'xclip -i -selection clipboard'
