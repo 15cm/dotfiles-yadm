@@ -441,8 +441,35 @@ class Layer2 < Layer
         )
       end
     end
+    def special_rule_hook
+      special_map = {
+        "h" => "left_arrow",
+        "j" => "down_arrow",
+        "k" => "up_arrow",
+        "l" => "right_arrow",
+        "y" => "home",
+        "u" => "page_down",
+        "i" => "page_up",
+        "o" => "end",
+        "comma" => "f12",
+        "period" => "f6",
+      }
+      @layer_keymap_filter += special_map.keys
+
+      manipulators = special_map.map do |from_key, to_key|
+        m = layer_manipulator(from_key, to_key)
+        m[:to][0].delete(:modifiers)
+        m
+      end
+
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: direction, Tmux prefix, Firefox switch frame",
+        manipulators
+      )
+    end
 
     private_rule_hook()
+    special_rule_hook()
   end
 end
 
@@ -475,11 +502,7 @@ class Layer3 < Layer
 
       # F Region
       f_map = (KeyRegion.above
-        .zip(('1'..'12').map { |x| 'f' + x }) + [
-        "comma", "f12",
-        "period", "f6",
-      ])
-      .to_h
+        .zip(('1'..'12').map { |x| 'f' + x })).to_h
 
       special_map = media_map.merge(f_map)
       @layer_keymap_filter += special_map.keys
