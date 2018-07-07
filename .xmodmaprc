@@ -1,4 +1,4 @@
 clear Lock
-keycode 66 = Control_R
+keycode 66 = Control_L
 keycode 231= Tab
-add Control = Control_R
+add Control = Control_L
