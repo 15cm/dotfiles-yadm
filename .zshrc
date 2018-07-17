@@ -84,6 +84,11 @@ fpath=($HOME/.zsh-completions $fpath)
 
 # --------------------- Key map ---------------------
 export KEYTIMEOUT=5
+
+# Fix backspace behavior after switching back from command mode
+# https://unix.stackexchange.com/questions/290392/backspace-in-zsh-stuck
+bindkey -v '^?' backward-delete-char
+
 # Updates editor information when the keymap changes.
 function zle-keymap-select() {
   zle reset-prompt
