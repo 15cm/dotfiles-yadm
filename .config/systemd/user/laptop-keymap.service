@@ -1,12 +1,9 @@
 [Unit]
 Description=Laptop Keymap
+PartOf=keymap.target
 
 [Service]
 Environment="DISPLAY=:0"
-ExecStart=/bin/sh -c '/usr/bin/setxkbmap -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | /usr/bin/xkbcomp -w 0 -I"%h/.xkb" - $DISPLAY; /usr/bin/xmodmap %h/.xmodmaprc'
+ExecStart=/bin/sh -c 'setxkbmap -device $(xinput list | sed -n "s/.*Internal Keyboard.*id=\([0-9]*\).*/\1/p") -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $DISPLAY'
 Type=oneshot
 RemainAfterExit=yes
-
-[Install]
-WantedBy=keymap.target
-
