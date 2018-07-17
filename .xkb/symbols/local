@@ -7,6 +7,7 @@ xkb_symbols "basic"
 
     name[Group1] = "basic";
 
+    key <aD00> { [Tab, Tab, Tab] };
     key <AD06> { [y, Y, Home] };
     key <AD07> { [u, U, Next] };
     key <AD08> { [i, I, Prior] };
@@ -37,7 +38,10 @@ xkb_symbols "basic"
 partial modifier_keys
 xkb_symbols "modifiers"
 {
-    key <LVL3> {
+    key <AD00> {
         [ISO_Level3_Shift]
+    };
+    key <AC00> {
+    [Control_R]
     };
 };

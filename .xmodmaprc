@@ -1,4 +1,0 @@
-clear Lock
-keycode 66 = Control_L
-keycode 231= Tab
-add Control = Control_L
