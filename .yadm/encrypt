@@ -1,3 +1,4 @@
 .config/karabiner/private.yml
 .ssh/config*
 .gitconfig
+.config/nginx
