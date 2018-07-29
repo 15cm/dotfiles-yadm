@@ -162,8 +162,8 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10  
 
 # hide/show windows
-bindsym $mod+comma scratchpad show
-bindsym $mod+period move scratchpad
+bindsym $mod+period scratchpad show
+bindsym $mod+comma move scratchpad
 
 # Move focus between screens
 bindsym $mod+n focus output eDP-1
@@ -190,7 +190,7 @@ bindsym $mod+o mode "launcher"
 
 mode "launcher" {
      bindsym f exec firefox; mode "default"
-     bindsym e exec emacs; mode "default"
+     bindsym e exec dex /usr/share/applications/emacs.desktop; mode "default"
      bindsym s exec spectacle; mode "default"
      bindsym d exec dolphin; mode "default"
      bindsym r exec rambox; mode "default"
