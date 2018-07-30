@@ -6,7 +6,7 @@
 gen_and_install_desktop() {
   rel_src_path=$1
   exec_name=$(echo $rel_src_path | grep -oP '\w+(-\w+)*(?=-linux)')
-  app_name=$(echo $exec_name | sed 's/^./\U&/; s/-\(.\)/\U\1/')
+  app_name=$(echo $exec_name | sed 's/^./\U&/; s/-\(.\)/\U\1/g')
   abs_src_path=$(realpath $rel_src_path)
   sudo tee /usr/share/applications/${exec_name}.desktop > /dev/null << EOF
 [Desktop Entry]
