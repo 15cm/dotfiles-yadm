@@ -2,3 +2,4 @@
 .ssh/config*
 .gitconfig
 .config/nginx
+local/share/electron-apps/app-urls.txt
