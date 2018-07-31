@@ -13,8 +13,13 @@ alias scu="systemctl --user"
 export PATH="$PATH:$HOME/.local/bin"
 
 # add ssh keys
-eval $([[ -f $HOME/.ssh/bitbucket_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/bitbucket_rsa")
-eval $([[ -f $HOME/.ssh/github_rsa ]] && keychain --agents ssh --eval "$HOME/.ssh/github_rsa")
+function () {
+  local keys=(bitbucket_rsa github_rsa gcp_rsa)
+  for key in $keys
+  do
+    eval $(keychain --eval --quiet $key)
+  done
+}
 
 # Powerline
 unset _POWERLINE_SAVE_WIDGET
