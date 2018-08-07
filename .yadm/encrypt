@@ -1,5 +1,10 @@
 .config/karabiner/private.yml
 .ssh/config*
 .gitconfig
-.config/nginx
 local/share/electron-apps/app-urls.txt
+
+.config/nginx
+.config/openvpn
+.config/dconf
+.config/rslsync
+.config/plasma-org.kde.plasma.desktop-appletsrc
