@@ -7,6 +7,17 @@ xkb_symbols "basic"
 
     name[Group1] = "basic";
 
+    key <AE01> { [1, exclam, F1] };
+    key <AE02> { [2, at, F2] };
+    key <AE03> { [3, numbersign, F3] };
+    key <AE04> { [4, dollar, F4] };
+    key <AE05> { [5, percent, F5] };
+    key <AE06> { [6, asciicircum, F6] };
+    key <AE07> { [7, ampersand, F7] };
+    key <AE08> { [8, asterisk, F8] };
+    key <AE09> { [9, parenleft, F9] };
+    key <AE10> { [0, parenright, F10] };
+
     key <aD00> { [Tab, Tab, Tab] };
     key <AD06> { [y, Y, Home] };
     key <AD07> { [u, U, Next] };
@@ -20,19 +31,10 @@ xkb_symbols "basic"
 
     key <AB06> { [n, N, BackSpace] };
     key <AB07> { [m, M, Delete] };
-    key <AB08> { [comma, less, F12 ] };
+    key <AB08> { [comma, less, F6 ] };
     key <AB09> { [period, greater, F6] };
 
-    key <AE01> { [1, exclam, F1] };
-    key <AE02> { [2, at, F2] };
-    key <AE03> { [3, numbersign, F3] };
-    key <AE04> { [4, dollar, F4] };
-    key <AE05> { [5, percent, F5] };
-    key <AE06> { [6, asciicircum, F6] };
-    key <AE07> { [7, ampersand, F7] };
-    key <AE08> { [8, asterisk, F8] };
-    key <AE09> { [9, parenleft, F9] };
-    key <AE10> { [0, parenright, F10] };
+    key <aA04> { [space, space, space] };
 };
 
 partial modifier_keys
@@ -42,6 +44,6 @@ xkb_symbols "modifiers"
         [ISO_Level3_Shift]
     };
     key <AC00> {
-    [Control_R]
+        [Control_R]
     };
 };

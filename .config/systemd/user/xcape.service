@@ -4,6 +4,6 @@ After=laptop-keymap.service
 PartOf=keymap.target
 
 [Service]
-ExecStart=/usr/bin/xcape -d -e "Control_R=Escape;ISO_Level3_Shift=Tab"
+ExecStart=/usr/bin/xcape -d -e "Control_R=Escape;ISO_Level3_Shift=Tab;Super_L=F12;Super_R=F12"
 Restart=always
 RestartSec=10
