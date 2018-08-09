@@ -18,7 +18,6 @@ xkb_symbols "basic"
     key <AE09> { [9, parenleft, F9] };
     key <AE10> { [0, parenright, F10] };
 
-    key <aD00> { [Tab, Tab, Tab] };
     key <AD06> { [y, Y, Home] };
     key <AD07> { [u, U, Next] };
     key <AD08> { [i, I, Prior] };
@@ -40,7 +39,7 @@ xkb_symbols "basic"
 partial modifier_keys
 xkb_symbols "modifiers"
 {
-    key <AD00> {
+    key <AA04> {
         [ISO_Level3_Shift]
     };
     key <AC00> {
