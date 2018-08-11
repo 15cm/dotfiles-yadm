@@ -10,4 +10,3 @@ local/share/electron-apps/app-urls.txt
 .config/openvpn
 .config/dconf
 .config/rslsync
-.config/plasma-org.kde.plasma.desktop-appletsrc
