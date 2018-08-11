@@ -79,7 +79,7 @@ else
   [[ -f $SYS_PYTHON ]] || $pacman_install python
   [[ -f $SYS_PIP ]] || $pacman_install python-pip
   sudo $SYS_PIP install powerline-status
-  sudo SYS_PIP install powerline-gitstatus
+  sudo $SYS_PIP install powerline-gitstatus
   # exa
   if is_arch; then
     ins_wrap exa
@@ -131,11 +131,6 @@ else
      ins_wrap trash-cli
   fi
 
-  # urxvt and urxvt plugins
-  if is_arch; then
-    ins_wrap rxvt-unicode
-  fi
-  git clone https://github.com/15cm/urxvt-perls ~/.urxvt/ext
 fi
 
 # Oh-my-zsh
