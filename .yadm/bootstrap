@@ -95,6 +95,8 @@ else
   ins_wrap keychain
   # pyenv
   bin_exists pyenv || git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  # nvm
+  bin_exists nvm || git clone https://github.com/creationix/nvm.git ~/.nvm
   # fd
   if is_arch; then
     ins_wrap fd fd-rs
