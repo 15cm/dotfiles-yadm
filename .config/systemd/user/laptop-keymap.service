@@ -4,6 +4,6 @@ PartOf=keymap.target
 
 [Service]
 Environment="DISPLAY=:0"
-ExecStart=/bin/sh -c 'setxkbmap -device $(xinput list | sed -n "s/.*Internal Keyboard.*id=\([0-9]*\).*/\1/p") -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $DISPLAY'
+ExecStart=/bin/sh -c 'setxkbmap -device $(xinput list | sed -n "s/.*AT Translated Set 2 keyboard.*id=\([0-9]*\).*/\1/p") -I"%h/.xkb" -option "altwin:swap_alt_win" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $DISPLAY'
 Type=oneshot
 RemainAfterExit=yes
