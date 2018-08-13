@@ -1,11 +1,4 @@
-# (No) Title Bars
-for_window [class="^.*"] border pixel 0
-
-# Gaps
-gaps inner 1
-gaps outer 0
-smart_gaps on
-
+# Colors
 set $black       #212121
 set $darkblack   #000000
 set $red         #fb4934
@@ -24,6 +17,25 @@ set $white       #ebdbb2
 set $darkwhite   #a89984
 set $background  #000000
 set $transparent #00000000
+
+# (No) Title Bars
+for_window [class="^.*"] border pixel 2
+
+# Border Colors
+# class                 border  backgr. text    indicator child_border
+client.focused          $white  #285577 #ffffff #2e9ef4   $yello
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
+# Gaps
+gaps inner 0
+gaps outer 0
+smart_gaps on
+smart_borders on
 
 # Windows button
 set $mod Mod4
