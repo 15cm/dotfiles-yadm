@@ -1,3 +1,0 @@
-[Unit]
-Description=Keymap for Laptop
-Requires=laptop-keymap.service xcape.service

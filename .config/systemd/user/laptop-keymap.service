@@ -1,9 +1,24 @@
 [Unit]
-Description=Laptop Keymap
-PartOf=keymap.target
+Description=Laptop keymap; Running service: xcape
 
 [Service]
 Environment="DISPLAY=:0"
-ExecStart=/bin/sh -c 'setxkbmap -device $(xinput list | sed -n "s/.*AT Translated Set 2 keyboard.*id=\([0-9]*\).*/\1/p") -I"%h/.xkb" -option "altwin:swap_alt_win" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $DISPLAY'
-Type=oneshot
-RemainAfterExit=yes
+
+# Final workaround of remapping internal/external keyboards with xcape
+# Only key events without keyboard info can be listened to in X, so xcape effects globally
+# So double function keys in external keyboard should be remapped the same as internal keyboard
+# to prevent xcape from handling them in another way
+# Changes specific to internal keyboard are handled
+# forcefully(e.g. let Super and Alt behaves the same) and carefully
+# xkbcomp are executed twice. First set global keymap for xcape, second set internal keyboard
+# Let Super and Alt behave the same for internal keyboard where Super and Alt are swapped
+
+ExecStartPre=/bin/sh -c 'setxkbmap -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $$DISPLAY'
+ExecStart=/usr/bin/xcape -d -e "Control_R=Escape;ISO_Level3_Shift=space;#64=F12;#133=F12"
+ExecStartPost=/usr/bin/bash -c 'setxkbmap -option "altwin:swap_alt_win" -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $$DISPLAY -i $$(xinput list | sed -n "s/.*AT Translated Set 2 keyboard.*id=\([0-9]*\).*/\1/p")'
+ExecStop=/bin/setxkbmap -keycodes "evdev+aliases(qwerty)" us
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

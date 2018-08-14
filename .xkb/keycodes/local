@@ -1,6 +1,8 @@
 xkb_keycodes {
+// CapsLock to Control_R
     <AC00> = 66;
 
+// Space to ISO_Level3_Shift
     <AA04> = 65;
     <aA04> = 231;
 };
