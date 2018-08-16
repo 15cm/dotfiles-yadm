@@ -23,7 +23,7 @@ for_window [class="^.*"] border pixel 2
 
 # Border Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          $white  #285577 #ffffff #2e9ef4   $yello
+client.focused          $white  #285577 #ffffff #2e9ef4   $yellow
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -55,8 +55,6 @@ font pango:Helvetica Neue, FontAwesome 11
 floating_minimum_size 800 x 600
 
 # use mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
 # kill focused window
 bindsym $mod+q kill
 
@@ -123,11 +121,12 @@ bindsym $mod+shift+z focus child
 #bindsym $mod+d focus child
 
 # Displays and Screens
-set $monitor_laptop "eDP-1"
-set $monitor_main "DP-1"
+set $monitor_laptop eDP1
+set $monitor_main DP2
 
 # set $workspace_main_adhoc 1
 # set $workspace_main_daily_config 2
+
 # set $workspace_main_document 3
 # set $workspace_main_contact 4
 # set $workspace_main_media 5
@@ -178,10 +177,10 @@ bindsym $mod+period scratchpad show
 bindsym $mod+comma move scratchpad
 
 # Move focus between screens
-bindsym $mod+n focus output eDP-1
-bindsym $mod+m focus output DP-1
-bindsym $mod+Shift+n move container to output eDP-1
-bindsym $mod+Shift+m move container to output DP-1
+bindsym $mod+n focus output $monitor_laptop
+bindsym $mod+m focus output $monitor_main
+bindsym $mod+Shift+n move container to output $monitor_laptop
+bindsym $mod+Shift+m move container to output $monitor_main
 
 # Disable focus follow mouse
 focus_follows_mouse no

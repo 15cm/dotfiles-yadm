@@ -9,6 +9,7 @@ command -v copyq > /dev/null && alias pst="copyq clipboard"
 command -v trash-put > /dev/null && alias th="trash-put"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
+alias rk="refresh-kde.sh"
 
 export PATH="$PATH:$HOME/.local/bin"
 
