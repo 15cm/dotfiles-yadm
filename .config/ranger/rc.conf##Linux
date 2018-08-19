@@ -200,7 +200,7 @@ set sort_unicode false
 
 # Enable this if key combinations with the Alt Key don't work for you.
 # (Especially on xterm)
-set xterm_alt_key false
+set xterm_alt_key true
 
 # Whether to include bookmarks in cd command
 set cd_bookmarks true
