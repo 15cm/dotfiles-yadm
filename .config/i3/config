@@ -146,7 +146,7 @@ workspace 6 output $monitor_laptop
 workspace 7 output $monitor_laptop
 workspace 8 output $monitor_laptop
 workspace 9 output $monitor_laptop
-workspace 10 output$monitor_laptop
+workspace 10 output $monitor_laptop
 
 # switch to workspace
 bindsym $mod+1 workspace 1  
@@ -181,6 +181,8 @@ bindsym $mod+n focus output $monitor_laptop
 bindsym $mod+m focus output $monitor_main
 bindsym $mod+Shift+n move container to output $monitor_laptop
 bindsym $mod+Shift+m move container to output $monitor_main
+bindsym $mod+Mod1+n move workspace to output $monitor_laptop
+bindsym $mod+Mod1+m move workspace to output $monitor_main
 
 # Disable focus follow mouse
 focus_follows_mouse no
