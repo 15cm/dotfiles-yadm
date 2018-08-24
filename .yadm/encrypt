@@ -2,11 +2,10 @@
 .gitconfig
 local/share/electron-apps/app-urls.txt
 
-.aria2/aria2.conf
-.zsh_history
-
 .config/karabiner/private.yml
-.config/nginx
-.config/openvpn
-.config/dconf
-.config/rslsync
+
+.aria2/aria2.conf
+.z/
+.zsh_history
+.time-backup-exclude-etc
+.time-backup-exclude-home
