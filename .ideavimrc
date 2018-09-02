@@ -21,3 +21,6 @@ inoremap <C-N> <Down>
 
 noremap t :action AceAction<CR>
 noremap <leader>jl :action AceLineAction<CR>
+
+" Disable Hardware Beep Sound
+set vb
