@@ -193,6 +193,8 @@ bindsym $mod+Shift+r reload
 bindsym $mod+Mod1+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# move workspaces to specified display
+bindsym $mod+Mod1+Shift+m exec "$HOME/local/bin/move-workspaces.sh"
 
 # Launcher
 # Start a terminal
