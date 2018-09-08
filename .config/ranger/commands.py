@@ -227,6 +227,7 @@ class open_files_emacs_tmux(Command):
 
 open_option_keymap_general = {
     'o': 'open_files',
+    'O': 'open_files_file_browser',
     'e': 'open_files_emacs_tmux',
     'E': 'open_files_emacs',
     'v': 'edit',
@@ -234,7 +235,6 @@ open_option_keymap_general = {
 }
 
 open_option_keymap_mac = {
-    'O': 'reveal_files_in_finder',
     'g': 'open_files_emacs_gui'
 }
 
@@ -277,20 +277,25 @@ class my_move_right(Command):
         else:
             self.fm.execute_console('chain draw_command_option_keymap; open_files_with -h')
 
-class reveal_files_in_finder(Command):
+class open_files_file_browser(Command):
     """
-    :reveal_files_in_finder
-
-    Reveal selected files in finder
+    :open_files_file_browser
+    Reveal selected files in file browser
     """
     def execute(self):
         files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
-        paths = ",".join(['"{0}" as POSIX file'.format(file.path) for file in files])
-        reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(paths)
-        activate_script = "tell application \"Finder\" to set frontmost to true"
-        script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
-        self.fm.notify(script)
-        subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
+        if is_osx:
+            # open in finder
+            paths = ",".join(['"{0}" as POSIX file'.format(file.path) for file in files])
+            reveal_script = "tell application \"Finder\" to reveal {{{0}}}".format(paths)
+            activate_script = "tell application \"Finder\" to set frontmost to true"
+            script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
+            self.fm.notify(script)
+            subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
+        else:
+            # open in dolphin
+            paths = [f.path for f in files]
+            subprocess.check_output(["dolphin", "--select"] + paths, stderr=subprocess.DEVNULL)
 
 class shell_in_tmux(Command):
     """
