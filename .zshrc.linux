@@ -24,3 +24,7 @@ function () {
 
 # Powerline
 unset _POWERLINE_SAVE_WIDGET
+
+# Android Studio
+export ANDROID_HOME=$HOME/AppData/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
