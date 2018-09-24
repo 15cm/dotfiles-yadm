@@ -11,6 +11,7 @@ vimrc_theme_file="$HOME/.vimrc.theme"
 alacritty_config_file="$HOME/.alacritty.yml"
 ranger_scope_file="$HOME/.config/ranger/scope.sh"
 leetcode_cli_config_file="$HOME/.lc/config.json"
+glances_config_file="$HOME/.config/glances/glances.conf"
 
 jq_tmp=$(mktemp)
 
@@ -24,6 +25,7 @@ if [[ $cur_theme == 'light' ]]; then
   sed --follow-symlinks -i 's/\(set background=\).*/\1dark/' $vimrc_theme_file
   sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1dark/' $alacritty_config_file
   sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' $ranger_scope_file
+  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1black/' $glances_config_file
   jq '.color.theme = "dark"' $leetcode_cli_config_file > $jq_tmp && \
     mv $jq_tmp $leetcode_cli_config_file
 else
@@ -35,6 +37,7 @@ else
   sed --follow-symlinks -i 's/\(set background=\).*/\1light/' $vimrc_theme_file
   sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1light/' $alacritty_config_file
   sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' $ranger_scope_file
+  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1white/' $glances_config_file
   jq '.color.theme = "solarized.light"' $leetcode_cli_config_file > $jq_tmp && \
     mv $jq_tmp $leetcode_cli_config_file
 fi
