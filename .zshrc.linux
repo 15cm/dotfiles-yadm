@@ -10,10 +10,15 @@ command -v trash-put > /dev/null && alias th="trash-put"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias rk="refresh-kde.sh"
+alias rename="perl-rename"
 
 export PATH="$PATH:$HOME/.local/bin"
 
 # add ssh keys
+if $(which ksshaskpass > /dev/null); then
+  # kde wallet
+  export SSH_ASKPASS=ksshaskpass
+fi
 function () {
   local keys=(bitbucket_rsa github_rsa gcp_rsa)
   for key in $keys
