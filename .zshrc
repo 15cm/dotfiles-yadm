@@ -58,6 +58,11 @@ export _Z_DATA="$HOME/.z/.z"
 # GPG Fix
 export GPG_TTY=$(tty)
 
+# tldr color for light/dark themes
+export TLDR_COLOR_BLANK="blue"
+export TLDR_COLOR_DESCRIPTION="green"
+export TLDR_COLOR_PARAMETER="blue"
+
 # _____________________ ENV _____________________
 
 # --------------------- PATH ---------------------
