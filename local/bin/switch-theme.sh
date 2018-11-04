@@ -29,6 +29,7 @@ if [[ $cur_theme == 'light' ]]; then
   sed --follow-symlinks -i 's/\(curse_theme=\).*/\1black/' $glances_config_file
   jq '.color.theme = "dark"' $leetcode_cli_config_file > $jq_tmp && \
     mv $jq_tmp $leetcode_cli_config_file
+  guake --change-palette 'Tomorrow Night'
 else
   # switch to light color schemes
   jq '.current_theme = "light" 
@@ -42,6 +43,7 @@ else
   sed --follow-symlinks -i 's/\(curse_theme=\).*/\1white/' $glances_config_file
   jq '.color.theme = "solarized.light"' $leetcode_cli_config_file > $jq_tmp && \
     mv $jq_tmp $leetcode_cli_config_file
+  guake --change-palette 'Solarized Light'
 fi
 
 powerline-daemon --replace
