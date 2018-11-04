@@ -12,39 +12,85 @@ alacritty_config_file="$HOME/.alacritty.yml"
 ranger_scope_file="$HOME/.config/ranger/scope.sh"
 leetcode_cli_config_file="$HOME/.lc/config.json"
 glances_config_file="$HOME/.config/glances/glances.conf"
+emacs_server_dir="/tmp/emacs$UID"
 
 jq_tmp=$(mktemp)
 
+# Async
 if [[ $cur_theme == 'light' ]]; then
-  # switch to dark color schemes
+  # Switch to dark color schemes
+
+  # Powerline
   jq '.current_theme = "dark" 
   | .ext.shell.colorscheme = "nord" 
   | .ext.tmux.colorscheme = "nord"' \
      $powerline_config_file > $jq_tmp && \
     mv $jq_tmp $powerline_config_file
-  sed --follow-symlinks -i 's/\(set background=\).*/\1dark/' $vimrc_theme_file
-  sed --follow-symlinks -i 's/\(colorscheme \).*/\1Tomorrow-Night/' $vimrc_theme_file
-  sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1dark/' $alacritty_config_file
-  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' $ranger_scope_file
-  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1black/' $glances_config_file
-  jq '.color.theme = "dark"' $leetcode_cli_config_file > $jq_tmp && \
-    mv $jq_tmp $leetcode_cli_config_file
-  guake --change-palette 'Tomorrow Night'
+
+  # Emacs
+  for p in ${emacs_server_dir}/*; do
+    f=$(basename $p)
+    emacsclient -s $f -eun '(load "~/.config/scripts/emacs/load-theme-dark.el")'
+  done
 else
-  # switch to light color schemes
+  # Switch to light color schemes
+
   jq '.current_theme = "light" 
   | .ext.shell.colorscheme = "solarized-light" 
   | .ext.tmux.colorscheme = "solarized-light"' \
      $powerline_config_file  > $jq_tmp && mv $jq_tmp $powerline_config_file
-  sed --follow-symlinks -i 's/\(set background=\).*/\1light/' $vimrc_theme_file
-  sed --follow-symlinks -i 's/\(colorscheme \).*/\1solarized/' $vimrc_theme_file
-  sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1light/' $alacritty_config_file
-  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' $ranger_scope_file
-  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1white/' $glances_config_file
-  jq '.color.theme = "solarized.light"' $leetcode_cli_config_file > $jq_tmp && \
-    mv $jq_tmp $leetcode_cli_config_file
-  guake --change-palette 'Solarized Light'
+
+  # Emacs
+  for p in ${emacs_server_dir}/*; do
+    f=$(basename $p)
+    emacsclient -s $f -eun '(load "~/.config/scripts/emacs/load-theme-light.el")'
+  done
 fi
 
-powerline-daemon --replace
-tmux source "$powerline_tmux_binding"
+powerline-daemon --replace &
+tmux source "$powerline_tmux_binding" &
+
+# Sync
+if [[ $cur_theme == 'light' ]]; then
+  # Switch to dark color schemes
+
+  # vim
+  sed --follow-symlinks -i 's/\(set background=\).*/\1dark/' $vimrc_theme_file
+  sed --follow-symlinks -i 's/\(colorscheme \).*/\1Tomorrow-Night/' $vimrc_theme_file
+
+  # Alacritty
+  sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1dark/' $alacritty_config_file
+
+  # Ranger
+  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' $ranger_scope_file
+
+  # Glances
+  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1black/' $glances_config_file
+
+  # Leetcode-cli
+  jq '.color.theme = "dark"' $leetcode_cli_config_file > $jq_tmp && \
+    mv $jq_tmp $leetcode_cli_config_file
+
+  # Guake
+  guake --change-palette 'Tomorrow Night'
+else
+  # vim
+  sed --follow-symlinks -i 's/\(set background=\).*/\1light/' $vimrc_theme_file
+  sed --follow-symlinks -i 's/\(colorscheme \).*/\1solarized/' $vimrc_theme_file
+
+  # Alacritty
+  sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1light/' $alacritty_config_file
+
+  # Ranger
+  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' $ranger_scope_file
+
+  # Glances
+  sed --follow-symlinks -i 's/\(curse_theme=\).*/\1white/' $glances_config_file
+
+  # Leetcode-cli
+  jq '.color.theme = "solarized.light"' $leetcode_cli_config_file > $jq_tmp && \
+    mv $jq_tmp $leetcode_cli_config_file
+
+  # Guake
+  guake --change-palette 'Solarized Light'
+fi
