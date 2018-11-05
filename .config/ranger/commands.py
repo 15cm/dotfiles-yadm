@@ -291,11 +291,11 @@ class open_files_file_browser(Command):
             activate_script = "tell application \"Finder\" to set frontmost to true"
             script = "osascript -e '{0}' -e '{1}'".format(reveal_script, activate_script)
             self.fm.notify(script)
-            subprocess.check_output(["osascript", "-e", reveal_script, "-e", activate_script])
+            subprocess.Popen(["osascript", "-e", reveal_script, "-e", activate_script], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         else:
             # open in dolphin
             paths = [f.path for f in files]
-            subprocess.check_output(["dolphin", "--select"] + paths, stderr=subprocess.DEVNULL)
+            subprocess.Popen(["dolphin", "--select"] + paths, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 class shell_in_tmux(Command):
     """
