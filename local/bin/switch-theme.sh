@@ -18,6 +18,7 @@ powerline_tmux_binding="$HOME/.config/powerline/bindings/tmux/powerline.conf"
 cur_theme=$(jq -r '.current_theme' "$powerline_config_file")
 vimrc_theme_file="$HOME/.vimrc.theme"
 alacritty_config_file="$HOME/.alacritty.yml"
+ranger_config_file="$HOME/.config/ranger/rc.conf"
 ranger_scope_file="$HOME/.config/ranger/scope.sh"
 leetcode_cli_config_file="$HOME/.lc/config.json"
 glances_config_file="$HOME/.config/glances/glances.conf"
@@ -75,6 +76,7 @@ if [[ $cur_theme == 'light' ]]; then
   sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1dark/' $alacritty_config_file
 
   # Ranger
+  sed --follow-symlinks -i 's/\(set colorscheme\).*/\1 custom-dark/' $ranger_config_file
   sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' $ranger_scope_file
 
   # Glances
@@ -95,6 +97,7 @@ else
   sed --follow-symlinks -i 's/\(colors: \*color_scheme_\).*/\1light/' $alacritty_config_file
 
   # Ranger
+  sed --follow-symlinks -i 's/\(set colorscheme\).*/\1 custom-light/' $ranger_config_file
   sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' $ranger_scope_file
 
   # Glances
