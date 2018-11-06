@@ -206,7 +206,8 @@ bindsym $mod+o mode "launcher"
 
 mode "launcher" {
      bindsym f exec firefox; mode "default"
-     bindsym e exec emacs; mode "default"
+     bindsym e exec "if [ -S /tmp/emacs$UID/server ]; then emacsclient -s server -c; else emacs; fi"; mode "default"
+     bindsym E exec emacs; mode "default"
      bindsym s exec spectacle; mode "default"
      bindsym d exec dolphin; mode "default"
      bindsym r exec rambox; mode "default"
