@@ -10,4 +10,10 @@ class Scheme(Default):
 
     def use(self, context):
         fg, bg, attr = Default.use(self, context)
+
+        if context.in_titlebar:
+            if context.tab:
+                if not context.good:
+                    fg = cyan
+
         return fg, bg, attr
