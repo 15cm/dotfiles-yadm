@@ -14,6 +14,8 @@ alias rename="perl-rename"
 
 # env
 export PATH="$PATH:$HOME/.local/bin"
+# Alacritty hdpi
+WINIT_HIDPI_FACTOR=2.0
 
 # add ssh keys
 if $(which ksshaskpass > /dev/null); then
@@ -21,7 +23,7 @@ if $(which ksshaskpass > /dev/null); then
   export SSH_ASKPASS=ksshaskpass
 fi
 function () {
-  local keys=("~/.ssh/github_rsa" "~/.ssh/nas_rsa")
+  local keys=("$HOME/.ssh/github_rsa")
   for key in $keys
   do
     if [ -f $key ]; then
