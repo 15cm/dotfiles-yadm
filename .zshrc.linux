@@ -12,6 +12,7 @@ alias scu="systemctl --user"
 alias rk="refresh-kde.sh"
 alias rename="perl-rename"
 
+# env
 export PATH="$PATH:$HOME/.local/bin"
 
 # add ssh keys
@@ -20,10 +21,12 @@ if $(which ksshaskpass > /dev/null); then
   export SSH_ASKPASS=ksshaskpass
 fi
 function () {
-  local keys=(bitbucket_rsa github_rsa gcp_rsa)
+  local keys=("~/.ssh/github_rsa" "~/.ssh/nas_rsa")
   for key in $keys
   do
-    eval $(keychain --eval --quiet $key)
+    if [ -f $key ]; then
+      eval $(keychain --eval --quiet $key)
+    fi
   done
 }
 
