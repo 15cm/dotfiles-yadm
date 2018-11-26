@@ -170,72 +170,91 @@ class open_files(Command):
     """
 
     def execute(self):
-        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
         open_command = 'open' if is_osx else 'xdg-open'
         for f in files:
             p = f.path
             self.fm.notify('open {0}'.format(p))
             subprocess.check_output([open_command, p])
 
-emacs_client_cmd = "emacsclient -s misc -t"
+shell_emacs_cmd = "emacsclient -s misc -t"
+shell_vim_cmd = "vim"
 
-class open_files_emacs(Command):
+class open_files_shell_emacs(Command):
     """
-    :open_files_emacs
+    :open_files_shell_emacs
 
-    Open selected files by emacs-client
+    Open selected files with shell Emacs
     """
 
     def execute(self):
-        global emacs_client_cmd
-        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        global shell_emacs_cmd
+        files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
         for f in files:
             p = f.path
-            command = "shell {0} \"{1}\"".format(emacs_client_cmd, p)
+            command = "shell {0} \"{1}\"".format(shell_emacs_cmd, p)
             self.fm.notify('open emacs: {0}'.format(p))
             self.fm.execute_console(command)
 
-class open_files_emacs_gui(Command):
+class open_files_shell_emacs_tmux(Command):
     """
-    :open_files_emacs_gui
+    :open_files_shell_emacs_tmux
 
-    Open selected files by Emacs(GUI)
-    """
-
-    def execute(self):
-        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
-        for f in files:
-            p = f.path
-            self.fm.notify('open emacs(GUI) {0}'.format(p))
-            subprocess.check_output(["open-emacs.sh", p])
-
-class open_files_emacs_tmux(Command):
-    """
-    :open_files_emacs_tmux
-
-    Open selected files in tmux by emacs-client
+    Open selected files in tmux with shell Emacs
     """
 
     def execute(self):
-        global emacs_client_cmd
-        files = self.fm.thistab.get_selection() if self.arg(2) != '-h' else [self.fm.thisfile]
+        global shell_emacs_cmd
+        files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
         for f in files:
             p = f.path
-            command = "shell tmux splitw -h '{0} \"{1}\"'".format(emacs_client_cmd, p)
-            self.fm.notify('open tmux emacs {0}'.format(p))
+            command = "shell tmux splitw -h '{0} \"{1}\"'".format(shell_emacs_cmd, p)
+            self.fm.notify('open {0} with shell emacs tmux'.format(p))
+            self.fm.execute_console(command)
+
+class open_files_shell_vim(Command):
+    """
+    :open_files_shell_vim
+
+    Open selected files with shell Vim
+    """
+
+    def execute(self):
+        global shell_vim_cmd
+        files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
+        for f in files:
+            p = f.path
+            command = "shell {0} \"{1}\"".format(shell_vim_cmd, p)
+            self.fm.notify('open vim: {0}'.format(p))
+            self.fm.execute_console(command)
+
+class open_files_shell_vim_tmux(Command):
+    """
+    :open_files_shell_vim_tmux
+
+    Open selected files in tmux with shell Vim
+    """
+
+    def execute(self):
+        global shell_vim_cmd
+        files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
+        for f in files:
+            p = f.path
+            command = "shell tmux splitw -h '{0} \"{1}\"'".format(shell_vim_cmd, p)
+            self.fm.notify('open {0} with shell vim tmux'.format(p))
             self.fm.execute_console(command)
 
 open_option_keymap_general = {
     'o': 'open_files',
     'O': 'open_files_file_browser',
-    'e': 'open_files_emacs_tmux',
-    'E': 'open_files_emacs',
-    'v': 'edit',
+    'e': 'open_files_shell_emacs_tmux',
+    'E': 'open_files_shell_emacs',
+    'v': 'open_files_shell_vim_tmux',
+    'V': 'open_files_shell_vim',
     'q': 'cancel'
 }
 
 open_option_keymap_mac = {
-    'g': 'open_files_emacs_gui'
 }
 
 open_option_keymap = merge_two_dicts(open_option_keymap_general, open_option_keymap_mac if is_osx else {})
@@ -256,8 +275,13 @@ class open_files_with(Command):
     def execute(self):
         global open_option_keymap
         def callback(answer):
-            if answer != 'q':
-                self.fm.execute_console('{0} {1}'.format(open_option_keymap[answer], ' '.join(self.args)))
+            cmd = open_option_keymap[answer]
+            if answer == 'q':
+                pass
+            elif not cmd.startswith('open_files_'):
+                self.fm.execute_console(cmd)
+            else:
+                self.fm.execute_console('{0} {1}'.format(open_option_keymap[answer], self.rest(1)))
             self.fm.ui.browser.draw_info = False
 
         keys = [k for k in open_option_keymap.keys()]
@@ -275,7 +299,7 @@ class my_move_right(Command):
         if f.is_directory:
             self.fm.move(right=1)
         else:
-            self.fm.execute_console('chain draw_command_option_keymap; open_files_with -h')
+            self.fm.execute_console('chain draw_command_option_keymap; open_files_with --open-from-move-right')
 
 class open_files_file_browser(Command):
     """
