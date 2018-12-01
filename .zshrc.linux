@@ -10,6 +10,7 @@ command -v trash-put > /dev/null && alias th="trash-put"
 alias sc="sudo systemctl"
 alias scu="systemctl --user"
 alias rk="refresh-kde.sh"
+alias rx="refresh-xsession.sh > /dev/null 2>&1"
 alias rename="perl-rename"
 
 # env
@@ -23,7 +24,7 @@ if $(which ksshaskpass > /dev/null); then
   export SSH_ASKPASS=ksshaskpass
 fi
 function () {
-  local keys=("$HOME/.ssh/github_rsa")
+  local keys=("$HOME/.ssh/github_rsa" "$HOME/.ssh/duke_git_rsa")
   for key in $keys
   do
     if [ -f $key ]; then
