@@ -11,6 +11,9 @@ export ZSH=$HOME/.oh-my-zsh
 # Disable updates
 DISABLE_UPDATE_PROMPT=true
 DISABLE_AUTO_UPDATE=true
+# Disable Ctrl-s which freezes the terminal
+stty -ixon
+
 # _____________________ Common Config  _____________________
 
 # --------------------- Helpers ---------------------
@@ -62,6 +65,13 @@ export GPG_TTY=$(tty)
 export TLDR_COLOR_BLANK="blue"
 export TLDR_COLOR_DESCRIPTION="green"
 export TLDR_COLOR_PARAMETER="blue"
+
+# proxy
+# export HTTP_PROXY="http://localhost:8123"
+# export HTTPS_PROXY=$HTTP_PROXY
+# export FTP_PROXY=$HTTP_PROXY
+# export NO_PROXY="locahost,127.0.0.1,.lan,.loc"
+# export ALL_PROXY="socks5://localhost:1080"
 
 # _____________________ ENV _____________________
 
@@ -178,7 +188,7 @@ bindkey -s '^[u' 'ranger-cd^m'
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv > /dev/null; then eval "$(pyenv init - --no-rehash)"; fi
 
 # pyenv-virtualenv
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
