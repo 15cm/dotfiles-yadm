@@ -7,10 +7,6 @@ Environment="DISPLAY=:0"
 # Only key events without keyboard info can be listened to in X, so xcape effects globally
 # This service should not run when external keyboard is connected
 
-# ExecStartPre=/bin/sh -c 'setxkbmap -option "altwin:swap_alt_win" -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $$DISPLAY'
-# Use xmodmap for space layer instead of xkb because xkb doesn't work in IntelliJ
-ExecStartPre=/bin/setxkbmap -option "altwin:swap_alt_win" -option "ctrl:nocaps"
-ExecStartPre=/bin/xmodmap %h/.xmodmap
-ExecStart=/usr/bin/xcape -d -e "Control_L=Escape;Control_R=Escape;Mode_switch=space;#64=F12;#133=F12"
+ExecStartPre=/bin/sh -c 'setxkbmap -option "altwin:swap_alt_win" -option "ctrl:nocaps" -I"%h/.xkb" -keycodes "evdev+aliases(qwerty)+local" -compat "local" local -print | xkbcomp -w 0 -I"%h/.xkb" - $$DISPLAY'
+ExecStart=/usr/bin/xcape -d -e "Control_L=Escape;Control_R=Escape;Overlay1_Enable=space;#64=F12;#133=F12"
 ExecStop=/bin/setxkbmap -option
-#ExecStop=/bin/setxkbmap -keycodes "evdev+aliases(qwerty)" us

@@ -1,8 +1,5 @@
 xkb_keycodes {
-// CapsLock to Control_R
-    <AC00> = 66;
-
-// Space to ISO_Level3_Shift
+    // Space to Overlay1_Enable
     <AA04> = 65;
     <aA04> = 231;
 };

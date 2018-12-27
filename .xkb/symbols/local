@@ -7,42 +7,48 @@ xkb_symbols "basic"
 
     name[Group1] = "basic";
 
-    key <AE01> { [1, exclam, F1] };
-    key <AE02> { [2, at, F2] };
-    key <AE03> { [3, numbersign, F3] };
-    key <AE04> { [4, dollar, F4] };
-    key <AE05> { [5, percent, F5] };
-    key <AE06> { [6, asciicircum, F6] };
-    key <AE07> { [7, ampersand, F7] };
-    key <AE08> { [8, asterisk, F8] };
-    key <AE09> { [9, parenleft, F9] };
-    key <AE10> { [0, parenright, F10] };
-
-    key <AD06> { [y, Y, Home] };
-    key <AD07> { [u, U, Next] };
-    key <AD08> { [i, I, Prior] };
-    key <AD09> { [o, O, End] };
-
-    key <AC06> { [h, H, Left] };
-    key <AC07> { [j, J, Down] };
-    key <AC08> { [k, K, Up]};    
-    key <AC09> { [l, L, Right] };
-
-    key <AB06> { [n, N, BackSpace] };
-    key <AB07> { [m, M, Delete] };
-    key <AB08> { [comma, less, F6 ] };
-    key <AB09> { [period, greater, F6] };
-
+    // Assign an artribrary keycode to space for xcape to map
     key <aA04> { [space, space, space] };
+
+    // Overlay: map symbol to symbol
+
+    // Number to F region
+    key <AE01> {overlay1 = <FK01>};
+    key <AE02> {overlay1 = <FK02>};
+    key <AE03> {overlay1 = <FK03>};
+    key <AE04> {overlay1 = <FK04>};
+    key <AE05> {overlay1 = <FK05>};
+    key <AE06> {overlay1 = <FK06>};
+    key <AE07> {overlay1 = <FK07>};
+    key <AE08> {overlay1 = <FK08>};
+    key <AE09> {overlay1 = <FK09>};
+    key <AE10> {overlay1 = <FK10>};
+
+    // Line/Page
+    key <AD06> {overlay1 = <HOME>};
+    key <AD07> {overlay1 = <PGDN>};
+    key <AD08> {overlay1 = <PGUP>};
+    key <AD09> {overlay1 = <END>};
+
+    // Vi
+    key <AC06> {overlay1 = <LEFT>};
+    key <AC07> {overlay1 = <DOWN>};
+    key <AC08> {overlay1 = <UP>};    
+    key <AC09> {overlay1 = <RGHT>};
+
+    // Misc
+    key <AB06> {overlay1 = <BKSP>};
+    key <AB07> {overlay1 = <DELE>};
+    key <AB08> {overlay1 = <FK06>};
+    key <AB09> {overlay1 = <FK06>};
 };
 
 partial modifier_keys
 xkb_symbols "modifiers"
 {
+    // Space to Overlay1_Enable
     key <AA04> {
-        [ISO_Level3_Shift]
-    };
-    key <AC00> {
-        [Control_R]
+        type= "ONE_LEVEL",
+        [Overlay1_Enable]
     };
 };
