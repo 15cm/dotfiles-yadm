@@ -208,7 +208,7 @@ mode "launcher" {
      bindsym f exec firefox; mode "default"
      bindsym e exec "if [ -S /tmp/emacs$UID/server ]; then emacsclient -s server -c; else emacs; fi"; mode "default"
      bindsym E exec emacs; mode "default"
-     bindsym s exec spectacle; mode "default"
+     bindsym s exec "flameshot gui"; mode "default"
      bindsym d exec dolphin; mode "default"
      bindsym r exec rambox; mode "default"
      bindsym c exec clementine; mode "default"
@@ -260,9 +260,11 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id systemctl --no-block --user start xsession.target
 
 # Assign applications to workspaces
-# assign [class="TelegramDesktop"] 4
-# assign [class="Rambox"] 4
+# assign [class="TelegramDesktop"] 6
+# assign [class="Rambox"] 6
 # assign [class="Clementine"] 5
+
+# Window floating
 for_window [class="yakuake"] floating enable;
 for_window [class="keepassxc"] floating enable;
 for_window [class="GoldenDict"] floating enable;
