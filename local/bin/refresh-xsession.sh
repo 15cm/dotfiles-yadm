@@ -13,7 +13,3 @@ if lsusb | grep -q -E 'feed.*(1307|6060)'; then
 else
   systemctl --user restart laptop-keymap.service
 fi
-
-for i in $(seq 2); do
-  i3-msg '[class="Alacritty"] floating toggle'
-done
