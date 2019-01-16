@@ -13,9 +13,11 @@ if ! cmd_exists jq; then
   exit 1
 fi
 
+# Get $GLOBAL_THEME
+source ~/.global-env.sh
+
 powerline_config_file="$HOME/.config/powerline/config.json"
 powerline_tmux_binding="$HOME/.config/powerline/bindings/tmux/powerline.conf"
-cur_theme=$(jq -r '.current_theme' "$powerline_config_file")
 vimrc_theme_file="$HOME/.vimrc.theme"
 alacritty_config_file="$HOME/.alacritty.yml"
 ranger_config_file="$HOME/.config/ranger/rc.conf"
@@ -27,12 +29,11 @@ emacs_server_dir="/tmp/emacs$UID"
 jq_tmp=$(mktemp)
 
 # Async
-if [[ $cur_theme == 'light' ]]; then
+if [[ $GLOBAL_THEME == 'light' ]]; then
   # Switch to dark color schemes
 
   # Powerline
-  jq '.current_theme = "dark" 
-  | .ext.shell.colorscheme = "nord" 
+  jq '.ext.shell.colorscheme = "nord" 
   | .ext.tmux.colorscheme = "nord"' \
      $powerline_config_file > $jq_tmp && \
     mv $jq_tmp $powerline_config_file
@@ -47,8 +48,8 @@ if [[ $cur_theme == 'light' ]]; then
 else
   # Switch to light color schemes
 
-  jq '.current_theme = "light" 
-  | .ext.shell.colorscheme = "solarized-light" 
+  # Powerline
+  jq '.ext.shell.colorscheme = "solarized-light" 
   | .ext.tmux.colorscheme = "solarized-light"' \
      $powerline_config_file  > $jq_tmp && mv $jq_tmp $powerline_config_file
 
@@ -65,7 +66,7 @@ cmd_exists powerline-daemon && powerline-daemon --replace &
 cmd_exists tmux && tmux source "$powerline_tmux_binding" &
 
 # Sync
-if [[ $cur_theme == 'light' ]]; then
+if [[ $GLOBAL_THEME == 'light' ]]; then
   # Switch to dark color schemes
 
   # vim
@@ -88,6 +89,9 @@ if [[ $cur_theme == 'light' ]]; then
 
   # Guake
   cmd_exists guake && guake --change-palette 'Tomorrow Night'
+
+  # Global
+  sed -i 's/\(GLOBAL_THEME=\).*/\1dark/' ~/.global-env.sh
 else
   # vim
   sed --follow-symlinks -i 's/\(set background=\).*/\1light/
@@ -109,4 +113,7 @@ else
 
   # Guake
   cmd_exists guake && guake --change-palette 'Solarized Light'
+
+  # Global
+  sed -i 's/\(GLOBAL_THEME=\).*/\1light/' ~/.global-env.sh
 fi
