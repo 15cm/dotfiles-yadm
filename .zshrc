@@ -1,7 +1,8 @@
 # zmodload zsh/zprof
 # _____________________ profiling _____________________
 
-# --------------------- Common Config  ---------------------
+
+# --------------------- Common Config ---------------------
 # Fix for emacs tramp mode
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
@@ -14,7 +15,7 @@ DISABLE_AUTO_UPDATE=true
 # Disable Ctrl-s which freezes the terminal
 stty -ixon
 
-# _____________________ Common Config  _____________________
+# _____________________ Common Config _____________________
 
 # --------------------- Helpers ---------------------
 sys_name=$(uname -s)
@@ -34,7 +35,7 @@ function lazy_load() {
     alias ${i}="${lazy_func} ${i}"
   done
 
- eval "
+  eval "
     function ${lazy_func}() {
         unset -f ${lazy_func}
         lazy_load_clean $@
@@ -67,11 +68,11 @@ export TLDR_COLOR_DESCRIPTION="green"
 export TLDR_COLOR_PARAMETER="blue"
 
 # proxy
-# export HTTP_PROXY="http://localhost:8123"
+# export HTTP_PROXY="http://localhost:8118"
 # export HTTPS_PROXY=$HTTP_PROXY
 # export FTP_PROXY=$HTTP_PROXY
 # export NO_PROXY="locahost,127.0.0.1,.lan,.loc"
-# export ALL_PROXY="socks5://localhost:1080"
+# export ALL_PROXY=$HTTP_PROXY
 
 # _____________________ ENV _____________________
 
@@ -84,8 +85,11 @@ export PATH="$PATH:$HOME/go/bin"
 # _____________________ PATH _____________________
 
 # --------------------- Plugins ---------------------
-# Env
+# Auto suggestions
 ZSH_AUTOSUGGEST_USE_ASYNC=true
+
+# Alias tips
+export ZSH_PLUGINS_ALIAS_TIPS_EXCLUDES="_ ll vi"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting cd-gitroot zce yadm docker alias-tips)
 # _____________________ Plugins _____________________
@@ -275,7 +279,7 @@ _gen_fzf_default_opts() {
 
   # Solarized color scheme for fzf
   local FZF_COLOR_OPTS="--color fg:-1,bg:-1,hl:$magenta,fg+:$base02,bg+:$base2,hl+:$cyan
-    --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow"
+   --color info:$yellow,prompt:$yellow,pointer:$base3,marker:$base3,spinner:$yellow"
   export FZF_DEFAULT_OPTS="${FZF_COLOR_OPTS} --height 40% -m --reverse --bind 'ctrl-d:page-down,ctrl-u:page-up,ctrl-k:kill-line,pgup:preview-page-up,pgdn:preview-page-down,alt-a:toggle-all'"
 }
 _gen_fzf_default_opts
@@ -373,24 +377,6 @@ fi
 
 # _____________________ Config for local and remote machine _____________________
 
-# --------------------- Tmux ---------------------
-
-alias ta='tmux attach -t'
-alias tad='tmux attach -d -t'
-alias ts='tmux new-session -s'
-alias tl='tmux list-sessions'
-alias tksv='tmux kill-server'
-alias tkss='tmux kill-session -t'
-
-# if which tmux 2>&1 >/dev/null; then
-#   if [ -z "$TMUX" ]
-#   then
-#     tmux attach || tmux
-#   fi
-# fi
-
-# _____________________ Tmux _____________________
-
 # --------------------- Powerline ---------------------
 . $HOME/.config/powerline/bindings/zsh/powerline.zsh
 # _____________________ Powerline _____________________
@@ -407,6 +393,7 @@ alias cdg="cd-gitroot"
 alias prl="parallel"
 alias grep="grep --color=auto"
 alias rp="realpath"
+alias sudo="sudo "
 
 # Leetcode
 alias lc="leetcode"
@@ -415,7 +402,16 @@ alias lcsb="leetcode submit"
 alias lct="leetcode test"
 alias lcl="leetcode list"
 
-# _____________________ Common Alias  _____________________
+# Tmux
+
+alias ta='tmux attach -t'
+alias tad='tmux attach -d -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tksv='tmux kill-server'
+alias tkss='tmux kill-session -t'
+
+# _____________________ Common Alias _____________________
 
 # --------------------- profiling ---------------------
 # zprof

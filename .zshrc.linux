@@ -1,7 +1,7 @@
 # Encoding
 export LANG=en_US.UTF-8
 
-# alias
+# --------------------- Alias ---------------------
 alias op="xdg-open"
 command -v pacman > /dev/null && alias p="yay"
 command -v copyq > /dev/null && alias cpy="copyq copy -"
@@ -12,13 +12,22 @@ alias scu="systemctl --user"
 alias rk="refresh-kde.sh"
 alias rx="refresh-xsession.sh > /dev/null 2>&1"
 alias rename="perl-rename"
+# _____________________ Alias _____________________
 
-# env
+# --------------------- Env ---------------------
 export PATH="$PATH:$HOME/.local/bin"
-# Alacritty hdpi
-WINIT_HIDPI_FACTOR=2.0
 
-# add ssh keys
+# Alacritty hdpi
+export WINIT_HIDPI_FACTOR=2.0
+
+# Android Studio
+export ANDROID_HOME=$HOME/AppData/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+# _____________________ Env _____________________
+
+
+# --------------------- Misc ---------------------
+# Ssh keys
 if $(which ksshaskpass > /dev/null); then
   # kde wallet
   export SSH_ASKPASS=ksshaskpass
@@ -35,7 +44,4 @@ function () {
 
 # Powerline
 unset _POWERLINE_SAVE_WIDGET
-
-# Android Studio
-export ANDROID_HOME=$HOME/AppData/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools
+# _____________________ Misc _____________________
