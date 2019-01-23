@@ -62,13 +62,6 @@ bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -dmenu -font "san serif medium 18" '
 bindsym $mod+w exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -i -show window -font "san serif medium 18" '
 
-# screenshot (now provided by plasma)
-# bindsym print exec --no-startup-id spectacle
-
-# shipping a .desktop file. it is a wrapper around dmenu, so you need that
-# installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -216,6 +209,13 @@ mode "launcher" {
      bindsym Escape mode "default"
 }
 
+# Media
+# Sony XM2 sends XF86AudioPause and XF86AudioPlay in turn when connected via bluetooth
+bindsym XF86AudioPause exec "clementine --play-pause"
+
+bindsym XF86AudioPlay exec "clementine --play-pause"
+bindsym XF86AudioNext exec "clementine --next"
+bindsym XF86AudioPrev exec "clementine --prev"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
