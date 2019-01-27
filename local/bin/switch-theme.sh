@@ -78,7 +78,7 @@ if [[ $GLOBAL_THEME == 'light' ]]; then
 
   # Ranger
   sed --follow-symlinks -i 's/\(set colorscheme\).*/\1 custom-dark/' $ranger_config_file
-  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Moria"/' $ranger_scope_file
+  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"molokai"/' $ranger_scope_file
 
   # Glances
   sed --follow-symlinks -i 's/\(curse_theme=\).*/\1black/' $glances_config_file
@@ -102,7 +102,7 @@ else
 
   # Ranger
   sed --follow-symlinks -i 's/\(set colorscheme\).*/\1 custom-light/' $ranger_config_file
-  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"Zellner"/' $ranger_scope_file
+  sed --follow-symlinks -i 's/\(HIGHLIGHT_STYLE=\).*/\1"solarized-light"/' $ranger_scope_file
 
   # Glances
   sed --follow-symlinks -i 's/\(curse_theme=\).*/\1white/' $glances_config_file
