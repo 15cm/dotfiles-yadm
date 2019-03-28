@@ -3,6 +3,4 @@ app_folder="/usr/share/applications"
 
 # plex
 sudo rm -f $app_folder/plexmediaplayer.desktop
-
-# bluez-git
-sudo sed -i 's/\(ExecStart=\).*/\1\/usr\/lib\/bluetoothd/' /usr/lib/systemd/system/bluetooth.service
+sudo sed -i 's/Exec=\S*$/& --desktop --scale-factor=2/' $app_folder/plex-media-player.desktop
