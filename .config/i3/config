@@ -220,7 +220,7 @@ bindsym XF86AudioPlay exec "clementine --play-pause"
 bindsym XF86AudioNext exec "clementine --next"
 bindsym XF86AudioPrev exec "clementine --prev"
 
-bindsym $mod+Control+space exec "fcitx-remote -c"
+bindsym $mod+Control+space exec "fcitx-remote -s fcitx-keyboard-us"
 bindsym $mod+Mod1+space exec "fcitx-remote -s rime"
 bindsym $mod+Control+Mod1+space exec "fcitx-remote -s mozc"
 
