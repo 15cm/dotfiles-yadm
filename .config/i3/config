@@ -166,8 +166,8 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10  
 
 # hide/show windows
-bindsym $mod+period scratchpad show
-bindsym $mod+comma move scratchpad
+bindsym $mod+comma [con_mark="^(?!to_hide).*$"] scratchpad show
+bindsym $mod+period mark "misc", move scratchpad
 
 # Move focus between screens
 bindsym $mod+n focus output $monitor_laptop
@@ -189,9 +189,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # move workspaces to specified display
 bindsym $mod+Mod1+Shift+m exec "$HOME/local/bin/move-workspaces.sh"
 
-# Launcher
 # Fix problem that xkb doesn't work for global shortcut
-bindsym Mod1+space exec krunner
+ bindsym Mod1+space exec krunner
+
+# Launcher
 bindsym $mod+e exec "$HOME/.emacs_anywhere/bin/run"
 bindsym $mod+Return exec alacritty
 bindsym $mod+i exec keepassxc
@@ -200,7 +201,7 @@ bindsym $mod+u exec goldendict
 bindsym $mod+o mode "launcher"
 
 mode "launcher" {
-     bindsym f exec firefox; mode "default"
+     bindsym f exec "f=$HOME/.config/scripts/firefox/firefox-daemonize.sh; [ -f $f ] && $f; firefox"; mode "default"
      bindsym e exec "if [ -S /tmp/emacs$UID/server ]; then emacsclient -s server -c; else emacs; fi"; mode "default"
      bindsym E exec emacs; mode "default"
      bindsym s exec "flameshot gui"; mode "default"
@@ -218,6 +219,10 @@ bindsym XF86AudioPause exec "clementine --play-pause"
 bindsym XF86AudioPlay exec "clementine --play-pause"
 bindsym XF86AudioNext exec "clementine --next"
 bindsym XF86AudioPrev exec "clementine --prev"
+
+bindsym $mod+Control+space exec "fcitx-remote -c"
+bindsym $mod+Mod1+space exec "fcitx-remote -s rime"
+bindsym $mod+Control+Mod1+space exec "fcitx-remote -s mozc"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -258,7 +263,6 @@ bindsym $mod+r mode "resize"
 #}
 
 # Starting things with i3
-# exec --no-startup-id compton &    # Bare compositor to allow transparency
 exec --no-startup-id systemctl --no-block --user start xsession.target
 
 # Assign applications to workspaces
@@ -273,7 +277,7 @@ for_window [class="GoldenDict"] floating enable;
 for_window [class="Clementine"] floating disable;
 
 ## Plasma Integration
-# Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
+# Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everything)
 exec --no-startup-id wmctrl -c Plasma
 for_window [title="Desktop — Plasma"] kill; floating enable; border none
 
@@ -287,3 +291,9 @@ for_window [class="krunner"] floating enable; border none
 for_window [class="Kmix"] floating enable; border none
 for_window [class="Klipper"] floating enable; border none
 for_window [class="Plasmoidviewer"] floating enable; border none
+
+# test
+exec --user firefox --new-window 'about://invalid'
+# for_window [title="^Invalid URL - Mozilla Firefox$"] mark "to_hide", move scratchpad
+bindsym $mod+Mod1+z mark "to_hide", move scratchpad
+bindsym $mod+Mod1+x [con_mark="^(?!to_hide).*$"] scratchpad show
