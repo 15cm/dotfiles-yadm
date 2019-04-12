@@ -67,22 +67,7 @@ export TLDR_COLOR_BLANK="blue"
 export TLDR_COLOR_DESCRIPTION="green"
 export TLDR_COLOR_PARAMETER="blue"
 
-# proxy
-# export HTTP_PROXY="http://localhost:8118"
-# export HTTPS_PROXY=$HTTP_PROXY
-# export FTP_PROXY=$HTTP_PROXY
-# export NO_PROXY="locahost,127.0.0.1,.lan,.loc"
-# export ALL_PROXY=$HTTP_PROXY
-
 # _____________________ ENV _____________________
-
-# --------------------- PATH ---------------------
-export PATH="/usr/local/bin:$HOME/local/bin:$PATH"
-# Path for powerline on mac
-export PATH="$PATH:$HOME/Library/Python/2.7/bin"
-# Path for go
-export PATH="$PATH:$HOME/go/bin"
-# _____________________ PATH _____________________
 
 # --------------------- Plugins ---------------------
 # Auto suggestions
@@ -368,14 +353,14 @@ bindkey '^[x' __fzf_dir_widget
 export FZF_COMPLETION_TRIGGER=':'
 # _____________________ fzf and z _____________________
 
-# --------------------- Config for local and remote machine ---------------------
+# --------------------- Config for different OS ---------------------
 if [[ $sys_name = "Darwin" ]]; then
   source $HOME/.zshrc.mac
 else
   source $HOME/.zshrc.linux
 fi
 
-# _____________________ Config for local and remote machine _____________________
+# _____________________ Config for different OS _____________________
 
 # --------------------- Powerline ---------------------
 . $HOME/.config/powerline/bindings/zsh/powerline.zsh

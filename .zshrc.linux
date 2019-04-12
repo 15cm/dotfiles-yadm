@@ -23,14 +23,7 @@ export WINIT_HIDPI_FACTOR=2.0
 # Plasma widget hdpi
 export PLASMA_USE_QT_SCALING=1
 
-# GTK applications hdpi
-export GDK_SCALE=2
-
-# Android Studio
-export ANDROID_HOME=$HOME/AppData/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools
 # _____________________ Env _____________________
-
 
 # --------------------- Misc ---------------------
 # Ssh keys
