@@ -7,6 +7,7 @@ set $green       #b8bb26
 set $darkgreen   #98971a
 set $yellow      #fabd2f
 set $darkyellow  #d79921
+set $lime        #00ff00
 set $blue        #83a598
 set $darkblue    #458588
 set $magenta     #d3869b
@@ -23,7 +24,8 @@ for_window [class="^.*"] border pixel 2
 
 # Border Colors
 # class                 border  backgr. text    indicator child_border
-client.focused          $white  #285577 #ffffff #2e9ef4   $yellow
+# client.focused          $white  #285577 #ffffff #2e9ef4   $yellow
+client.focused          $white  #285577 #ffffff #2e9ef4   $lime
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -32,10 +34,10 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 # Gaps
-gaps inner 0
+gaps inner 4
 gaps outer 0
 smart_gaps on
-smart_borders on
+smart_borders 0
 
 # Windows button
 set $mod Mod4
@@ -236,6 +238,11 @@ mode "resize" {
         bindsym j resize grow height 10 px or 5 ppt
         bindsym k resize shrink height 10 px or 5 ppt
         bindsym l resize grow width 10 px or 5 ppt
+
+        bindsym Shift+h resize shrink width 20 px or 10 ppt
+        bindsym Shift+j resize grow height 20 px or 10 ppt
+        bindsym Shift+k resize shrink height 20 px or 10 ppt
+        bindsym Shift+l resize grow width 20 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 5 ppt
