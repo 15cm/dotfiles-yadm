@@ -55,6 +55,9 @@ if is_osx; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
 
+  # Update source
+  brew update
+
   # Install common packages
   install_common_pac
 
@@ -82,11 +85,14 @@ if is_osx; then
   ins_wrap ranger
 else
   # Choose package manager according to distribution
+  # Update source
   if is_arch; then
     bin_exists yay || (cd /tmp && git clone https://aur.archlinux.org/yay.git && makepkg -si)
     pacman_install="sudo yay -S --noconfirm"
+    yay -Sy
   else
     pacman_install="sudo apt-get -y install"
+    apt-get update
   fi
 
   # Create folders
@@ -156,6 +162,10 @@ else
     ins_wrap copyq
   fi
 fi
+
+# Ranger icon support
+git clone https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devicons \
+    && (cd /tmp/ranger_devicons && make install)
 
 # Oh-my-zsh
 git clone --recurse-submodules https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
