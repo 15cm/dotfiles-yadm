@@ -34,16 +34,30 @@ install_common_pac() {
   ins_wrap jq
   # ripgrep
   ins_wrap ripgrep
+  # fzf
+  ins_wrap fzf
+}
+
+fetch_url_github_latest_release_binary() {
+  local repo=${1}
+  local name_pattern=${2}
+  curl -s https://api.github.com/repos/${1}/releases/latest \
+       | grep "browser_download_url.*${2}" \
+       | cut -d : -f 2,3 \
+       | tr -d \"
 }
 
 if is_osx; then
   pacman_install="brew install"
+
   # brew
   if [[ ! -f '/usr/local/bin/brew' ]]; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
-  # common
+
+  # Install common packages
   install_common_pac
+
   # pip & Powerline
   BREW_PYTHON="/usr/local/bin/python"
   BREW_PIP="/usr/local/bin/pip"
@@ -51,28 +65,36 @@ if is_osx; then
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
   $BREW_PIP install powerline-status
   $BREW_PIP install powerline-gitstatus
+
   # exa
   ins_wrap exa
+
   # pyenv
   ins_wrap pyenv
+
   # rbenv
   ins_wrap rbenv
+
   # fd
   ins_wrap fd
+
   # ranger
   ins_wrap ranger
 else
+  # Choose package manager according to distribution
   if is_arch; then
-    bin_exists yaourt || sudo pacman -S --noconfirm yaourt
-    pacman_install="sudo yaourt -S --noconfirm"
+    bin_exists yay || (cd /tmp && git clone https://aur.archlinux.org/yay.git && makepkg -si)
+    pacman_install="sudo yay -S --noconfirm"
   else
     pacman_install="sudo apt-get -y install"
   fi
-  # folders
-  [ -d ~/local/bin ] || mkdir -p ~/local/bin
+
+  # Create folders
   [ -d ~/local/log ] || mkdir -p ~/local/log
-  # common
+
+  # Install common packages
   install_common_pac
+
   # pip & Powerline
   SYS_PYTHON="/usr/bin/python"
   SYS_PIP="/usr/bin/pip"
@@ -80,42 +102,48 @@ else
   [[ -f $SYS_PIP ]] || $pacman_install python-pip
   sudo $SYS_PIP install powerline-status
   sudo $SYS_PIP install powerline-gitstatus
+
   # exa
   if is_arch; then
     ins_wrap exa
   else
     if ! bin_exists exa; then
       tmpf=$(mktemp)
-      wget https://github.com/ogham/exa/releases/download/v0.8.0/exa-linux-x86_64-0.8.0.zip -O "$tmpf" \
-        && unzip "$tmpf" -d ~/local/bin && rm "$tmpf" \
+      wget $(fetch_url_github_latest_release_binary ogham/exa linux-x86_64) -O "$tmpf" \
+        && unzip "$tmpf" -d ~/local/bin \
+        && rm "$tmpf" \
         && mv ~/local/bin/exa-linux-x86_64 ~/local/bin/exa
     fi
   fi
+
   # Keychain
   ins_wrap keychain
-  # pyenv
-  bin_exists pyenv || git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  # nvm
-  bin_exists nvm || git clone https://github.com/creationix/nvm.git ~/.nvm
+
   # fd
   if is_arch; then
     ins_wrap fd fd-rs
   else
     if ! bin_exists fd; then
-      tmpv="7.0.0"
-      tmpf="fd_${tmpv}_amd64.deb"
-      tmpl="https://github.com/sharkdp/fd/releases/download/v${tmpv}/${tmpf}"
-      wget $tmpl -O /tmp/${tmpf} && sudo dpkg -i /tmp/${tmpf} && rm /tmp/${tmpf}
+      tmpf=$(mktemp)
+      wget $(fetch_url_github_latest_release_binary sharkdp/fd amd64.deb) -O ${tmpf} \
+        && sudo dpkg -i ${tmpf} \
+        && rm ${tmpf}
     fi
   fi
+
   # ranger
   if is_arch; then
      ins_wrap ranger
   else
-    git clone https://github.com/ranger/ranger.git /tmp/ranger && cd /tmp/ranger
-    sudo make install
-    cd -
+    git clone https://github.com/ranger/ranger.git /tmp/ranger \
+      && (cd /tmp/ranger && sudo make install)
   fi
+
+  # pyenv
+  bin_exists pyenv || git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+  # nvm
+  bin_exists nvm || git clone https://github.com/creationix/nvm.git ~/.nvm
 
   # rbenv & ruby-build
   if ! bin_exists rbenv; then
@@ -125,14 +153,8 @@ else
 
   # copyq
   if is_arch; then
-    ins_wrap
+    ins_wrap copyq
   fi
-
-  # trahs-cli
-  if is_arch; then
-     ins_wrap trash-cli
-  fi
-
 fi
 
 # Oh-my-zsh
@@ -140,12 +162,6 @@ git clone --recurse-submodules https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zs
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
-
-# fzf
-if ! bin_exists fzf; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-fi
 
 # vim colors
 wget -nc -P ~/.vim/colors https://raw.githubusercontent.com/altercation/vim-colors-solarized/master/colors/solarized.vim
