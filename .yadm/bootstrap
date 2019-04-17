@@ -140,7 +140,8 @@ else
      ins_wrap ranger
   else
     git clone https://github.com/ranger/ranger.git /tmp/ranger \
-      && (cd /tmp/ranger && sudo make install)
+      && (cd /tmp/ranger && sudo make install) \
+      && rm -rf /tmp/ranger
   fi
 
   # pyenv
