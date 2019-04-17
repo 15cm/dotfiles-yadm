@@ -34,8 +34,6 @@ install_common_pac() {
   ins_wrap jq
   # ripgrep
   ins_wrap ripgrep
-  # fzf
-  ins_wrap fzf
 }
 
 fetch_url_github_latest_release_binary() {
@@ -162,6 +160,10 @@ else
     ins_wrap copyq
   fi
 fi
+
+# fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
 # Ranger icon support
 git clone https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devicons \
