@@ -92,7 +92,7 @@ else
     yay -Sy
   else
     pacman_install="sudo apt-get -y install"
-    apt-get update
+    sudo apt-get update
   fi
 
   # Create folders
