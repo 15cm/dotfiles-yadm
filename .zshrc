@@ -396,6 +396,9 @@ alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
 
+# SSH
+alias sshfs='sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3' # Prevent sshfs freeze the OS
+
 # _____________________ Common Alias _____________________
 
 # --------------------- profiling ---------------------
