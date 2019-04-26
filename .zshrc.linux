@@ -32,6 +32,9 @@ if $(which ksshaskpass > /dev/null); then
   export SSH_ASKPASS=ksshaskpass
 fi
 
+# Start/find ssh-agent
+eval $(keychain --eval --quiet)
+
 # Powerline
 unset _POWERLINE_SAVE_WIDGET
 # _____________________ Misc _____________________
