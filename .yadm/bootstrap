@@ -24,15 +24,13 @@ ins_wrap() {
 }
 
 install_common_pac() {
-  # vim
+  ins_wrap sudo
+  ins_wrap curl
+  ins_wrap wget
   ins_wrap vim
-  # Tmux
   ins_wrap tmux
-  # ZSH
   ins_wrap zsh
-  # jq
   ins_wrap jq
-  # ripgrep
   ins_wrap ripgrep
 }
 
