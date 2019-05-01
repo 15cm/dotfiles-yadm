@@ -58,7 +58,7 @@ if is_osx; then
   install_common_pac
 
   # pip & Powerline
-  BREW_PYTHON="/usr/local/bin/python"
+  BREW_PYTHON="/usr/local/bin/python3"
   BREW_PIP="/usr/local/bin/pip"
   [[ -f $BREW_PYTHON ]] || $pacman_install python
   which pip > /dev/null || curl https://bootstrap.pypa.io/get-pip.py | $BREW_PYTHON
