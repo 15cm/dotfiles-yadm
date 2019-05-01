@@ -118,8 +118,7 @@ module Cond
   # module variables
   def is_internal_keyboard
     gen_device_if([
-      {vendor_id: 1452},
-      {product_id: 610},
+      {vendor_id: 1452, product_id: 610},
     ])
   end
   # layers
