@@ -79,6 +79,10 @@ if is_osx; then
 
   # ranger
   ins_wrap ranger
+
+  # fonts
+  brew tap homebrew/cask-fonts
+  brew cask install font-inconsolatalgc-nerd-font-mono
 else
   # Choose package manager according to distribution
   # Update source
