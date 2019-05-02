@@ -170,6 +170,26 @@ else
   fi
 fi
 
+# Git repos
+
+unset yadm_use_ssh_url
+if [ -f $HOME/.ssh/github_rsa ]; then
+  read -p 'SSH key for GitHub detected, clone personal repos with SSH url?[Y/n]' yn
+  while :; do
+    case $yn in
+      [Yy]*|"" ) yadm_use_ssh_url=YES; break;;
+      [Nn]* ) yadm_use_ssh_url=NO; break;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+fi
+
+if [[ ${yadm_use_ssh_url} = YES ]]; then
+  yadm_git_repo_url_prefix="git@github.com"
+else
+  yadm_git_repo_url_prefix="https://github.com"
+fi
+
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
@@ -179,7 +199,11 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devi
     && (cd /tmp/ranger_devicons && make install)
 
 # Oh-my-zsh
-git clone --recurse-submodules https://github.com/15cm/oh-my-zsh.git ~/.oh-my-zsh
+git clone --recurse-submodules ${yadm_git_repo_url_prefix}/15cm/oh-my-zsh.git ~/.oh-my-zsh
+if [[ ${yadm_use_ssh_url} == YES ]]; then
+  # Change submodule urls to SSH ones
+  sed -i 's|\(url = \)https://\(.*github.com/15cm.*\)|\1git@\2|' ~/.oh-my-zsh/.git/config
+fi
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
