@@ -57,6 +57,12 @@ if is_osx; then
   # Install common packages
   install_common_pac
 
+  # Coreutils
+  ins_wrap gls coreutils
+  ins_wrap gsed gnu-sed
+  # ALso use gsed in this script
+  PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+
   # pip & Powerline
   BREW_PYTHON="/usr/local/bin/python3"
   BREW_PIP="/usr/local/bin/pip"
