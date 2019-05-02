@@ -1,6 +1,4 @@
-.ssh/config*
 .gitconfig
-local/share/electron-apps/app-urls.txt
 
 .config/karabiner/private.yml
 
