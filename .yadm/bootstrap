@@ -147,7 +147,7 @@ else
   if is_arch; then
      ins_wrap ranger
   else
-    git clone https://github.com/ranger/ranger.git /tmp/ranger \
+    git clone --depth 1 https://github.com/ranger/ranger.git /tmp/ranger \
       && (cd /tmp/ranger && sudo make install) \
       && rm -rf /tmp/ranger
   fi
@@ -191,12 +191,11 @@ else
 fi
 
 # fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 
 # Ranger icon support
-git clone https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devicons \
-    && (cd /tmp/ranger_devicons && make install)
+git clone --depth 1 https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devicons \
+    && (cd /tmp/ranger_devicons && make install) && rm -rf /tmp/ranger_devicons
 
 # Oh-my-zsh
 git clone --recurse-submodules ${yadm_git_repo_url_prefix}15cm/oh-my-zsh.git ~/.oh-my-zsh
