@@ -114,6 +114,13 @@ else
   # Install common packages
   install_common_pac
 
+  # netcat
+  if is_arch; then
+    ins_wrap nc openbsd-netcat
+  else
+    ins_wrap nc netcat
+  fi
+
   # pip & Powerline
   SYS_PYTHON="/usr/bin/python"
   SYS_PIP="/usr/bin/pip"
