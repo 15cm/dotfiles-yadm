@@ -31,7 +31,7 @@ install_common_pac() {
   ins_wrap tmux
   ins_wrap zsh
   ins_wrap jq
-  ins_wrap ripgrep
+  ins_wrap rg ripgrep
 }
 
 fetch_url_github_latest_release_binary() {
@@ -56,6 +56,9 @@ if is_osx; then
 
   # Install common packages
   install_common_pac
+
+  # gpg
+  brew install gpg
 
   # Coreutils
   ins_wrap gls coreutils
@@ -89,6 +92,10 @@ if is_osx; then
   # fonts
   brew tap homebrew/cask-fonts
   brew cask install font-inconsolatalgc-nerd-font-mono
+
+  # clipper
+  brew install clipper && brew services start clipper
+
 else
   # Choose package manager according to distribution
   # Update source
@@ -168,11 +175,31 @@ else
   if is_arch; then
     ins_wrap copyq
   fi
+
+  # clipper
+  if [ -n $DISPLAY ]; then
+    while :; do
+      read -p 'Graphic session detected. Do you want to install clipper(go will also be installed)[Y/n]' yn
+      case $yn in
+        [Yy]*|"" ) yadm_install_clipper=YES; break;;
+        [Nn]* ) yadm_install_clipper=NO; break;;
+        * ) echo "Please answer y or n.";;
+      esac
+    done
+  fi
+  if [ ${yadm_install_clipper} = YES ]; then
+    if is_arch; then
+      ins_wrap go
+    else
+      ins_wrap go golang-go
+    fi
+    which clipper > /dev/null || go get github.com/wincent/clipper
+  fi
 fi
 
 # Git repos
 
-unset yadm_use_ssh_url
+unset yn
 if [ -f $HOME/.ssh/github_rsa ]; then
   while :; do
     read -p 'SSH key for GitHub detected, clone personal repos with SSH url?[Y/n]' yn
@@ -184,7 +211,7 @@ if [ -f $HOME/.ssh/github_rsa ]; then
   done
 fi
 
-if [[ ${yadm_use_ssh_url} = YES ]]; then
+if [ ${yadm_use_ssh_url} = YES ]; then
   yadm_git_repo_url_prefix="git@github.com:"
 else
   yadm_git_repo_url_prefix="https://github.com/"
