@@ -185,9 +185,9 @@ if [ -f $HOME/.ssh/github_rsa ]; then
 fi
 
 if [[ ${yadm_use_ssh_url} = YES ]]; then
-  yadm_git_repo_url_prefix="git@github.com"
+  yadm_git_repo_url_prefix="git@github.com:"
 else
-  yadm_git_repo_url_prefix="https://github.com"
+  yadm_git_repo_url_prefix="https://github.com/"
 fi
 
 # fzf
@@ -199,17 +199,17 @@ git clone https://github.com/alexanderjeurissen/ranger_devicons /tmp/ranger_devi
     && (cd /tmp/ranger_devicons && make install)
 
 # Oh-my-zsh
-git clone --recurse-submodules ${yadm_git_repo_url_prefix}/15cm/oh-my-zsh.git ~/.oh-my-zsh
+git clone --recurse-submodules ${yadm_git_repo_url_prefix}15cm/oh-my-zsh.git ~/.oh-my-zsh
 if [[ ${yadm_use_ssh_url} == YES ]]; then
   # Change submodule urls to SSH ones
-  sed -i 's|\(url = \)https://\(.*github.com/15cm.*\)|\1git@\2|' ~/.oh-my-zsh/.git/config
+  sed -i 's|\(url = \)https://.*github.com/\(15cm.*\)|\1git@github.com:\2|' ~/.oh-my-zsh/.git/config
 fi
 
 # Spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d && (cd ~/.emacs.d && git checkout develop)
 
 # My spacemacs config
-git clone ${yadm_git_repo_url_prefix}/15cm/spacemacs-config.git ~/.spacemacs.d
+git clone ${yadm_git_repo_url_prefix}15cm/spacemacs-config.git ~/.spacemacs.d
 
 # z
 git clone https://github.com/rupa/z.git ~/.z
