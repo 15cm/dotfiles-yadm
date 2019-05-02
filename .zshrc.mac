@@ -72,16 +72,4 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH:/usr/local/opt/gettext/bin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# others
-export PATH="/usr/local/opt/sbt@0.13/bin:$PATH"
-
-# user path
-export PATH="$PATH:$HOME/user-scripts"
-
-# Rust
-# source $HOME/.cargo/env
-
-# added by travis gem
-# [ -f /$HOME/.travis/travis.sh ] && source /$HOME/.travis/travis.sh
-
 unset _POWERLINE_SAVE_WIDGET
