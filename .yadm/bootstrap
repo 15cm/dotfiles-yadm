@@ -32,6 +32,7 @@ install_common_pac() {
   ins_wrap zsh
   ins_wrap jq
   ins_wrap rg ripgrep
+  ins_wrap bc
 }
 
 fetch_url_github_latest_release_binary() {
