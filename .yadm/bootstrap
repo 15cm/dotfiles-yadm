@@ -174,12 +174,12 @@ fi
 
 unset yadm_use_ssh_url
 if [ -f $HOME/.ssh/github_rsa ]; then
-  read -p 'SSH key for GitHub detected, clone personal repos with SSH url?[Y/n]' yn
   while :; do
+    read -p 'SSH key for GitHub detected, clone personal repos with SSH url?[Y/n]' yn
     case $yn in
       [Yy]*|"" ) yadm_use_ssh_url=YES; break;;
       [Nn]* ) yadm_use_ssh_url=NO; break;;
-      * ) echo "Please answer yes or no.";;
+      * ) echo "Please answer y or n.";;
     esac
   done
 fi
