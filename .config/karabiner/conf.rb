@@ -2,19 +2,6 @@ require './karabiner'
 
 module Conf
   module_function
-  def gen_emacs_manipulator(from_keycode, from_mods, to_keys, app_cond = nil)
-    rc = {
-      from: {
-        key_code: from_keycode,
-        modifiers: from_mods,
-      },
-      to: to_keys,
-    }
-    if app_cond
-      rc[:conditions] = [app_cond]
-    end
-    rc
-  end
   def basic_rules
     [
       Rule.gen(
@@ -31,7 +18,7 @@ module Conf
           }],
       ),
       Rule.gen(
-        '(interval) caps_lock: escape, left_control',
+        '(internal) caps_lock: escape, left_control',
         [{
           conditions: [
             Cond.is_internal_keyboard,
@@ -45,109 +32,19 @@ module Conf
          }]
       ),
       Rule.gen(
-        'emacs keymap: up/down/left/right/delete_forward',
-        [
-          ['p', 'up_arrow'],
-          ['n', 'down_arrow'],
-          ['b', 'left_arrow'],
-          ['f', 'right_arrow'],
-          ['d', 'delete_forward'],
-        ].map { |(f, t)| [f, [{key_code: t}]] }
-        .map { |from_keycode, to_keys| gen_emacs_manipulator(from_keycode, ModFrom.mandatory_control, to_keys, Cond.app_keymap_not_partial_nor_total_emacs) }
-      ),
-      Rule.gen(
-        'emacs keymap: home/end/kill_to_end',
-        (lambda do
-            single_tokeys =
-              [
-              ['a', 'home'],
-              ['e', 'end'],
-              ].map { |f, t| [f, [{key_code: t}]] }
-            complex_tokeys =
-              [
-              ['k', [
-               {
-                  key_code: 'end',
-                  modifiers: ['fn', 'shift'],
-               },
-               {
-                 key_code: 'delete_or_backspace'
-               }
-             ]],
-              ]
-            (single_tokeys + complex_tokeys)
-            .map { |from_keycode, to_keys| gen_emacs_manipulator(from_keycode, ModFrom.mandatory_control, to_keys, Cond.app_keymap_need_home_end) }
-          end).call
-      ),
-      Rule.gen(
-        'emacs keymap: delete',
-        [
-          ['h', 'delete_or_backspace']
-        ].map { |f, t| [f, [{key_code: t}]] }
-        .map{ |from_keycode, to_keys| gen_emacs_manipulator(from_keycode, ModFrom.mandatory_control, to_keys, Cond.app_keymap_not_partial_nor_total_emacs) }
-      ),
-      Rule.gen(
-        'emacs keymap: back/forward/delete_back/delete_forward a word',
-        (lambda do
-            moves = [
-              ['b', 'left_arrow'],
-              ['f', 'right_arrow'],
-            ].map do |f, t|
-              [
-                f, [{
-                  key_code: t,
-                  modifiers: ['option']
-                 }]
-              ]
-            end
-            deletes = [
-              ['h', 'left_arrow'],
-              ['d', 'right_arrow'],
-            ].map do |f, t|
-              [
-                f, [
-                  {
-                    key_code: t,
-                    modifiers: ['option', 'shift'],
-                  },
-                  {
-                    key_code: 'delete_or_backspace'
-                  }
-             ]
-              ]
-            end
-            (moves + deletes)
-            .map { |from_keycode, to_keys| gen_emacs_manipulator(from_keycode, ModFrom.mandatory_option, to_keys, Cond.app_keymap_not_total_emacs) }
-          end).call
-      ),
-      Rule.gen(
-        'command-control-u/d: page_up/page_down',
-        [
-          ['u', 'page_up'],
-          ['d', 'page_down'],
-        ].map do |from_keycode, to_keycode|
-          {
-            from: {
-              key_code: from_keycode,
-              modifiers: ModFrom.mandatory_control_command,
-            },
-            to: [{ key_code: to_keycode }]
-          }
-        end
-      ),
-      Rule.gen(
-        'command-semicolon: f6(Firefox)',
+        '(internal) left_command: f7, left_gui',
         [{
           conditions: [
-            Cond.app_is_firefox,
+            Cond.is_internal_keyboard,
           ],
           from: {
-            key_code: 'semicolon',
-            modifiers: ModFrom.mandatory_command,
+            key_code: 'left_gui',
+            modifiers: ModFrom.optional_any
           },
-          to: [{ key_code: 'f6' }]
+          to: [{ key_code: "left_gui"}],
+          to_if_alone: [{ key_code: "f7"}],
          }]
-      )
+      ),
     ]
   end
 
@@ -158,8 +55,7 @@ module Conf
   def layer1_mods
     [
     "command",
-    "shift",
-    "option",
+    "control",
     ]
   end
   def layer1_keys
@@ -189,7 +85,7 @@ module Conf
     [
       "control",
       "shift",
-      "command",
+      "option",
     ]
   end
   def layer3_keys
