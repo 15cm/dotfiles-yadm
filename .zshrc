@@ -379,6 +379,7 @@ alias prl="parallel"
 alias grep="grep --color=auto"
 alias rp="realpath"
 alias sudo="sudo "
+alias ssh="ssh -F ~/.ssh/interactive.conf"
 
 # Leetcode
 alias lc="leetcode"
