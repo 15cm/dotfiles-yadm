@@ -15,73 +15,6 @@ module Rule
   end
 end
 
-module App
-  module_function
-  def name2bundle_id(name)
-    name_bid_map =
-    {
-      telegram: "^org\\.telegram\\.desktop.*",
-      microsoft_office: "^com\\.microsoft\\..*",
-      alacritty: "^io\\.alacritty.*",
-      emacs: "^org\\.gnu\\.Emacs.*",
-      iterm: "^com\\.googlecode\\.iterm2.*",
-      terminal: "^com\\.apple\\.com\\.Terminal.*",
-      jetbrains: "^com\\.jetbrains\\..*",
-      xcode: "^com\\.apple\\.dt\\.Xcode.*",
-      firefox: "^org\\.mozilla\\.firefox.*",
-      parallel_desktop: "com\\.parallels\\.desktop.*",
-    }
-  name_bid_map[name]
-  end
-  def editors
-    [
-      :emacs,
-    ]
-  end
-  def terminals
-    [
-      :alacritty,
-      :iterm,
-      :terminal,
-    ]
-  end
-  def ides
-    [
-      :jetbrains,
-      :xcode,
-    ]
-  end
-  def keymap_total_emacs
-    editors + terminals
-  end
-  def keymap_partial_emacs
-    ides
-  end
-  def keymap_need_home_end
-    [
-      :telegram,
-      :microsoft_office,
-    ]
-  end
-  def firefox
-    [
-      :firefox
-    ]
-  end
-  def parallel_desktop
-    [
-      :parallel_desktop
-    ]
-  end
-end
-
-module T1
-  module_function
-  def f1
-    1
-  end
-end
-
 module Cond
   module_function
   def gen_device_if(identifiers)
@@ -105,13 +38,6 @@ module Cond
       input_sources: [
         language: src
       ]
-    }
-  end
-  def gen_application_if(app_names, is = true)
-    bundle_ids = app_names.map { |name| App.name2bundle_id(name) }
-    {
-      bundle_identifiers: bundle_ids,
-      type: "frontmost_application_#{is ? 'if' : 'unless'}",
     }
   end
 
@@ -143,19 +69,6 @@ module Cond
   end
   def input_is_ja
     gen_input_if("ja")
-  end
-
-  def app_keymap_not_total_emacs
-    gen_application_if(App.keymap_total_emacs + App.parallel_desktop, false)
-  end
-  def app_keymap_not_partial_nor_total_emacs
-    gen_application_if(App.keymap_partial_emacs + App.keymap_total_emacs + App.parallel_desktop, false)
-  end
-  def app_keymap_need_home_end
-    gen_application_if(App.keymap_need_home_end)
-  end
-  def app_is_firefox
-    gen_application_if(App.firefox)
   end
 end
 
@@ -353,7 +266,7 @@ class Layer
   end
 end
 
-# Application Launcher, Input Source Switching
+# Basic movements
 class Layer1 < Layer
   def initialize(*args)
     super(1, *args)
@@ -364,22 +277,22 @@ class Layer1 < Layer
     def input_source_rule_hook
       # key => input_source_to_switch_to
       key_maps = [
-        ['a', :en],
-        ['s', :zh],
-        ['d',:ja],
+        ['s', :en],
+        ['d', :zh],
+        ['f',:ja],
       ]
       @layer_keymap_filter += key_maps.map { |k, _| k }
 
       # place entry following the order in system keyboard
       cond_map = {
-        ja: Cond.input_is_ja,
         en: Cond.input_is_en,
+        ja: Cond.input_is_ja,
         zh: Cond.input_is_zh,
       }
       sys_next_key = "f18"
       len = key_maps.length
 
-      find_src_index = lambda do |src| 
+      find_src_index = lambda do |src|
         cond_map.find_index { |k, _| k == src }
       end
 
@@ -410,7 +323,90 @@ class Layer1 < Layer
         manipulators
       )
     end
+
+    # Cursor movement
+    def movement_rule_hook()
+      move_key_maps = [
+        ['h', 'left_arrow'],
+        ['j', 'down_arrow'],
+        ['k', 'up_arrow'],
+        ['l', 'right_arrow'],
+        ['y', 'home'],
+        ['u', 'page_down'],
+        ['i', 'page_up'],
+        ['o', 'end'],
+        ['p', 'f6'],
+        ['n', 'delete_or_backspace'],
+        ['m', 'delete_forward'],
+      ]
+      move_word_key_maps = [
+        ['semicolon', 'left_arrow'],
+        ['quote', 'right_arrow']
+      ]
+      delete_word_key_maps = [
+        ['comma', 'left_arrow'],
+        ['period', 'right_arrow']
+      ]
+      @layer_keymap_filter += (move_key_maps + move_word_key_maps + delete_word_key_maps).map { |k, _| k }
+
+      move_manipulators = move_key_maps.map do | f, t| {
+        conditions: [
+          @cond_is_in_this_layer
+        ],
+        from: {
+          key_code: f,
+          modifiers: ModFrom.optional_any,
+        },
+        to: [
+          {key_code: t},
+        ],
+      }
+      end
+
+      move_word_manipulators = move_word_key_maps.map do |f, t|  {
+        conditions: [
+          @cond_is_in_this_layer
+        ],
+        from: {
+          key_code: f,
+          modifiers: ModFrom.optional_any,
+        },
+        to: [
+          {key_code: t, modifiers: ['option']},
+        ],
+      }
+      end
+
+      delete_word_manipulators = delete_word_key_maps.map do |f, t|  {
+        conditions: [
+          @cond_is_in_this_layer
+        ],
+        from: {
+          key_code: f,
+          modifiers: ModFrom.optional_any,
+        },
+        to: [
+          {key_code: t, modifiers: ['option', 'shift']},
+          {key_code: 'delete_or_backspace'},
+        ],
+      }
+      end
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: basic movements",
+        move_manipulators
+      )
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: word movements",
+        move_word_manipulators
+      )
+      @rules << Rule.gen(
+        "#{@layer_description_prefix}: delete word movements",
+        delete_word_manipulators
+      )
+    end
+
     input_source_rule_hook()
+    movement_rule_hook()
   end
 end
 
@@ -440,35 +436,28 @@ class Layer2 < Layer
         )
       end
     end
-    def special_rule_hook
-      special_map = {
-        "h" => "left_arrow",
-        "j" => "down_arrow",
-        "k" => "up_arrow",
-        "l" => "right_arrow",
-        "y" => "home",
-        "u" => "page_down",
-        "i" => "page_up",
-        "o" => "end",
-        "comma" => "f12",
-        "period" => "f6",
-      }
-      @layer_keymap_filter += special_map.keys
 
-      manipulators = special_map.map do |from_key, to_key|
+    def f_region_rule_hook
+      # F Region
+      f_map = (KeyRegion.above
+        .zip(('1'..'12').map { |x| 'f' + x })).to_h
+
+      @layer_keymap_filter += f_map.keys
+
+      manipulators = f_map.map do |from_key, to_key|
         m = layer_manipulator(from_key, to_key)
         m[:to][0].delete(:modifiers)
         m
       end
 
       @rules << Rule.gen(
-        "#{@layer_description_prefix}: direction, Tmux prefix, Firefox switch frame",
+        "#{@layer_description_prefix}: F region",
         manipulators
       )
     end
 
     private_rule_hook()
-    special_rule_hook()
+    f_region_rule_hook()
   end
 end
 
@@ -479,7 +468,7 @@ class Layer3 < Layer
   end
 
   def gen_rules_hook_before
-    def special_main_rule_hook
+    def app_rule_hook
       # Clementine
       app_map = {
         "j" => "5",
@@ -490,7 +479,7 @@ class Layer3 < Layer
       }
       @layer_keymap.merge!(app_map)
     end
-    def special_rule_hook
+    def media_rule_hook
       # Media
       media_map = {
         "o" => "volume_decrement",
@@ -498,15 +487,9 @@ class Layer3 < Layer
         "i" => "mute",
       }
 
+      @layer_keymap_filter += media_map.keys
 
-      # F Region
-      f_map = (KeyRegion.above
-        .zip(('1'..'12').map { |x| 'f' + x })).to_h
-
-      special_map = media_map.merge(f_map)
-      @layer_keymap_filter += special_map.keys
-
-      manipulators = special_map.map do |from_key, to_key|
+      manipulators = media_map.map do |from_key, to_key|
         m = layer_manipulator(from_key, to_key)
         m[:to][0].delete(:modifiers)
         m
@@ -518,8 +501,8 @@ class Layer3 < Layer
       )
     end
 
-    special_main_rule_hook()
-    special_rule_hook()
+    app_rule_hook()
+    media_rule_hook()
   end
 end
 

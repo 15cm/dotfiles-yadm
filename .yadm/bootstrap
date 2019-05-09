@@ -32,6 +32,7 @@ install_common_pac() {
   ins_wrap zsh
   ins_wrap jq
   ins_wrap rg ripgrep
+  ins_wrap ag the_silver_searcher
   ins_wrap bc
 }
 
@@ -90,13 +91,25 @@ if is_osx; then
   # ranger
   ins_wrap ranger
 
-  # fonts
-  brew tap homebrew/cask-fonts
-  brew cask install font-inconsolatalgc-nerd-font-mono
-
   # clipper
   brew install clipper && brew services start clipper
 
+  # Brew cask
+  brew tap homebrew/cask-fonts
+  brew cask install \
+       font-inconsolatalgc-nerd-font-mono \
+       karabiner-elements \
+       bartender \
+       resilio-sync \
+       istat-menus \
+       emacs \
+       amethyst \
+       rambox \
+       google-chrome \
+       alfred \
+       keepassxc \
+       bettertouchtool \
+       alacritty
 else
   # Choose package manager according to distribution
   # Update source
