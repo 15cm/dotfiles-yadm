@@ -37,7 +37,8 @@ client.background       #ffffff
 gaps inner 4
 gaps outer 0
 smart_gaps on
-smart_borders 0
+
+workspace_auto_back_and_forth no
 
 # Windows button
 set $mod Mod4
@@ -54,7 +55,9 @@ font pango:Helvetica Neue, FontAwesome 11
 #font pango:DejaVu Sans Mono 8
 
 # floating size
-floating_minimum_size 800 x 600
+# floating_minimum_size 800 x 600
+
+mouse_warping output
 
 # use mouse+$mod to drag floating windows to their wanted position
 # kill focused window
@@ -109,8 +112,8 @@ bindsym $mod+shift+x floating toggle
 bindsym $mod+x focus mode_toggle
 
 # focus the parent container
-bindsym $mod+z focus parent
-bindsym $mod+shift+z focus child
+bindsym $mod+slash focus parent
+bindsym $mod+question focus child
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -118,18 +121,6 @@ bindsym $mod+shift+z focus child
 # Displays and Screens
 set $monitor_laptop eDP1
 set $monitor_main DP2
-
-# set $workspace_main_adhoc 1
-# set $workspace_main_daily_config 2
-
-# set $workspace_main_document 3
-# set $workspace_main_contact 4
-# set $workspace_main_media 5
-# set $workspace_main_adhoc 6
-# set $workspace_main_daily_config 7
-# set $workspace_main_document 8
-# set $workspace_main_contact 9
-# set $workspace_main_media 10
 
 # assign workspaces to screens
 workspace 1 output $monitor_main
@@ -144,28 +135,28 @@ workspace 9 output $monitor_laptop
 workspace 10 output $monitor_laptop
 
 # switch to workspace
-bindsym $mod+1 workspace 1  
-bindsym $mod+2 workspace 2  
-bindsym $mod+3 workspace 3  
-bindsym $mod+4 workspace 4  
-bindsym $mod+5 workspace 5  
-bindsym $mod+6 workspace 6  
-bindsym $mod+7 workspace 7  
-bindsym $mod+8 workspace 8  
-bindsym $mod+9 workspace 9  
-bindsym $mod+0 workspace 10   
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1  
-bindsym $mod+Shift+2 move container to workspace 2  
-bindsym $mod+Shift+3 move container to workspace 3  
-bindsym $mod+Shift+4 move container to workspace 4  
-bindsym $mod+Shift+5 move container to workspace 5  
-bindsym $mod+Shift+6 move container to workspace 6  
-bindsym $mod+Shift+7 move container to workspace 7  
-bindsym $mod+Shift+8 move container to workspace 8  
-bindsym $mod+Shift+9 move container to workspace 9  
-bindsym $mod+Shift+0 move container to workspace 10  
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
 
 # hide/show windows
 bindsym $mod+comma [con_mark="^(?!to_hide).*$"] scratchpad show
@@ -191,14 +182,17 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # move workspaces to specified display
 bindsym $mod+Mod1+Shift+m exec "$HOME/local/bin/move-workspaces.sh"
 
+# Easyfocus
+bindsym $mod+v exec wmfocus
+
 # Fix problem that xkb doesn't work for global shortcut
- bindsym Mod1+space exec krunner
+bindsym Mod1+space exec krunner
 
 # Launcher
 bindsym $mod+e exec "$HOME/.emacs_anywhere/bin/run"
 bindsym $mod+Return exec alacritty
 bindsym $mod+i exec keepassxc
-bindsym $mod+u exec goldendict
+# bindsym $mod+u exec goldendict
 
 bindsym $mod+o mode "launcher"
 
@@ -226,13 +220,23 @@ bindsym $mod+Control+space exec "fcitx-remote -s fcitx-keyboard-us"
 bindsym $mod+Mod1+space exec "fcitx-remote -s rime"
 bindsym $mod+Control+Mod1+space exec "fcitx-remote -s mozc"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
+# resize or move floating window (you can also use the mouse for that)
+mode "resize/move" {
         # These bindings trigger as soon as you enter the resize mode
         bindsym h resize shrink width 10 px or 5 ppt
         bindsym j resize grow height 10 px or 5 ppt
         bindsym k resize shrink height 10 px or 5 ppt
         bindsym l resize grow width 10 px or 5 ppt
+
+        bindsym y move left 10
+        bindsym u move down 10
+        bindsym i move up 10
+        bindsym o move right 10
+
+        bindsym Shift+y move left 20
+        bindsym Shift+u move down 20
+        bindsym Shift+i move up 20
+        bindsym Shift+o move right 20
 
         bindsym Shift+h resize shrink width 20 px or 10 ppt
         bindsym Shift+j resize grow height 20 px or 10 ppt
@@ -245,18 +249,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-# i3bar
-#bar {
-#        verbose yes
-#        position bottom 
-#        status_command i3blocks
-#        i3bar_command i3bar -t
-#        colors {
-#          statusline #ffffff
-#          background $transparent
-#        }
-#}
 
 # Starting things with i3
 exec --no-startup-id systemctl --no-block --user start xsession.target
