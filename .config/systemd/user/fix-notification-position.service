@@ -1,0 +1,12 @@
+[Unit]
+Description=Fix notification position by refresh display settings
+After=xorg.target
+
+[Service]
+ExecStart=/bin/bash -c 'xrandr --output DP2 --left-of eDP1; xrandr --output DP2 --right-of eDP1'
+Type=oneshot
+RemainAfterExit=no
+
+[Install]
+WantedBy=xsession.target
+
