@@ -26,11 +26,6 @@ export PLASMA_USE_QT_SCALING=1
 # _____________________ Env _____________________
 
 # --------------------- Misc ---------------------
-# Ssh keys
-if $(which ksshaskpass > /dev/null); then
-  # kde wallet
-  export SSH_ASKPASS=ksshaskpass
-fi
 
 # Start/find ssh-agent
 eval $(keychain --eval --quiet)
