@@ -221,7 +221,7 @@ bindsym $mod+Mod1+space exec "fcitx-remote -s rime"
 bindsym $mod+Control+Mod1+space exec "fcitx-remote -s mozc"
 
 # resize or move floating window (you can also use the mouse for that)
-mode "resize/move" {
+mode "resize_move" {
         # These bindings trigger as soon as you enter the resize mode
         bindsym h resize shrink width 10 px or 5 ppt
         bindsym j resize grow height 10 px or 5 ppt
@@ -248,13 +248,7 @@ mode "resize/move" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod+r mode "resize"
-
-# Fix notification position for Plasma multiple monitors
-exec --no-startup-id ~/.config/scripts/i3/fix-notification-position.sh
-
-# Starting things with i3
-exec --no-startup-id systemctl --no-block --user start xsession.target
+bindsym $mod+r mode "resize_move"
 
 # Assign applications to workspaces
 # assign [class="TelegramDesktop"] 6
@@ -285,3 +279,9 @@ for_window [class="krunner"] floating enable; border none
 for_window [class="Kmix"] floating enable; border none
 for_window [class="Klipper"] floating enable; border none
 for_window [class="Plasmoidviewer"] floating enable; border none
+
+# Starting things with i3
+exec --no-startup-id systemctl --user start xsession.target
+
+# Fix notification position for Plasma multiple monitors
+exec --no-startup-id ~/.config/scripts/i3/fix-notification-position.sh
