@@ -34,6 +34,7 @@ install_common_pac() {
   ins_wrap rg ripgrep
   ins_wrap ag the_silver_searcher
   ins_wrap bc
+  ins_wrap highlight
 }
 
 fetch_url_github_latest_release_binary() {
@@ -96,6 +97,9 @@ if is_osx; then
 
   # ispell
   ins_wrap ispell
+
+  # pdftotext
+  ins_wrap pdftotext poppler
 
   # Brew cask
   brew tap homebrew/cask-fonts
@@ -219,6 +223,9 @@ else
     fi
     which clipper > /dev/null || go get github.com/wincent/clipper
   fi
+
+  # pdftotext
+  ins_wrap pdftotext poppler-utils
 fi
 
 # Git repos
