@@ -238,6 +238,10 @@ else
   yadm_git_repo_url_prefix="https://github.com/"
 fi
 
+# YADM Submodules
+yadm submodule update --init --recursive
+sed -i 's|\(url = \)https://.*github.com/\(15cm.*\)|\1git@github.com:\2|' ~/.yadm/repo.git/config
+
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 
