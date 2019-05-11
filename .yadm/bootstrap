@@ -94,6 +94,9 @@ if is_osx; then
   # clipper
   brew install clipper && brew services start clipper
 
+  # ispell
+  ins_wrap ispell
+
   # Brew cask
   brew tap homebrew/cask-fonts
   brew cask install \
