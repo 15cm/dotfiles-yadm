@@ -155,7 +155,7 @@ class delete_files(Command):
             paths = list(map(lambda f: f.path, self.fm.thistab.get_selection()))
             for p in paths:
                 if is_osx:
-                    subprocess.check_output(["trash", "-a", p])
+                    subprocess.check_output(["trash", p])
                 else:
                     subprocess.check_output(['trash-put', p])
             self.fm.notify('trashed {0}'.format(' '.join(map(lambda p: '"{0}"'.format(p), paths))))
