@@ -1,6 +1,12 @@
+# --------------------- ENV ---------------------
 # Encoding
 export LC_ALL=en_US.utf-8
 export LANG="$LC_ALL"
+
+# Homebrew
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# _____________________ ENV _____________________
 
 # alias
 # alias p="proxychains4 -q"
