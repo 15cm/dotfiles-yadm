@@ -1,7 +1,5 @@
 .gitconfig
 
-.config/karabiner/private.yml
-
 .aria2/aria2.conf
 .z/
 .zsh_history
