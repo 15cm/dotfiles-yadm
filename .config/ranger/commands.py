@@ -208,7 +208,7 @@ class open_files_shell_emacs_tmux(Command):
         files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
         for f in files:
             p = f.path
-            command = "shell tmux splitw -h '{0} \"{1}\"'".format(shell_emacs_cmd, p)
+            command = "shell tmux splitw -v '{0} \"{1}\"'".format(shell_emacs_cmd, p)
             self.fm.notify('open {0} with shell emacs tmux'.format(p))
             self.fm.execute_console(command)
 
@@ -240,33 +240,32 @@ class open_files_shell_vim_tmux(Command):
         files = self.fm.thistab.get_selection() if self.args[-1] != '--open-from-move-right' else [self.fm.thisfile]
         for f in files:
             p = f.path
-            command = "shell tmux splitw -h '{0} \"{1}\"'".format(shell_vim_cmd, p)
+            command = "shell tmux splitw -v '{0} \"{1}\"'".format(shell_vim_cmd, p)
             self.fm.notify('open {0} with shell vim tmux'.format(p))
             self.fm.execute_console(command)
 
-open_option_keymap_general = {
-    'o': 'open_files',
-    'O': 'open_files_file_browser',
-    'e': 'open_files_shell_emacs_tmux',
-    'E': 'open_files_shell_emacs',
-    'v': 'open_files_shell_vim_tmux',
-    'V': 'open_files_shell_vim',
-    'q': 'cancel'
-}
-
-open_option_keymap_mac = {
-}
-
-open_option_keymap = merge_two_dicts(open_option_keymap_general, open_option_keymap_mac if is_osx else {})
-
-class draw_command_option_keymap(Command):
+class draw_command_open_option_keymap(Command):
     """
-    :draw_command_option_keymap
+    :draw_command_open_option_keymap
     """
     def execute(self):
-        global open_option_keymap
-        keymap_infos = ['{0} | {1}'.format(k, v.replace('open_files_', '')) for (k, v) in open_option_keymap.items()]
-        self.fm.ui.browser.draw_info = keymap_infos
+        open_option_keymap_general = {
+            'o': 'open_files',
+            'O': 'open_files_file_browser',
+            'e': 'open_files_shell_emacs_tmux',
+            'E': 'open_files_shell_emacs',
+            'v': 'open_files_shell_vim_tmux',
+            'V': 'open_files_shell_vim',
+            'q': 'cancel'
+        }
+
+        open_option_keymap_mac = {
+        }
+
+        open_option_keymap = merge_two_dicts(open_option_keymap_general, open_option_keymap_mac if is_osx else {})
+
+        keymap = ['{0} | {1}'.format(k, v.replace('open_files_', '')) for (k, v) in open_option_keymap.items()]
+        self.fm.ui.browser.draw_info = keymap
 
 class open_files_with(Command):
     """
@@ -299,7 +298,7 @@ class my_move_right(Command):
         if f.is_directory:
             self.fm.move(right=1)
         else:
-            self.fm.execute_console('chain draw_command_option_keymap; open_files_with --open-from-move-right')
+            self.fm.execute_console('chain draw_command_open_option_keymap; open_files_with --open-from-move-right')
 
 class open_files_file_browser(Command):
     """
@@ -329,5 +328,5 @@ class shell_in_tmux(Command):
     """
     def execute(self):
         curdir = self.fm.thisdir.path
-        command = "shell tmux splitw -h 'exec $SHELL && cd {0}'".format(curdir)
+        command = "shell tmux splitw -v 'exec $SHELL && cd {0}'".format(curdir)
         self.fm.execute_console(command)
