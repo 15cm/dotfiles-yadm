@@ -1,1 +1,1 @@
-/home/sinkerine/.config/ranger/scope.sh##Linux
+/Users/sinkerine/.config/ranger/scope.sh##Darwin
